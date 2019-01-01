@@ -35,7 +35,7 @@ This custom-code-editor schema returns an object.
 ```javascript
 {
     code : '<string code value>',
-    type : '<mode>'
+    type : '<modes>'
 }
 ```
 
@@ -64,7 +64,7 @@ module.exports = {
         options : {
             // All options available in : https://github.com/ajaxorg/ace/wiki/Configuring-Ace
         },
-        mode : [
+        modes : [
             {
                 title : 'Javascript', // Title to Override Name
                 name : 'javascript', // Name of the mode (Case-Sensitive)
@@ -153,7 +153,7 @@ If you want it to disable snippet for specific mode. Write the `name` of the mod
 
 ```javascript
 ace : {
-    mode : [
+    modes : [
         {
             name : "html",
             disableSnippet : true // This will not automatically change snippet when you change mode on dropdown
@@ -167,7 +167,7 @@ Also , if you wanted to override default snippet for specific mode. Write the `n
 
 ```javascript
 ace : {
-    mode : [
+    modes : [
         {
             name: 'javascript', // name must be the same as existing default mode
             snippet: "document.addEventListener(\"DOMContentLoaded\" , function(){\n
@@ -181,7 +181,7 @@ ace : {
 ### `@code-here` On Snippet
 What is that syntax for ? Well , whenever you change your mode on dropdown , existing codes on schema will replace automatically on new snippet on `@code-here`. Amazing right ? If you did not provide that syntax , your existing value on editor schema will be lost. Let's make a new override snippet and has our own `@code-here` on it :
 ```javascript
-      mode : [
+      modes : [
          {
             name :'javascript',
             content : "// Content Start Here \n print(\"Hello World\") \n @code-here"
@@ -193,7 +193,7 @@ What is that syntax for ? Well , whenever you change your mode on dropdown , exi
 By default , the name of a dropdown will be on `name` property. But some of the name does not make sense ! Can I change it ? Yes you can , simply add `title` property like existing mode called **bash** :
 ```javascript
 ace : {
-    mode : [
+    modes : [
         name : 'sh',
         title : 'Bash' // This will make dropdown name as Bash instead of Sh
     ]
@@ -211,7 +211,7 @@ ace : {
 Once you clear your mode , you can define your own modes without considering any overrides mode. Isn't this makes your life easier ?
 ```javascript
 ace : {
-    mode : [
+    modes : [
         // List of all modes that you want to define. The options you may write like this
         title : '<title of your mode>',
         name : '<name of your mode (case sensitive)>',

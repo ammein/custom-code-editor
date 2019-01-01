@@ -94,29 +94,29 @@ apos.define('custom-code-editor' , {
                 })
 
                 // create dropdown modes
-                for (var i = 0; i < self.ace.mode.length; i++) {
+                for (var i = 0; i < self.ace.modes.length; i++) {
                     var dropdown = $fieldSet.find("#myDropdown");
                     var li = document.createElement("li");
                     li.innerHTML =
-                        (self.ace.mode[i].title) ? self.ace.mode[i].title.capitalize() : self.ace.mode[i].name.capitalize();
+                        (self.ace.modes[i].title) ? self.ace.modes[i].title.capitalize() : self.ace.modes[i].name.capitalize();
                     $(dropdown).append(li);
 
-                    if(self.ace.mode[i].title){
-                        li.setAttribute("data-name", self.ace.mode[i].name.toLowerCase());
-                        li.setAttribute("data-title", self.ace.mode[i].title.capitalize());
+                    if(self.ace.modes[i].title){
+                        li.setAttribute("data-name", self.ace.modes[i].name.toLowerCase());
+                        li.setAttribute("data-title", self.ace.modes[i].title.capitalize());
                     }else{
-                        li.setAttribute("data-name", self.ace.mode[i].name.toLowerCase());
+                        li.setAttribute("data-name", self.ace.modes[i].name.toLowerCase());
                     }
 
                     // Set Mode
-                    if (self.ace.defaultMode === self.ace.mode[i].name) {
+                    if (self.ace.defaultMode === self.ace.modes[i].name) {
 
                         editor.session.setMode("ace/mode/" + self.ace.defaultMode.toLowerCase());
 
-                        if (self.ace.mode[i].snippet && !self.ace.mode[i].disableSnippet) {
+                        if (self.ace.modes[i].snippet && !self.ace.modes[i].disableSnippet) {
                             
                             var beautify = ace.require("ace/ext/beautify");
-                            editor.session.setValue(self.ace.mode[i].snippet);
+                            editor.session.setValue(self.ace.modes[i].snippet);
                             beautify.beautify(editor.session);
                             // Find the template for replace the code area
                             var find = editor.find('@code-here', {
@@ -145,18 +145,18 @@ apos.define('custom-code-editor' , {
 
                         $fieldSet.find("#buttonDropdown").text((getTitle) ? getTitle.capitalize() : getText.capitalize());
                         // Set Mode
-                        for (var i = 0; i < self.ace.mode.length; i++)(function (i) {
-                            if (getText === self.ace.mode[i].name) {
+                        for (var i = 0; i < self.ace.modes.length; i++)(function (i) {
+                            if (getText === self.ace.modes[i].name) {
 
-                                editor.session.setMode("ace/mode/" + self.ace.mode[i].name.toLowerCase());
+                                editor.session.setMode("ace/mode/" + self.ace.modes[i].name.toLowerCase());
 
-                                if (self.ace.mode[i].snippet) {
+                                if (self.ace.modes[i].snippet) {
                                     // If got disableContent , get out from this if else
-                                    if(self.ace.mode[i].disableSnippet)
+                                    if(self.ace.modes[i].disableSnippet)
                                         return;
 
                                     var beautify = ace.require("ace/ext/beautify");
-                                    editor.session.setValue(self.ace.mode[i].snippet);
+                                    editor.session.setValue(self.ace.modes[i].snippet);
                                     beautify.beautify(editor.session);
                                     // If changing mode got existing codes , replace the value
                                     if (editor.getSelectedText().length > 1)

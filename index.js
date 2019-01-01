@@ -19,7 +19,7 @@ module.exports = {
       options.ace = _.defaults(options.ace, {
          theme : '',
          defaultMode : '',
-         mode : []
+         modes : []
       });
 
       options.pathLib = path.join(__dirname + "/lib");
@@ -29,9 +29,9 @@ module.exports = {
       options.ace.theme = options.ace.theme || "ambiance";
 
       if(options.ace.clearModes){
-         options.ace.mode = options.ace.mode;
+         options.ace.modes = options.ace.modes;
       }else{
-         var extensionMode = options.ace.mode;
+         var extensionMode = options.ace.modes;
          var originalMode = [
             {
                title : "Bash",
@@ -115,7 +115,7 @@ module.exports = {
             }
          ];
 
-         options.ace.mode = _.values(_.merge(_.keyBy(originalMode, 'name'), _.keyBy(extensionMode, 'name')));
+         options.ace.modes = _.values(_.merge(_.keyBy(originalMode, 'name'), _.keyBy(extensionMode, 'name')));
       }
 
       options.stylesheets.files = [
