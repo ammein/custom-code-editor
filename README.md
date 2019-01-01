@@ -194,8 +194,10 @@ By default , the name of a dropdown will be on `name` property. But some of the 
 ```javascript
 ace : {
     modes : [
-        name : 'sh',
-        title : 'Bash' // This will make dropdown name as Bash instead of Sh
+        {
+            name : 'sh',
+            title : 'Bash' // This will make dropdown name as Bash instead of Sh
+        }
     ]
 }
 ```
@@ -212,10 +214,12 @@ Once you clear your mode , you can define your own modes without considering any
 ```javascript
 ace : {
     modes : [
-        // List of all modes that you want to define. The options you may write like this
-        title : '<title of your mode>',
-        name : '<name of your mode (case sensitive)>',
-        snippet : '<code snippet>'
+        {
+            // List of all modes that you want to define. The options you may write like this
+            title : '<title of your mode>',
+            name : '<name of your mode (case sensitive)>',
+            snippet : '<code snippet>'
+        }
     ]
 }
 ```
