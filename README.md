@@ -109,7 +109,7 @@ module.exports = {
 Simple , make sure the name of the mode is similar to default modes provided. 
 
 ### Default Mode
-By default , `defaultMode : 'javascript'` enable. But you can choose a default mode by yourself ! Name any mode available for you. Let say a command prompt whenever you created a new widget with this schema on it
+By default , `defaultMode : 'javascript'` enable. But you can choose a default mode by yourself ! Name any mode available for you. Let say you want 'css' to be in default mode.
 
 ```javascript
 ace : {
