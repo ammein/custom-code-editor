@@ -113,7 +113,7 @@ By default , `defaultMode : 'javascript'` enable. But you can choose a default m
 
 ```javascript
 ace : {
-    defaultMode : 'cmd' // Same as `name : 'cmd' in mode : []`
+    defaultMode : 'css' // Same as `name : 'css' in mode : []`
 }
 ```
 
