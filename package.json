@@ -9,6 +9,10 @@
   "directories": {
     "lib": "lib"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ammein/custom-code-editor.git"
+  },
   "keywords": [
     "apostrophe",
     "apostrophecms",
