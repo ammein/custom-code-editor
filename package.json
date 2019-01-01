@@ -1,0 +1,20 @@
+{
+  "name": "custom-code-editor",
+  "version": "2.0.2",
+  "description": "ApostropheCMS Code Schema Field",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "keywords": [
+    "apostrophe",
+    "apostrophecms",
+    "apostrophe-cms",
+    "schema"
+  ],
+  "author": "Amin Shazrin",
+  "license": "ISC"
+}

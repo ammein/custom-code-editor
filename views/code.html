@@ -1,0 +1,26 @@
+{%- import "apostrophe-schemas:macros.html" as schemas -%}
+
+{# A macro for our code editor control's content #}
+{% macro codeEditor(field) %}
+<div class="flex">
+  <div class="editor-container">
+    <div class="dropdown">
+    <style>
+        .dropdown:after{
+          color: black;
+        }
+    </style>
+        <button class="button-dropdown result" id="buttonDropdown"></button>
+        <div id="myDropdown" class="dropdown-content">
+          <input type="text" placeholder="Search.." id="myInput">
+        </div>
+    </div>
+    <div id="editor" data-editor>
+      <!-- This is where code begins -->
+    </div>
+  </div>
+</div>
+{% endmacro %}
+
+{# Wrap our content in a standard fieldset #}
+{{ schemas.fieldset(data, codeEditor) }}

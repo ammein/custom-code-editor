@@ -1,0 +1,144 @@
+@dropdownHeight : 35px;
+@dropdownRadius : 5px;
+
+.apos-ui .flex-editor{
+  display :flex;
+}
+
+.editor-container{
+  width : 100%;
+  background-color: #fff;
+  height : 300px;
+  max-width : 100%;
+  position : relative;
+
+  #editor{
+    height : inherit;
+    position : relative;
+    border-radius : 2px;
+  }
+
+  .dropdown{
+    width : auto;
+    height : @dropdownHeight;
+    background-color: white;
+    position : absolute;
+    z-index : 99;
+    box-shadow : 5px 5px 30px #242424;
+    display : inline-block;
+    text-align : center;
+    line-height : @dropdownHeight;
+    border-radius : @dropdownRadius;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .dropdown:after{
+    content: "\f0d7";
+    position: absolute;
+    right: 6px;
+    font-family: "FontAwesome";
+    pointer-events: none;
+    color: black;
+    top: 0;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f6f6f6;
+    min-width: 230px;
+    overflow: auto;
+    border: 1px solid #ddd;
+    z-index: 1;
+    max-height :300px;
+    left: 0;
+  }
+
+  #myInput{
+    padding: 15px;
+    margin: 20px;
+    border-radius: 20px;
+    border: none;
+    font-size: 14px;
+    font-family: inherit;
+  }
+
+  .dropdown-content li {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+
+  .dropdown li:hover {background-color: #ddd;}
+
+  .button-dropdown{
+    height : inherit;
+    background-color : transparent;
+    border : none;
+    width : 100%;
+    color : black;
+    padding : inherit;
+  }
+}
+
+.show {display: block !important;}
+
+// Override due to APOSCMS problem
+.ace_cursor{
+  box-sizing: border-box !important;
+  border-left: 2px solid !important;
+}
+
+.ace_editor {
+  position: relative;
+  overflow: hidden;
+  font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace !important;
+}
+
+.ace_search{
+  border : 1px solid #cbcbcb !important;
+  margin: 0 !important;
+  padding: 4px 6px 0 4px !important;
+}
+
+.ace_searchbtn{
+  border: 1px solid #cbcbcb !important;
+  line-height: inherit !important;
+  padding: 0 6px !important;
+  margin: 0 !important;
+}
+
+.ace_searchbtn.prev, .ace_searchbtn.next {
+  padding: 0px 0.7em !important;
+  border-radius: 0px;
+}
+
+.ace_searchbtn.next:after{
+  border-width:0 2px 2px 0 !important;
+}
+
+.ace_search_form, .ace_replace_form{
+  margin : 0 20px 4px 0 !important;
+  line-height: 1.9 !important;
+}
+
+.ace_tooltip{
+  border : 1px solid gray !important;
+  padding : 3px 4px !important;
+  box-sizing: border-box !important;
+  line-height: normal !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+}
+
+.ace_gutter-cell {
+    padding-left: 19px !important;
+    padding-right: 6px !important;
+}
+
+.ace_content{
+  box-sizing: border-box !important; 
+}
