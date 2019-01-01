@@ -103,7 +103,7 @@ module.exports = {
 - Javascript
 
 # Name Of The Modes References
-### [List of all Modes](https://github.com/ajaxorg/ace/blob/master/lib/ace/ext/modelist.js#L173)
+### [List of all Modes](https://github.com/ajaxorg/ace/blob/master/lib/ace/ext/modelist.js#L45)
 
 # How to Override Existing Mode ?
 Simple , make sure the name of the mode is similar to default modes provided. 
