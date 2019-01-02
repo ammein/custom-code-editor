@@ -1,8 +1,8 @@
-apos.define('custom-code-editor' , {
-    afterConstruct : function(self){
+apos.define('custom-code-editor', {
+    afterConstruct: function (self) {
         self.addFieldCodeType();
     },
-    construct : function(self, options){
+    construct: function (self, options) {
 
         self.name = self.__meta.name;
 
@@ -10,14 +10,14 @@ apos.define('custom-code-editor' , {
 
         self.addFieldCodeType = function () {
             apos.schemas.addFieldType({
-                name : self.name,
-                populate : self.populate,
-                convert : self.convert
+                name: self.name,
+                populate: self.populate,
+                convert: self.convert
             })
         }
 
         // To avoid using lodash _.has
-        self.has = function(object , path){
+        self.has = function (object, path) {
             var curObj = object;
             var pathArr = path.match(/([^\.\[\]]+)/g);
             for (var p in pathArr) {
@@ -28,14 +28,14 @@ apos.define('custom-code-editor' , {
         }
 
         // Get the field ready and pickup the current code value
-        self.populate = function (object, name, $field, $el, field, callback){      
+        self.populate = function (object, name, $field, $el, field, callback) {
             // Capitalize helper
             String.prototype.capitalize = function () {
                 return this.charAt(0).toUpperCase() + this.slice(1);
             }
 
             // Locate the element 
-            var $fieldSet = apos.schemas.findFieldset($el , name);
+            var $fieldSet = apos.schemas.findFieldset($el, name);
 
             var originalValue;
 
@@ -52,7 +52,7 @@ apos.define('custom-code-editor' , {
 
             editor.session.setMode("ace/mode/" + self.ace.defaultMode.toLowerCase());
             editor.setTheme("ace/theme/" + self.ace.theme);
-            
+
             // If got specific height for editor-container
             if (self.has(self.ace, "config.editorHeight")) {
                 $($fieldSet.find(".editor-container")).css({
@@ -69,7 +69,7 @@ apos.define('custom-code-editor' , {
             if (self.has(self.ace, "options")) {
                 // use setOptions method to set several options at once
                 var options = self.ace.options;
-                for (var key in options) {   
+                for (var key in options) {
                     if (options.hasOwnProperty(key)) {
                         editor.setOptions(Object.assign(options));
                     }
@@ -78,12 +78,13 @@ apos.define('custom-code-editor' , {
 
             // If dropdown enable
             if (self.has(self.ace, "config.dropdown.enable")) {
-                if (object[name]) {
-                    $($fieldSet.find("#buttonDropdown")).text(object[name].type.capitalize());
-                } else {
+
+                // Only Set if got no object. Set to defaultMode
+                if (!object[name]) {
                     $($fieldSet.find("#buttonDropdown")).text(self.ace.defaultMode.capitalize());
                 }
 
+                // Enable Dropdown
                 $($fieldSet.find(".dropdown")).css({
                     display: 'block'
                 })
@@ -101,10 +102,10 @@ apos.define('custom-code-editor' , {
                         (self.ace.modes[i].title) ? self.ace.modes[i].title.capitalize() : self.ace.modes[i].name.capitalize();
                     $(dropdown).append(li);
 
-                    if(self.ace.modes[i].title){
+                    if (self.ace.modes[i].title) {
                         li.setAttribute("data-name", self.ace.modes[i].name.toLowerCase());
                         li.setAttribute("data-title", self.ace.modes[i].title.capitalize());
-                    }else{
+                    } else {
                         li.setAttribute("data-name", self.ace.modes[i].name.toLowerCase());
                     }
 
@@ -114,7 +115,7 @@ apos.define('custom-code-editor' , {
                         editor.session.setMode("ace/mode/" + self.ace.defaultMode.toLowerCase());
 
                         if (self.ace.modes[i].snippet && !self.ace.modes[i].disableSnippet) {
-                            
+
                             var beautify = ace.require("ace/ext/beautify");
                             editor.session.setValue(self.ace.modes[i].snippet);
                             beautify.beautify(editor.session);
@@ -152,7 +153,7 @@ apos.define('custom-code-editor' , {
 
                                 if (self.ace.modes[i].snippet) {
                                     // If got disableContent , get out from this if else
-                                    if(self.ace.modes[i].disableSnippet)
+                                    if (self.ace.modes[i].disableSnippet)
                                         return;
 
                                     var beautify = ace.require("ace/ext/beautify");
@@ -224,7 +225,7 @@ apos.define('custom-code-editor' , {
                 })
 
                 // Because we cannot get psuedo class , just make inline stylesheet in code.html and write it again if got this config
-                if(self.ace.config.dropdown.arrowColor){
+                if (self.ace.config.dropdown.arrowColor) {
                     $($fieldSet.find("style")).each(function () {
                         var text = $(this).text();
                         text = text.replace(/(?:color\s*:\s*(?:.*))/g, "color :" + self.ace.config.dropdown.arrowColor + " !important");
@@ -256,23 +257,34 @@ apos.define('custom-code-editor' , {
             //     };
 
             // });
-            
+
             // if got object
-            if(object[name]){
+            if (object[name]) {
                 editor.session.setValue(object[name].code);
                 editor.session.setMode("ace/mode/" + object[name].type.toLowerCase());
                 originalValue = editor.getValue();
+
+                // Find modes. When found , set title if available, else set name of the mode
+                for (var i = 0; i < self.ace.modes.length; i++)(function (i) {
+                    if (self.ace.modes[i].name.match(/(?!(\/|\\))(?:\w)*$/g)[0] === object[name].type.toLowerCase()) {
+                        var getTitle = (self.ace.modes[i].title) ? self.ace.modes[i].title : object[name].type.capitalize();
+                        $($fieldSet.find("#buttonDropdown")).text(getTitle);
+                        return;
+                    } else {
+                        return;
+                    }
+                })(i);
             }
 
             // Pass Editor Data Object so that can be use in self.convert
-            $fieldSet.data("editor" , editor);
-            
+            $fieldSet.data("editor", editor);
+
             return setImmediate(callback);
         }
 
 
         // Clean up data and reject if unacceptable
-        self.convert = function (data, name, $field, $el, field, callback){
+        self.convert = function (data, name, $field, $el, field, callback) {
 
             // Locate the element 
             var $fieldSet = apos.schemas.findFieldset($el, name);
@@ -290,8 +302,8 @@ apos.define('custom-code-editor' , {
                 type: editor.session.getMode().$id.match(/(?!(\/|\\))(?:\w)*$/g)[0]
             }
 
-            if(field.required && !(data[name]))
-                return setImmediate(_.partial(callback , "required"));
+            if (field.required && !(data[name]))
+                return setImmediate(_.partial(callback, "required"));
 
             return setImmediate(callback);
 
@@ -299,4 +311,4 @@ apos.define('custom-code-editor' , {
 
         apos.customCodeEditor = self;
     }
-})
+});

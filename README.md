@@ -72,21 +72,23 @@ module.exports = {
                 disableSnippet : true // Disable default snippet value when switching (OPTIONAL - Boolean)
             }
         ],
-        config : {
-            fontSize : 16, // Editor Font Size (Number or String)
-            editorHeight : 500, // Editor Height (Number or String)
-            dropdown : {
-                enable : true, // Enable it for switching modes button (Boolean)
-                height : 30, // Height Dropdown (Number or String)
-                borderRadius : 5, // Border Radius Dropdown (Number or String)
-                fontFamily : "Mont-Regular", // Font Family Dropdown (String)
-                fontSize : 16 , // Font Size Dropdown (Number or String)
-                position : {
+        config: {
+            fontSize: 16, // Editor Font Size (Number or String)
+            editorHeight: 500, // Editor Height (Number or String)
+            dropdown: {
+                enable: true, // Enable it for switching modes button (Boolean)
+                height: 30, // Height Dropdown (Number or String)
+                borderRadius: 5, // Border Radius Dropdown (Number or String)
+                fontFamily: "Mont-Regular", // Font Family Dropdown (String)
+                backgroundColor : "Orange", // Background Color Dropdown (String)
+                textColor : "white", // Text Color Dropdown (String)
+                fontSize: 16, // Font Size Dropdown (Number or String)
+                position: {
                     // All top , left , right , bottom dropdown position enable for configs
-                    bottom : 20,
-                    right : 20
+                    bottom: 20,
+                    right: 20
                 },
-                arrowColor : "blue" // To change arrow color in dropdown (String)
+                arrowColor: "blue" // To change arrow color in dropdown (String)
             }
         }
     }
@@ -264,6 +266,8 @@ ace : {
             borderRadius : '<Number or String>', // Border Radius Dropdown
             fontFamily : '<String>', // Font Family Dropdown
             fontSize : '<Number or String>' , // Font Size Dropdown
+            backgroundColor : "<String>", // Background Color Dropdown (String)
+            textColor : "<String>", // Text Color Dropdown (String)
             position : {
                 top : '<Number or String>',
                 bottom : '<Number or String>',
@@ -296,6 +300,9 @@ I provide a simple object for you. Behold !
 
 ### Stylesheets inside `public/css/<all css files>`
 ```javascript
+ace : {
+    // All ace options
+},
 stylesheets : {
     files : [
         {
@@ -317,6 +324,9 @@ stylesheets : {
 How about javascripts files ? Same as above example :
 
 ```javascript
+ace : {
+    // All ace options
+},
 scripts : {
     files : [
         {
@@ -338,16 +348,32 @@ scripts : {
 If you receive an error while pushing files assets to browser , please make sure your directory is in correct path without extension name and accept any files extension name by your own modified extension names. For example
 
 ```javascript
+ace : {
+    // All ace options
+},
 scripts : {
     files : [
         {
+            // Get all files inside parentFolder
             name : 'parentFolder/*',
+            when : 'user'
+        },
+        {
+            // If got subfolder inside parentFolder
+            // Include it too
+            name : 'parentFolder/subFolder/*', 
+            when : 'user'
+        },
+        {
+            name : 'index', // get index.js
             when : 'user'
         }
     ]
     acceptFiles : ["con.min.js"] // and other prefix extension file names available
 }
 ```
+
+> NOTE : You don't have to include `'js/filedirectory'` or `'css/filedirectory'` in it. APOSTROPHECMS will push based on `self.pushAsset()` that you may found in [ApostropheCMS Push Asset Documentation](https://apostrophecms.org/docs/tutorials/getting-started/pushing-assets.html#configuring-stylesheets). Easy right ?
 
 # Browser
 
