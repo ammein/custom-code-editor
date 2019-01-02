@@ -276,6 +276,11 @@ apos.define('custom-code-editor', {
                         return;
                     }
                 })(i);
+
+                // IF ONLY that the user does not define any modes options , set it to defaultMode
+                if(self.ace.modes.length === 0){
+                    $($fieldSet.find("#buttonDropdown")).text(object[name].type.capitalize());
+                }
             }
 
             // Pass Editor Data Object so that can be use in self.convert
