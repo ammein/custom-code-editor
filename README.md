@@ -235,6 +235,7 @@ ace : {
     theme : 'monokai'
 }
 ```
+You can find all available themes here : [All Ace Editor Themes Available](https://github.com/ajaxorg/ace/tree/master/lib/ace/theme)
 
 # Ace Editor Options
 Now this one , I just extend it for you to enable ace editor options.

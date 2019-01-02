@@ -264,13 +264,15 @@ apos.define('custom-code-editor', {
                 editor.session.setMode("ace/mode/" + object[name].type.toLowerCase());
                 originalValue = editor.getValue();
 
-                // Find modes. When found , set title if available, else set name of the mode
+                // Find modes. When found , set title if available, else set name of the mode. If not found , set to default type object
                 for (var i = 0; i < self.ace.modes.length; i++)(function (i) {
                     if (self.ace.modes[i].name.match(/(?!(\/|\\))(?:\w)*$/g)[0] === object[name].type.toLowerCase()) {
                         var getTitle = (self.ace.modes[i].title) ? self.ace.modes[i].title : object[name].type.capitalize();
                         $($fieldSet.find("#buttonDropdown")).text(getTitle);
                         return;
                     } else {
+                        var getTitle = object[name].type.capitalize();
+                        $($fieldSet.find("#buttonDropdown")).text(getTitle);
                         return;
                     }
                 })(i);
