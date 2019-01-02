@@ -270,7 +270,7 @@ apos.define('custom-code-editor', {
                         var getTitle = (self.ace.modes[i].title) ? self.ace.modes[i].title : object[name].type.capitalize();
                         $($fieldSet.find("#buttonDropdown")).text(getTitle);
                         return;
-                    } else {
+                    } else if (object[name].type.toLowerCase() === self.ace.defaultMode.toLowerCase()) {
                         var getTitle = object[name].type.capitalize();
                         $($fieldSet.find("#buttonDropdown")).text(getTitle);
                         return;
