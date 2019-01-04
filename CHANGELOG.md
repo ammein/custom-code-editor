@@ -1,4 +1,4 @@
-### 2.6.2
+### 2.6.3
 - Fix CSS where code folding can't be seen in your code editor. Now you can press it on gutter area.
 
 ### 2.6.0
