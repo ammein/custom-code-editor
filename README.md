@@ -506,17 +506,18 @@ apos.define('custom-code-editor', {
 ## Methods available
 These two methods are available from ApostropheCMS itself. You can refer them in ApostropheCMS docs:
 
-### `self.populate` & `self.convert`
 
-This only run once : [self.populate](https://apostrophecms.org/docs/tutorials/intermediate/custom-schema-field-types.html#handling-user-input-the-browser-side)
+| Method | Description |
+| --- | --- |
+| self.populate | Run once. If contain any bind event like clickEvent, mouseEvent and etc, it will execute normally like your javascript browser. Check documentation here : [self.populate](https://apostrophecms.org/docs/tutorials/intermediate/custom-schema-field-types.html#handling-user-input-the-browser-side)
+| self.method | Run multiple times. It will trigger on submission. Check documentation here : [self.convert](https://apostrophecms.org/docs/tutorials/intermediate/custom-schema-field-types.html#what-39-s-going-on-in-this-code) |
+| _this | Just an example use of self . Because inside self.populate ,you cannot access self directly. You have to define it to a new variable. It returns all methods & options. |
+| self.has / _this.has | `self.has`/`_this.has` accepts object and a string of path. This works similar as `_.has` in lodash but to access nested object , you only can use dot notation in that string. It returns `boolean`. |
 
-Run Multiple times (Trigger on submission) :[self.convert](https://apostrophecms.org/docs/tutorials/intermediate/custom-schema-field-types.html#what-39-s-going-on-in-this-code)
 
-### `_this` variable from `self` object
-This one is from extension method and options that are available for you to use :
+### How to use .has method ?
 
-#### `self.has`
-self.has accepts object and string of path. This works similar as `_.has` in lodash. It returns `boolean`. How to use ? Simple :
+ How to use ? Simple :
 
 ```javascript
 var myObject = {
@@ -535,7 +536,21 @@ _this.has(myObject , "nested.anotherNested.getValue");
 // Returns false since there is no getValue property inside anotherNested.myObject
 ```
 
-#### `_this.ace`
-Well , this will return all your options available in `ace` object. Check it out !
+#### Access all options available in `ace : {}` object
+Simple , you can access it via `self.ace` or `_this.ace`
 
-> Boom ! You're done !
+# Changelog
+
+
+### 2.6.0
+- **NEW SAVE FEATURE ADDED !** Provide new shortcut key to save your own selection and switch dropdown with your own selection ! . Adjust README to have better documentation to all developers.
+
+- Fix if got empty modes when `clearModes : true` and should return text of `object[name].type`. This will not return empty text on dropdown when you have an existing value in schema.
+
+### 2.5.0
+
+- Fix default mode name should be show in dropdown if got `object[name]`. This will not be return empty text on dropdown.
+
+### 2.3.0
+
+- Adjust README and FIXED on existing dropdown `title` bug that would not update if open the schema again
