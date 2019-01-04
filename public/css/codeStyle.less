@@ -136,9 +136,21 @@
 
 .ace_gutter-cell {
     padding-left: 19px !important;
-    padding-right: 6px !important;
+    padding-right: 6px;
 }
 
 .ace_content{
   box-sizing: border-box !important; 
+}
+
+.ace_dark .ace_fold-widget{
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHklEQVQIW2P4//8/AzoGEQ7oGCaLLAhWiSwB146BAQCSTPYocqT0AAAAAElFTkSuQmCC") !important;
+}
+
+.ace_folding-enabled .ace_fold-widget{
+  display: inline-block !important;
+}
+
+.ace_folding-enabled > .ace_gutter-cell{
+  padding-right: 13px !important;
 }
