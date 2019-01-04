@@ -433,6 +433,7 @@ apos.customCodeEditor.mysecondcode.editor
 # How To
 ### Search Bar
 Ace got it owns search bar. Simply hit `Ctrl + F` ! 
+
 ![Search Function](https://media.giphy.com/media/dQlgFYEG6CbgoHWdHw/giphy.gif)
 
 ### ***NEW FEATURE (Save Selection)
@@ -504,7 +505,7 @@ apos.define('custom-code-editor', {
 ```
 
 ## Methods available
-These two methods are available from ApostropheCMS itself. You can refer them in ApostropheCMS docs:
+These methods are available for you to use :
 
 
 | Method | Description |
