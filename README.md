@@ -400,3 +400,142 @@ By that , you can test anything on browser-side. For example you open on Chrome 
 ```javascript
 apos.customCodeEditor.editor.session.getValue()
 ```
+
+### Get Multiple Editor Browser in Single Schema
+Oops ! How can I get specific editor browser object if I have two fields in a same schema ? I made a simple for you , let say you have this fields :
+
+```javascript
+addFields : [
+    {
+        type : 'custom-code-editor',
+        name : 'mycode',
+        label : 'Paste Your First Code Here'
+    },
+    {
+        type : 'custom-code-editor',
+        name : 'mysecondcode',
+        label : 'Paste Your Second Code Here'
+    }
+]
+```
+
+Next, simply get the `name` property to get specific schema in browser object : 
+```javascript
+// First Editor
+apos.customCodeEditor.mycode.editor
+
+// Second Editor
+apos.customCodeEditor.mysecondcode.editor
+```
+
+> Easy right ? Hell yeah it is ! :D
+
+# How To
+### Search Bar
+Ace got it owns search bar. Simply hit `Ctrl + F` ! 
+![Search Function](https://media.giphy.com/media/dQlgFYEG6CbgoHWdHw/giphy.gif)
+
+### ***NEW FEATURE (Save Selection)
+Now this one is a new function ONLY for ApostropheCMS . If you hit `Ctrl + Shift + S` while selecting new code, it will replace an existing highlighted text previously when you change your mode. Don't believe me ? Check it out !
+
+![Save Feature](https://media.giphy.com/media/4EFt3QBgKu1NG5oz5a/giphy.gif)
+
+Wait ! Can I change save command ? Yup , you can. Add options like this :
+```javascript
+ace : {
+    config : {
+        saveCommand : {
+            win : 'Ctrl-Shift-F', // Windows Key
+            mac : 'Command-Shift-F',// Mac Key,
+            message : 'Your Selected Text Saved ! ' // Your custom save message
+        }
+    }
+}
+```
+
+# Advanced Configuration
+I know you are a tough coder living in Apostrophe who have sleepless night configuring this ace editor by yourself. Sometimes you just feel my options does not fit you enough. Well , nobody stopping you from configuring my custom code editor by yourself ! But I'm still need to guide you on this.
+
+Let say you want to add MORE commands that you already refer to [Ace Editor HOW TO](https://ace.c9.io/#nav=howto) or maybe add new events by yourself. First , let's create new js file to any name you like and push like this :
+
+```javascript
+// In custom-code-editor/index.js
+ace : {
+    // All ace options
+},
+scripts : {
+    files : [
+        {
+            name : 'custom', // will get /js/custom.js
+            when : 'user'
+        }
+    ]
+}
+```
+
+And inside `custom.js` :
+```javascript
+// In custom-code-editor/public/js/custom.js
+
+apos.define('custom-code-editor', {
+    construct : function(self,options){
+        // create superPopulate to extend method
+        var superPopulate = self.populate;
+
+        // Get extension self object
+        var _this = self;
+
+        self.populate = function(object, name, $field, $el, field, callback){
+            // Locate the element on specific schema
+            var $fieldSet = apos.schemas.findFieldset($el, name);
+
+            // Get Editor
+            var $fieldInput = $fieldSet.find("[data-editor]").get(0);
+
+            // Init Editor
+            var editor = ace.edit($fieldInput);
+
+            // ... your custom codes here
+
+            superPopulate(object, name , $field , $el , field , callback);
+        }
+    }
+})
+```
+
+## Methods available
+These two methods are available from ApostropheCMS itself. You can refer them in ApostropheCMS docs:
+
+### `self.populate` & `self.convert`
+
+This only run once : [self.populate](https://apostrophecms.org/docs/tutorials/intermediate/custom-schema-field-types.html#handling-user-input-the-browser-side)
+
+Run Multiple times (Trigger on submission) :[self.convert](https://apostrophecms.org/docs/tutorials/intermediate/custom-schema-field-types.html#what-39-s-going-on-in-this-code)
+
+### `_this` variable from `self` object
+This one is from extension method and options that are available for you to use :
+
+#### `self.has`
+self.has accepts object and string of path. This works similar as `_.has` in lodash. It returns `boolean`. How to use ? Simple :
+
+```javascript
+var myObject = {
+    nested : {
+        anotherNested : {
+            valueHere : true
+        }
+    }
+}
+
+// _this from extension object from self as shown example previously
+_this.has(myObject , "nested.anotherNested.valueHere");
+// Returns true
+
+_this.has(myObject , "nested.anotherNested.getValue"); 
+// Returns false since there is no getValue property inside anotherNested.myObject
+```
+
+#### `_this.ace`
+Well , this will return all your options available in `ace` object. Check it out !
+
+> Boom ! You're done !

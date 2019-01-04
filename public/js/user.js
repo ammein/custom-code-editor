@@ -44,8 +44,15 @@ apos.define('custom-code-editor', {
 
             var editor = ace.edit($fieldInput);
 
-            // Pass to self object
-            self.editor = editor;
+            // Pass to self object but by schema name prefix (Trigger this if got more than one schema , else pass to editor property)
+            if ($el.find("#editor[data-editor]").length > 1) {
+                self[name] = {
+                    editor: editor
+                }
+            } else {
+                // Pass to self object
+                self.editor = editor;
+            }
 
             // Default Empty Value
             editor.setValue("");
@@ -79,6 +86,32 @@ apos.define('custom-code-editor', {
             // If dropdown enable
             if (self.has(self.ace, "config.dropdown.enable")) {
 
+                // Save new value when press save command
+                editor.commands.addCommand({
+                    name: 'saveNewCode',
+                    bindKey: {
+                        win: (self.has(self.ace, "config.saveCommand.win")) ? self.ace.config.saveCommand.win : 'Ctrl-Shift-S',
+                        mac: (self.has(self.ace, "config.saveCommand.mac")) ? self.ace.config.saveCommand.mac : 'Command-Shift-S'
+                    },
+                    exec: function (editor) {
+                        // If Two or more editor in single schema , show field name
+                        if ($el.find("#editor[data-editor]").length > 1) {
+                            apos.notify((self.has(self.ace, "config.saveCommand.message")) ? self.ace.config.saveCommand.message + " - Field Name : " + name : 'Selected Code Saved Successfully' + " - Field Name : " + name, {
+                                type: "success",
+                                dismiss: 2
+                            });
+                        } else {
+                            apos.notify((self.has(self.ace, "config.saveCommand.message")) ? self.ace.config.saveCommand.message : 'Selected Code Saved Successfully', {
+                                type: "success",
+                                dismiss: 2
+                            });
+                        }
+
+                        originalValue = editor.getSelectedText();
+                    },
+                    readOnly: false
+                });
+
                 // Only Set if got no object. Set to defaultMode
                 if (!object[name]) {
                     $($fieldSet.find("#buttonDropdown")).text(self.ace.defaultMode.capitalize());
@@ -99,12 +132,12 @@ apos.define('custom-code-editor', {
                     var dropdown = $fieldSet.find("#myDropdown");
                     var li = document.createElement("li");
                     li.innerHTML =
-                        (self.ace.modes[i].title) ? self.ace.modes[i].title.capitalize() : self.ace.modes[i].name.capitalize();
+                        (self.ace.modes[i].title) ? self.ace.modes[i].title : self.ace.modes[i].name.capitalize();
                     $(dropdown).append(li);
 
                     if (self.ace.modes[i].title) {
                         li.setAttribute("data-name", self.ace.modes[i].name.toLowerCase());
-                        li.setAttribute("data-title", self.ace.modes[i].title.capitalize());
+                        li.setAttribute("data-title", self.ace.modes[i].title);
                     } else {
                         li.setAttribute("data-name", self.ace.modes[i].name.toLowerCase());
                     }
@@ -276,6 +309,11 @@ apos.define('custom-code-editor', {
                         return;
                     }
                 })(i);
+
+                // Set if clearModes and there is no single mode at all
+                if (self.ace.modes.length === 0) {
+                    $($fieldSet.find("#buttonDropdown")).text(object[name].type.capitalize());
+                }
             }
 
             // Pass Editor Data Object so that can be use in self.convert
