@@ -400,3 +400,158 @@ By that , you can test anything on browser-side. For example you open on Chrome 
 ```javascript
 apos.customCodeEditor.editor.session.getValue()
 ```
+
+### Get Multiple Editor Browser in Single Schema
+Oops ! How can I get specific editor browser object if I have two fields in a same schema ? I made a simple for you , let say you have this fields :
+
+```javascript
+addFields : [
+    {
+        type : 'custom-code-editor',
+        name : 'mycode',
+        label : 'Paste Your First Code Here'
+    },
+    {
+        type : 'custom-code-editor',
+        name : 'mysecondcode',
+        label : 'Paste Your Second Code Here'
+    }
+]
+```
+
+Next, simply get the `name` property to get specific schema in browser object : 
+```javascript
+// First Editor
+apos.customCodeEditor.mycode.editor
+
+// Second Editor
+apos.customCodeEditor.mysecondcode.editor
+```
+
+> Easy right ? Hell yeah it is ! :D
+
+# How To
+### Search Bar
+Ace got it owns search bar. Simply hit `Ctrl + F` ! 
+
+![Search Function](https://media.giphy.com/media/dQlgFYEG6CbgoHWdHw/giphy.gif)
+
+### ***NEW FEATURE (Save Selection)
+Now this one is a new function ONLY for ApostropheCMS . If you hit `Ctrl + Shift + S` while selecting new code, it will replace an existing highlighted text previously when you change your mode. Don't believe me ? Check it out !
+
+![Save Feature](https://media.giphy.com/media/4EFt3QBgKu1NG5oz5a/giphy.gif)
+
+Wait ! Can I change save command ? Yup , you can. Add options like this :
+```javascript
+ace : {
+    config : {
+        saveCommand : {
+            win : 'Ctrl-Shift-F', // Windows Key
+            mac : 'Command-Shift-F',// Mac Key,
+            message : 'Your Selected Text Saved ! ' // Your custom save message
+        }
+    }
+}
+```
+
+# Advanced Configuration
+I know you are a tough coder living in Apostrophe who have sleepless night configuring this ace editor by yourself. Sometimes you just feel my options does not fit you enough. Well , nobody stopping you from configuring my custom code editor by yourself ! But I'm still need to guide you on this.
+
+Let say you want to add MORE commands that you already refer to [Ace Editor HOW TO](https://ace.c9.io/#nav=howto) or maybe add new events by yourself. First , let's create new js file to any name you like and push like this :
+
+```javascript
+// In custom-code-editor/index.js
+ace : {
+    // All ace options
+},
+scripts : {
+    files : [
+        {
+            name : 'custom', // will get /js/custom.js
+            when : 'user'
+        }
+    ]
+}
+```
+
+And inside `custom.js` :
+```javascript
+// In custom-code-editor/public/js/custom.js
+
+apos.define('custom-code-editor', {
+    construct : function(self,options){
+        // create superPopulate to extend method
+        var superPopulate = self.populate;
+
+        // Get extension self object
+        var _this = self;
+
+        self.populate = function(object, name, $field, $el, field, callback){
+            // Locate the element on specific schema
+            var $fieldSet = apos.schemas.findFieldset($el, name);
+
+            // Get Editor
+            var $fieldInput = $fieldSet.find("[data-editor]").get(0);
+
+            // Init Editor
+            var editor = ace.edit($fieldInput);
+
+            // ... your custom codes here
+
+            superPopulate(object, name , $field , $el , field , callback);
+        }
+    }
+})
+```
+
+## Methods available
+These methods are available for you to use :
+
+
+| Method | Description |
+| --- | --- |
+| self.populate | Run once. If contain any bind event like clickEvent, mouseEvent and etc, it will execute normally like your javascript browser. Check documentation here : [self.populate](https://apostrophecms.org/docs/tutorials/intermediate/custom-schema-field-types.html#handling-user-input-the-browser-side)
+| self.method | Run multiple times. It will trigger on submission. Check documentation here : [self.convert](https://apostrophecms.org/docs/tutorials/intermediate/custom-schema-field-types.html#what-39-s-going-on-in-this-code) |
+| _this | Just an example use of self . Because inside self.populate ,you cannot access self directly. You have to define it to a new variable. It returns all methods & options. |
+| self.has / _this.has | `self.has`/`_this.has` accepts object and a string of path. This works similar as `_.has` in lodash but to access nested object , you only can use dot notation in that string. It returns `boolean`. |
+
+
+### How to use .has method ?
+
+ How to use ? Simple :
+
+```javascript
+var myObject = {
+    nested : {
+        anotherNested : {
+            valueHere : true
+        }
+    }
+}
+
+// _this from extension object from self as shown example previously
+_this.has(myObject , "nested.anotherNested.valueHere");
+// Returns true
+
+_this.has(myObject , "nested.anotherNested.getValue"); 
+// Returns false since there is no getValue property inside anotherNested.myObject
+```
+
+#### Access all options available in `ace : {}` object
+Simple , you can access it via `self.ace` or `_this.ace`
+
+# Changelog
+
+
+### 2.6.0
+- **NEW SAVE FEATURE ADDED !** Provide new shortcut key to save your own selection and switch dropdown with your own selection ! . Adjust README to have better documentation to all developers.
+
+- Fix if got empty modes when `clearModes : true` and should return text of `object[name].type`. This will not return empty text on dropdown when you have an existing value in schema.
+
+### 2.5.0
+
+- Fix default mode name should be show in dropdown if got `object[name]`. This will not be return empty text on dropdown.
+
+### 2.3.0
+
+- Adjust README and FIXED on existing dropdown `title` bug that would not update if open the schema again
