@@ -142,8 +142,8 @@ apos.define('custom-code-editor', {
                         li.setAttribute("data-name", self.ace.modes[i].name.toLowerCase());
                     }
 
-                    // Set Mode
-                    if (self.ace.defaultMode === self.ace.modes[i].name) {
+                    // Set defaultMode if found defined modes
+                    if (self.ace.defaultMode.toLowerCase() === self.ace.modes[i].name.toLowerCase()) {
 
                         editor.session.setMode("ace/mode/" + self.ace.defaultMode.toLowerCase());
 
@@ -177,10 +177,10 @@ apos.define('custom-code-editor', {
                         var getText = $(this).attr("data-name");
                         var getTitle = $(this).attr("data-title");
 
-                        $fieldSet.find("#buttonDropdown").text((getTitle) ? getTitle.capitalize() : getText.capitalize());
+                        $fieldSet.find("#buttonDropdown").text((getTitle) ? getTitle : getText.capitalize());
                         // Set Mode
                         for (var i = 0; i < self.ace.modes.length; i++)(function (i) {
-                            if (getText === self.ace.modes[i].name) {
+                            if (getText === self.ace.modes[i].name.toLowerCase()) {
 
                                 editor.session.setMode("ace/mode/" + self.ace.modes[i].name.toLowerCase());
 
@@ -299,7 +299,7 @@ apos.define('custom-code-editor', {
 
                 // Find modes. When found , set title if available, else set name of the mode. If not found , set to default type object
                 for (var i = 0; i < self.ace.modes.length; i++)(function (i) {
-                    if (self.ace.modes[i].name.match(/(?!(\/|\\))(?:\w)*$/g)[0] === object[name].type.toLowerCase()) {
+                    if (self.ace.modes[i].name.toLowerCase() === object[name].type.toLowerCase()) {
                         var getTitle = (self.ace.modes[i].title) ? self.ace.modes[i].title : object[name].type.capitalize();
                         $($fieldSet.find("#buttonDropdown")).text(getTitle);
                         return;
