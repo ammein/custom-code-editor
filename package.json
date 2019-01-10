@@ -1,6 +1,6 @@
 {
   "name": "custom-code-editor",
-  "version": "2.6.7",
+  "version": "2.6.8",
   "description": "ApostropheCMS Code Schema Field",
   "main": "index.js",
   "scripts": {
