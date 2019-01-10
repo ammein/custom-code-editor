@@ -22,6 +22,8 @@ module.exports = {
          modes : []
       });
 
+      options.scene = options.scene || "user";
+
       options.pathLib = path.join(__dirname + "/lib");
 
       options.ace.defaultMode = options.ace.defaultMode || 'javascript';

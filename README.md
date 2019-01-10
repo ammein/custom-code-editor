@@ -186,7 +186,7 @@ What is that syntax for ? Well , whenever you change your mode on dropdown , exi
       modes : [
          {
             name :'javascript',
-            content : "// Content Start Here \n print(\"Hello World\") \n @code-here"
+            snippet : "// Content Start Here \n print(\"Hello World\") \n @code-here"
          }
       ],
 ```
@@ -366,6 +366,11 @@ scripts : {
             when : 'user'
         },
         {
+            // Or you can manually get custom.js inside parentFolder for specific js file
+            name : 'parentFolder/custom',
+            when : 'user'
+        },
+        {
             name : 'index', // get index.js
             when : 'user'
         }
@@ -511,12 +516,12 @@ These methods are available for you to use :
 | Method | Description |
 | --- | --- |
 | self.populate | Run once. If contain any bind event like clickEvent, mouseEvent and etc, it will execute normally like your javascript browser. Check documentation here : [self.populate](https://apostrophecms.org/docs/tutorials/intermediate/custom-schema-field-types.html#handling-user-input-the-browser-side)
-| self.method | Run multiple times. It will trigger on submission. Check documentation here : [self.convert](https://apostrophecms.org/docs/tutorials/intermediate/custom-schema-field-types.html#what-39-s-going-on-in-this-code) |
+| self.convert | Run multiple times. It will trigger on submission. Check documentation here : [self.convert](https://apostrophecms.org/docs/tutorials/intermediate/custom-schema-field-types.html#what-39-s-going-on-in-this-code) |
 | _this | Just an example use of self . Because inside self.populate ,you cannot access self directly. You have to define it to a new variable. It returns all methods & options. |
 | self.has / _this.has | `self.has`/`_this.has` accepts object and a string of path. This works similar as `_.has` in lodash but to access nested object , you only can use dot notation in that string. It returns `boolean`. |
 
 
-### How to use .has method ?
+### How to use `.has()` method ?
 
  How to use ? Simple :
 
@@ -534,7 +539,7 @@ _this.has(myObject , "nested.anotherNested.valueHere");
 // Returns true
 
 _this.has(myObject , "nested.anotherNested.getValue"); 
-// Returns false since there is no getValue property inside anotherNested.myObject
+// Returns false since there is no getValue property inside anotherNested.getValue
 ```
 
 #### Access all options available in `ace : {}` object
@@ -542,6 +547,11 @@ Simple , you can access it via `self.ace` or `_this.ace`
 
 # Changelog
 
+### 2.6.7
+- Fix every `name` of the modes into lowerCase(). This to avoid errors when developers setting it to capitalize words or any uppercase letters (tested). Also fix `getTitle` where `.capitalize()` helper is removed from that variable.
+
+### 2.6.5
+- Fix CSS where code folding can't be seen in your code editor. Now you can press it on gutter area.
 
 ### 2.6.0
 - **NEW SAVE FEATURE ADDED !** Provide new shortcut key to save your own selection and switch dropdown with your own selection ! . Adjust README to have better documentation to all developers.
