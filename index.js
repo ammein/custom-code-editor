@@ -11,9 +11,10 @@ module.exports = {
          acceptFiles : []
       });
 
-      options.scripts = _.defaults(options.scripts,{
-         files: [],
-         acceptFiles: []
+      options.scripts = _.defaults(options.scripts, {
+            files: [],
+            acceptFiles: [],
+            pushAllAce: false
       });
 
       options.ace = _.defaults(options.ace, {

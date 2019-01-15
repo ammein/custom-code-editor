@@ -381,6 +381,21 @@ scripts : {
 
 > NOTE : You don't have to include `'js/filedirectory'` or `'css/filedirectory'` in it. APOSTROPHECMS will push based on `self.pushAsset()` that you may found in [ApostropheCMS Push Asset Documentation](https://apostrophecms.org/docs/tutorials/getting-started/pushing-assets.html#configuring-stylesheets). Easy right ?
 
+
+### Push All Ace Js Files for Testing (**NEW FEATURE)
+By default , for optimization and performance based , we push only needed `modes` for your schema. The rest of the JS files will be not pushed to browser. However, if you want to push all Ace JS assets when you wanted to do testing with `apos.customCodeEditor.editor` on something , you just have to enable `pushAllAce` in your `scripts` object. Simple :
+
+```javascript
+ace : {
+    // all ace options
+},
+scripts : {
+    pushAllAce : true
+}
+```
+
+> NOTE : Beware that this push ALL ACE JS files including your own mode. Enable this only when you wanted to configure more ace on your own script. This might decrease performance and may require long time page loads.
+
 # Browser
 
 ### Browser Object
@@ -434,6 +449,18 @@ apos.customCodeEditor.mysecondcode.editor
 ```
 
 > Easy right ? Hell yeah it is ! :D
+
+### Why I cannot switch other themes or other modes by scripting ?
+As I already mentioned in Push Asset section , by default we only push asset that are ONLY defined modes. It detect by your modes name and push. The rest of the modes will not be available in your browser. This is due to performance where Ace Editor contains more than 10 js files for all modes. If you really want to do by scripting that can switch themes or maybe other modes via scripting , you have to push ALL ACE's JS files in order to do that. Here is the code :
+
+```javascript
+ace : {
+    // all ace options
+},
+scripts : {
+    pushAllAce : true
+}
+```
 
 # How To
 ### Search Bar
