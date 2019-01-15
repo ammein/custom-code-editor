@@ -574,6 +574,9 @@ Simple , you can access it via `self.ace` or `_this.ace`
 
 # Changelog
 
+### 2.8.0
+- Push Asset Feature where push modes & themes that are only defined by User. The rest of the JS files will not be pushed. However , you can push All Ace JS files by configure option in scripts object. Refer the documentation.
+
 ### 2.6.7
 - Fix every `name` of the modes into lowerCase(). This to avoid errors when developers setting it to capitalize words or any uppercase letters (tested). Also fix `getTitle` where `.capitalize()` helper is removed from that variable.
 
