@@ -229,16 +229,15 @@ ace : {
 > Don't worry about indent in Snippet , it will automatically beautify the codes whenever you enter your new content
 
 # Insert My Own Theme
-By default , `theme : 'ambiance'` . If you wish to change theme (Case Sensitive) :
+By default , `theme : 'ambiance'` . If you wish to change theme (Case Sensitive). You can find all available themes here [All Ace Editor Themes Available](https://github.com/ajaxorg/ace/tree/master/lib/ace/theme) :
 ```javascript
 ace : {
     theme : 'monokai'
 }
 ```
-You can find all available themes here : [All Ace Editor Themes Available](https://github.com/ajaxorg/ace/tree/master/lib/ace/theme)
 
 # Ace Editor Options
-Now this one , I just extend it for you to enable ace editor options.
+Now this one , I just extend it for you to enable ace editor options. Reference : [Ace Editor Options](https://github.com/ajaxorg/ace/wiki/Configuring-Ace)
 
 ```javascript
 ace : {
@@ -246,12 +245,27 @@ ace : {
         // Same property and value as in : https://github.com/ajaxorg/ace/wiki/Configuring-Ace
         // Example :
         cursorStyle: "smooth",
+        useSoftTabs: true
     }
 }
 ```
 
-Again , you can refer options that are available by Ace Editor here :
-[Ace Editor Options](https://github.com/ajaxorg/ace/wiki/Configuring-Ace)
+## Enable Emmet Option
+By default , emmet is not enable and you need to configure it yourself. But Ace Editor provides a simple options to enable emmet. However, you need a library to load it to Ace Editor. You can find any emmet libraries available online but I provide some sample to you below that works :
+
+```javascript
+ace : {
+    options : {
+        enableEmmet : true
+    }
+}
+```
+
+Then load emmet library in your template views :
+```twig
+<!-- load emmet code and snippets compiled for browser -->
+<script src="https://cloud9ide.github.io/emmet-core/emmet.js"></script>
+```
 
 # Ace Editor & Dropdown Configurations
 Well , you also can customize your own dropdown/ace editor css styles. All dropdown configuratins available for you are :
@@ -291,12 +305,89 @@ ace : {
 }
 ```
 
-Because we have a css issue on `!important` to override apostrophe css default normalize. So I did it for you to easily override it on `config` options. Or maybe you can push your own file to override it. Either way , both are possible override options :)
+> Because we have a css issue on `!important` to override apostrophe css default normalize. So I did it for you to easily override it on `config` options. Or maybe you can push your own file to override it. Either way , both are possible override options :)
 
-Again , you can find yourself available themes for your ace editor schema down here :
-[All Ace Editor Themes Available](https://github.com/ajaxorg/ace/tree/master/lib/ace/theme)
+# How To
+### Search Bar
+Ace got it owns search bar. Simply hit `Ctrl + F` ! 
 
-# How To Insert My Stylesheets/Scripts Files ?
+![Search Function](https://media.giphy.com/media/dQlgFYEG6CbgoHWdHw/giphy.gif)
+
+### ***NEW FEATURE (Save Selection)
+Now this one is a new function ONLY for ApostropheCMS . If you hit `Ctrl + Shift + S` while selecting new code, it will replace an existing highlighted text previously when you change your mode. Don't believe me ? Check it out !
+
+![Save Feature](https://media.giphy.com/media/4EFt3QBgKu1NG5oz5a/giphy.gif)
+
+Wait ! Can I change save command ? Yup , you can. Add options like this :
+```javascript
+ace : {
+    config : {
+        saveCommand : {
+            win : 'Ctrl-Shift-F', // Windows Key
+            mac : 'Command-Shift-F',// Mac Key,
+            message : 'Your Selected Text Saved ! ' // Your custom save message
+        }
+    }
+}
+```
+
+# Browser
+
+### Browser Object
+How can I get this schema browser object for my `custom-code-editor` ?
+
+Simply you can find it on :
+
+```javascript
+apos.customCodeEditor
+```
+
+### Get Editor Browser Object
+How can I get from the one that defined in javascript browser at `var editor = ace.edit("editor")` as in Ace Editor Website has telling you about ?
+
+You can get it via browser scripting
+```javascript
+apos.customCodeEditor.editor
+```
+
+By that , you can test anything on browser-side. For example you open on Chrome Developer Tools and enter :
+
+```javascript
+apos.customCodeEditor.editor.session.getValue()
+```
+
+### Get Multiple Editor Browser in Single Schema
+Oops ! How can I get specific editor browser object if I have two fields in a same schema ? I made a simple for you , let say you have this fields :
+
+```javascript
+addFields : [
+    {
+        type : 'custom-code-editor',
+        name : 'mycode',
+        label : 'Paste Your First Code Here'
+    },
+    {
+        type : 'custom-code-editor',
+        name : 'mysecondcode',
+        label : 'Paste Your Second Code Here'
+    }
+]
+```
+
+Next, simply get the `name` property to get specific schema in browser object : 
+```javascript
+// First Editor
+apos.customCodeEditor.mycode.editor
+
+// Second Editor
+apos.customCodeEditor.mysecondcode.editor
+```
+
+> Easy right ? Hell yeah it is ! :D
+
+# Advanced Configuration (Skip this if you comfortable with current feature)
+
+## How To Insert My Stylesheets/Scripts Files ?
 I provide a simple object for you. Behold !
 
 ### Stylesheets inside `public/css/<all css files>`
@@ -382,74 +473,6 @@ scripts : {
 > NOTE : You don't have to include `'js/filedirectory'` or `'css/filedirectory'` in it. APOSTROPHECMS will push based on `self.pushAsset()` that you may found in [ApostropheCMS Push Asset Documentation](https://apostrophecms.org/docs/tutorials/getting-started/pushing-assets.html#configuring-stylesheets). Easy right ?
 
 
-### Push All Ace Js Files for Testing (**NEW FEATURE)
-By default , for optimization and performance based , we push only needed `modes` for your schema. The rest of the JS files will be not pushed to browser. However, if you want to push all Ace JS assets when you wanted to do testing with `apos.customCodeEditor.editor` on something , you just have to enable `pushAllAce` in your `scripts` object. Simple :
-
-```javascript
-ace : {
-    // all ace options
-},
-scripts : {
-    pushAllAce : true
-}
-```
-
-> NOTE : Beware that this push ALL ACE JS files including your own mode. Enable this only when you wanted to configure more ace on your own script. This might decrease performance and may require long time page loads.
-
-# Browser
-
-### Browser Object
-How can I get this schema browser object for my `custom-code-editor` ?
-
-Simply you can find it on :
-
-```javascript
-apos.customCodeEditor
-```
-
-### Get Editor Browser Object
-How can I get from the one that defined in javascript browser at `var editor = ace.edit("editor")` as in Ace Editor Website has telling you about ?
-
-You can get it via browser scripting
-```javascript
-apos.customCodeEditor.editor
-```
-
-By that , you can test anything on browser-side. For example you open on Chrome Developer Tools and enter :
-
-```javascript
-apos.customCodeEditor.editor.session.getValue()
-```
-
-### Get Multiple Editor Browser in Single Schema
-Oops ! How can I get specific editor browser object if I have two fields in a same schema ? I made a simple for you , let say you have this fields :
-
-```javascript
-addFields : [
-    {
-        type : 'custom-code-editor',
-        name : 'mycode',
-        label : 'Paste Your First Code Here'
-    },
-    {
-        type : 'custom-code-editor',
-        name : 'mysecondcode',
-        label : 'Paste Your Second Code Here'
-    }
-]
-```
-
-Next, simply get the `name` property to get specific schema in browser object : 
-```javascript
-// First Editor
-apos.customCodeEditor.mycode.editor
-
-// Second Editor
-apos.customCodeEditor.mysecondcode.editor
-```
-
-> Easy right ? Hell yeah it is ! :D
-
 ### Why I cannot switch other themes or other modes by scripting ?
 As I already mentioned in Push Asset section , by default we only push asset that are ONLY defined modes. It detect by your modes name and push. The rest of the modes will not be available in your browser. This is due to performance where Ace Editor contains more than 10 js files for all modes. If you really want to do by scripting that can switch themes or maybe other modes via scripting , you have to push ALL ACE's JS files in order to do that. Here is the code :
 
@@ -462,32 +485,10 @@ scripts : {
 }
 ```
 
-# How To
-### Search Bar
-Ace got it owns search bar. Simply hit `Ctrl + F` ! 
+> NOTE : Beware that this push ALL ACE JS files including your own mode. Enable this only when you wanted to configure more ace on your own script. This might decrease performance and may require long time page loads.
 
-![Search Function](https://media.giphy.com/media/dQlgFYEG6CbgoHWdHw/giphy.gif)
 
-### ***NEW FEATURE (Save Selection)
-Now this one is a new function ONLY for ApostropheCMS . If you hit `Ctrl + Shift + S` while selecting new code, it will replace an existing highlighted text previously when you change your mode. Don't believe me ? Check it out !
-
-![Save Feature](https://media.giphy.com/media/4EFt3QBgKu1NG5oz5a/giphy.gif)
-
-Wait ! Can I change save command ? Yup , you can. Add options like this :
-```javascript
-ace : {
-    config : {
-        saveCommand : {
-            win : 'Ctrl-Shift-F', // Windows Key
-            mac : 'Command-Shift-F',// Mac Key,
-            message : 'Your Selected Text Saved ! ' // Your custom save message
-        }
-    }
-}
-```
-
-# Advanced Configuration
-I know you are a tough coder living in Apostrophe who have sleepless night configuring this ace editor by yourself. Sometimes you just feel my options does not fit you enough. Well , nobody stopping you from configuring my custom code editor by yourself ! But I'm still need to guide you on this.
+# Add More Methods/Commands/Event Listener To Your Ace Editor
 
 Let say you want to add MORE commands that you already refer to [Ace Editor HOW TO](https://ace.c9.io/#nav=howto) or maybe add new events by yourself. First , let's create new js file to any name you like and push like this :
 
@@ -527,6 +528,16 @@ apos.define('custom-code-editor', {
 
             // Init Editor
             var editor = ace.edit($fieldInput);
+
+            // Add my own custom command
+            editor.commands.addCommand({
+                name: 'myCommand',
+                bindKey: {win: 'Ctrl-M',  mac: 'Command-M'},
+                exec: function(editor) {
+                    //...
+                },
+                readOnly: true // false if this command should not apply in readOnly mode
+            });
 
             // ... your custom codes here
 
