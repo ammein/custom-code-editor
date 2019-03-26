@@ -422,9 +422,9 @@ ace : {
 scripts : {
     files : [
         {
-            name : 'parentFolder/*', // This will get all files inside the parent folder
-            when : 'user'
-        },
+            name : "custom", // This will get custom.js
+            when : "user"
+        }
         {
             name : 'parentFolder/myScript', // This will get myScript.js inside parentFolder
             when : 'user'
@@ -446,19 +446,14 @@ ace : {
 scripts : {
     files : [
         {
-            // Get all files inside parentFolder
-            name : 'parentFolder/*',
+            // Or you can manually get custom.js inside parentFolder for specific js file
+            name : 'parentFolder/custom',
             when : 'user'
         },
         {
             // If got subfolder inside parentFolder
             // Include it too
-            name : 'parentFolder/subFolder/*', 
-            when : 'user'
-        },
-        {
-            // Or you can manually get custom.js inside parentFolder for specific js file
-            name : 'parentFolder/custom',
+            name : 'parentFolder/subFolder/custom', 
             when : 'user'
         },
         {
@@ -585,7 +580,7 @@ Simple , you can access it via `self.ace` or `_this.ace`
 
 # Changelog
 
-### 2.8.4
+### 2.8.5
 - Adjust README for better "first setup" experience to beginners.
 
 ### 2.8.0
