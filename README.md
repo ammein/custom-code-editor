@@ -53,7 +53,7 @@ or you can simply use `apos.log()` to see what's available on `custom-code-edito
 ```
 
 
-# Ace Editor Options Available
+# Custom-Code-Editor Options Available
 
 ```javascript
 // in lib/modules/custom-code-editor/index.js
@@ -262,12 +262,12 @@ ace : {
 ```
 
 Then load emmet library in your template views :
-```twig
+```html
 <!-- load emmet code and snippets compiled for browser -->
 <script src="https://cloud9ide.github.io/emmet-core/emmet.js"></script>
 ```
 
-# Ace Editor & Dropdown Configurations
+# Custom-Code-Editor & Dropdown Configurations
 Well , you also can customize your own dropdown/ace editor css styles. All dropdown configuratins available for you are :
 
 ```javascript
@@ -585,7 +585,7 @@ Simple , you can access it via `self.ace` or `_this.ace`
 
 # Changelog
 
-### 2.8.3
+### 2.8.4
 - Adjust README for better "first setup" experience to beginners.
 
 ### 2.8.0

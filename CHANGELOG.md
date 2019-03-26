@@ -1,4 +1,4 @@
-### 2.8.3
+### 2.8.4
 - Adjust README for better "first setup" experience to beginners.
 
 ### 2.8.0
