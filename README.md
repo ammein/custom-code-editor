@@ -585,6 +585,9 @@ Simple , you can access it via `self.ace` or `_this.ace`
 
 # Changelog
 
+### 2.8.3
+- Adjust README for better "first setup" experience to beginners.
+
 ### 2.8.0
 - Push Asset Feature where push modes & themes that are only defined by User. The rest of the JS files will not be pushed. However , you can push All Ace JS files by configure option in scripts object. Refer the documentation.
 
