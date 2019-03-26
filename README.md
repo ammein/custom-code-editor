@@ -398,7 +398,7 @@ ace : {
 stylesheets : {
     files : [
         {
-            name : 'parentFolder/*', // This will get all files inside the parent folder
+            name : 'style.min', // This will get style.min.css
             when : 'user'
         },
         {
@@ -580,7 +580,7 @@ Simple , you can access it via `self.ace` or `_this.ace`
 
 # Changelog
 
-### 2.8.5
+### 2.8.6
 - Adjust README for better "first setup" experience to beginners.
 
 ### 2.8.0
