@@ -1,4 +1,4 @@
-### 2.8.7
+### 2.9.0
 - Update CSS to be cursor:pointer for better mouse hover experience
 
 ### 2.8.6
