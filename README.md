@@ -580,6 +580,9 @@ Simple , you can access it via `self.ace` or `_this.ace`
 
 # Changelog
 
+### 2.8.7
+- Update CSS to be cursor:pointer for better mouse hover experience
+
 ### 2.8.6
 - Adjust README for better "first setup" experience to beginners.
 
