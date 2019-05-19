@@ -4,7 +4,7 @@
   "description": "ApostropheCMS Code Schema Field",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "/bin/bash tests/run-all || bash tests/run-all"
   },
   "directories": {
     "lib": "lib"
@@ -23,5 +23,10 @@
     "schema"
   ],
   "author": "Amin Shazrin",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "apostrophe-nightwatch-tools": "^2.0.8",
+    "chromedriver": "^74.0.0",
+    "nightwatch": "^1.0.19"
+  }
 }

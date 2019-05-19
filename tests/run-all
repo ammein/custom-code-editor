@@ -1,0 +1,5 @@
+#!/bin/bash
+echo "** running from"
+echo $PWD
+./node_modules/.bin/nightwatch tests/scenarios/* --config nightwatch.js --env=local &&
+echo "TEST ENDED"
