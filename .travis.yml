@@ -4,8 +4,12 @@ node_js:
   - "8"
   - "10"
 
-before_script:
-  - npm install
+add_ons:
+  chrome: stable
+
+branches:
+  only:
+  - master
 
 script:
   - npm test

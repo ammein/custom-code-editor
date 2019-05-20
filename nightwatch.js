@@ -32,7 +32,10 @@ module.exports = {
             selenium_host: 'localhost',
             globals: {
                 // How long to wait (in milliseconds) before the test times out
-                waitForConditionTimeout: 5000
+                waitForConditionTimeout: 5000,
+                PROJECT : "/apostrophe-test/app.js",
+                apos_address: 'localhost',
+                apos_port: 3111,
             },
             desiredCapabilities: {
                 browserName: 'chrome',
