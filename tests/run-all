@@ -8,12 +8,21 @@ copy_module (){
     else
         mkdir "$MYDIR"
     fi
-    cp -r ../lib "$MYDIR"
-    cp -r ../views "$MYDIR"
-    cp -r ../public "$MYDIR"
-    cp ../index.js "$MYDIR"
-    cp ../package.json "$MYDIR"
-    echo "Your custom-code-editor copied to $MYDIR"
+    # Install from github
+    npm install git+https://github.com/ammein/custom-code-editor.git
+    # copy tests folder into apostrophe-test to run inside
+    cp -r ../tests .
+    cp -r ../test .
+    # copy nightwatch to it too
+    cp ../nightwatch.js .
+    echo "create dump for $DIR"
+    mongodump --out=mongodump -d $DIR 
+    # install dependencies for those
+    printf "\n Installing Dev Dependencies Testing \n\n"
+    npm install --save-dev apostrophe-nightwatch-tools chromedriver death geckodriver nightwatch selenium-server && npm install
+    echo "****************************************"
+    echo "Your custom-code-editor copied to $NODEDIR"
+    echo ""
 }
 
 # Checking Apostrophe CLI installed in a system
