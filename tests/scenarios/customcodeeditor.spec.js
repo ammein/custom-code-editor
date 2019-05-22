@@ -8,8 +8,7 @@ module.exports = Object.assign(
             console.log('IN START');
             client.resizeWindow(1200, 800);
             if (!this._server) {
-                const { apos_address , apos_port , PROJECT } = client.globals;
-                this._server = server.create(apos_address, apos_port , PROJECT);
+                this._server = server.create('localhost',3111);
                 this._server.start(done);
             }
         },

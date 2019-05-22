@@ -4,12 +4,53 @@ node_js:
   - "8"
   - "10"
 
-add_ons:
-  chrome: stable
+services:
+  - mongodb
+
+matrix:
+include:
+  - os: linux
+    node_js: '7'
+    sudo: required
+    env: DISPLAY=':99.0'
+    dist: trusty
+    addons:
+      apt:
+        sources:
+          - google-chrome
+        packages:
+          - google-chrome-stable
+  - os: osx
+    node_js: '7'
+    sudo: required
+    env: HOMEBREW_CASK_OPTS='--appdir=/Applications'
+
+env:
+  global:
+    - MONGODB_VERSION=4.0.5
+
+before_install:
+  - wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-$MONGODB_VERSION.tgz
+  - tar xfz mongodb-linux-x86_64-$MONGODB_VERSION.tgz
+  - export PATH='pwd'/mongodb-linux-x86_64-$MONGODB_VERSION/bin:$PATH
+  - mkdir -p data/db
+  - mongod --dbpath=data/db &
+  - sleep 3
+  - |
+    if [ "$TRAVIS_OS_NAME" = "osx" ]; then
+      brew update > /dev/null
+      brew cask install google-chrome
+    fi
 
 branches:
   only:
   - master
+
+before_script:
+  - |
+    if [ "$TRAVIS_OS_NAME" = "linux" ]; then
+      sh -e /etc/init.d/xvfb start
+    fi
 
 script:
   - npm test
