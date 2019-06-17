@@ -17,7 +17,7 @@ module.exports = {
             pushAllAce: false
       });
 
-      options.aceOptionsTypes = _.merge(require("./types.js"),_.keyBy(options.aceOptionsTypes, 'name'));
+      options.aceOptionsTypes = _.merge(require("./aceTypes.js"),_.keyBy(options.aceOptionsTypes, 'name'));
 
       options.ace = _.defaults(options.ace, {
          theme : '',
