@@ -22,7 +22,8 @@ module.exports = {
       options.ace = _.defaults(options.ace, {
          theme : '',
          defaultMode : '',
-         modes : []
+         modes : [],
+         optionsTypes : options.aceOptionsTypes
       });
 
       options.pathLib = path.join(__dirname + "/lib");
