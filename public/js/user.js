@@ -20,21 +20,27 @@ apos.define('custom-code-editor', {
             if(!item){
                 return false;
             }
-            return typeof item.length === "number" && item instanceof Array && typeof item !== "string"
+            // check if got object in it
+            for(var i = 0; i < item.length; i++){
+                if(item[i].constructor === Object){
+                    return false
+                }
+            }
+            return item && typeof item === 'object' && item.constructor === Array;
         }
 
         self.isObject = function(item){
             if (!item) {
                 return false;
             }
-            return !item.length && item instanceof Array === false && item instanceof Object && typeof item === "object"
+            return item && typeof item === 'object' && item.constructor === Object;
         }
 
         self.isString = function(item){
             if (!item) {
                 return false;
             }
-            return  typeof item === "string" && typeof item.length === "number"
+            return typeof item === "string" && typeof item.length === "number"
         }
 
         self.isArrayOfObject = function(item){
