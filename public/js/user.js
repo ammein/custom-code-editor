@@ -17,15 +17,15 @@ apos.define('custom-code-editor', {
         }
 
         self.isArray = function(item){
-            return item && typeof item.length === "number" && item instanceof Array && typeof item !== "string"
+            return item !== null && item !== undefined && typeof item.length === "number" && item instanceof Array && typeof item !== "string"
         }
 
         self.isObject = function(item){
-            return item && !item.length && item instanceof Array === false && item instanceof Object && typeof item === "object"
+            return item !== null && item !== undefined && !item.length && item instanceof Array === false && item instanceof Object && typeof item === "object"
         }
 
         self.isString = function(item){
-            return item && typeof item === "string" && typeof item.length === "number"
+            return item !== null && item !== undefined && typeof item === "string" && typeof item.length === "number"
         }
 
         self.isArrayOfObject = function(item){
