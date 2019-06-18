@@ -175,22 +175,6 @@ module.exports =  {
         value: null,
         category: "renderer"
     },
-    "fontSize" : {
-        name: "fontSize",
-        type: "number",
-        value: {
-            min : 12,
-            max : 60,
-            steps : 2
-        },
-        category: "renderer"
-    },
-    "fontFamily" : {
-        name: "fontFamily",
-        type: "string",
-        value: null,
-        category: "renderer"
-    },
     "maxLines" : {
         name: "maxLines" ,
         type: "number",
