@@ -17,19 +17,31 @@ apos.define('custom-code-editor', {
         }
 
         self.isArray = function(item){
-            return item !== null && item !== undefined && typeof item.length === "number" && item instanceof Array && typeof item !== "string"
+            if(!item){
+                return false;
+            }
+            return typeof item.length === "number" && item instanceof Array && typeof item !== "string"
         }
 
         self.isObject = function(item){
-            return item !== null && item !== undefined && !item.length && item instanceof Array === false && item instanceof Object && typeof item === "object"
+            if (!item) {
+                return false;
+            }
+            return !item.length && item instanceof Array === false && item instanceof Object && typeof item === "object"
         }
 
         self.isString = function(item){
-            return item !== null && item !== undefined && typeof item === "string" && typeof item.length === "number"
+            if (!item) {
+                return false;
+            }
+            return  typeof item === "string" && typeof item.length === "number"
         }
 
         self.isArrayOfObject = function(item){
-            return item && !self.isString(item) && self.isArray(item) && item.length ? self.isObject(item[item.length - 1]) : false
+            if (!item) {
+                return false;
+            }
+            return !self.isString(item) && self.isArray(item) && item.length ? self.isObject(item[item.length - 1]) : false
         }
 
         // To avoid using lodash _.has
