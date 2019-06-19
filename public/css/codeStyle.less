@@ -192,14 +192,18 @@
   }
 
   .button-options{
-    background-color:white;
-    width:20px;
+    background-color: #f8f8f8;
     height: 20px;
     position: relative;
-    top : 0;
-    right :0;
+    top: 5px;
+    right: 5px;
     font-family: "FontAwesome";
-    content: @fa-var-gear;
+    border-radius: 20px;
+    border: none;
+    box-shadow: 0 5px 6px 1px #414141;
+    &:before{
+      content: @fa-var-gear;
+    }
   }
 
   .options-container{
