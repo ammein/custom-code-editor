@@ -1,5 +1,6 @@
 @dropdownHeight : 35px;
 @dropdownRadius : 5px;
+@myFontAwesome :"FontAwesome", "Roboto" , "Helvetica" , sans-serif;
 
 .apos-ui .flex-editor{
   display :flex;
@@ -26,6 +27,37 @@
     right: 0;
     height: 100%;
     top: 0;
+
+    // Searchbar for options
+    #myOptions{
+      border: 20px;
+      padding: 15px;
+      background-color: #efefef;
+      font-size: inherit;
+      width: auto;
+    }
+
+    .collapse:before{
+      content: @fa-var-chevron-right;
+      font-family: @myFontAwesome;
+      font-size: 15px;
+    }
+
+    .uncollapse:before{
+      content:@fa-var-chevron-down;
+      font-family: @myFontAwesome;
+      font-size: 15px;
+    }
+
+    .copy-options:before{
+      content:@fa-var-clipboard;
+      font-family: @myFontAwesome;
+    }
+
+    .reset-options:before{
+      content: @fa-var-undo;
+      font-family: @myFontAwesome;
+    }
 
     & input,
     label {
