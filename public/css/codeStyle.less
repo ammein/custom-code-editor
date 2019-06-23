@@ -49,14 +49,50 @@
       font-size: 15px;
     }
 
-    .copy-options:before{
-      content:@fa-var-clipboard;
-      font-family: @myFontAwesome;
+
+    .copy-options
+      background-color: #6110ff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      margin-top: 20px;
+      flex: 1;
+      color: white;
+
+      &:before{
+        content:@fa-var-clipboard;
+        font-family: @myFontAwesome;
+      }
     }
 
-    .reset-options:before{
-      content: @fa-var-undo;
-      font-family: @myFontAwesome;
+    .reset-options{
+        background-color: #f6f6f6;
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        margin-top: 20px;
+        flex: 1;
+        color: gray;
+
+      &:before{
+        content: @fa-var-undo;
+        font-family: @myFontAwesome;
+      }
+    }
+
+    .save-options
+      background-color: #17b51c;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      margin-top: 20px;
+      flex: 1;
+      color: white;
+
+      &:before{
+        content: @fa-var-save;
+        font-family: @myFontAwesome;
+      }
     }
 
     & input,
