@@ -142,7 +142,10 @@ module.exports = {
          }, {
             name: 'ace/*',
             when: 'user'
-         }, {
+         },{
+            name : 'clipboard/clipboard.min',
+            when : 'user'
+         },{
             name: 'ace/snippets/*',
             when: 'user'
          }
