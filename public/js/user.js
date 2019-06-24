@@ -1,4 +1,6 @@
 apos.define('custom-code-editor', {
+    // Extend apostrophe-context to use self.api, self.link and self.html
+    extend: 'apostrophe-context',
     afterConstruct: function (self) {
         self.addFieldCodeType();
     },
