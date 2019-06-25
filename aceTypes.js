@@ -239,16 +239,6 @@ module.exports =  {
         value: null,
         category: "mouseHandler"
     },
-    "firstLineNumber" : {
-        name: "firstLineNumber",
-        type: "boolean",
-        value: {
-            min: 0,
-            max: 1,
-            steps: 0.1
-        },
-        category: "session"
-    },
     "overwrite" : {
         name: "overwrite",
         type: "boolean",
