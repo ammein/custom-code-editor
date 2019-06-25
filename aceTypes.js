@@ -183,28 +183,6 @@ module.exports =  {
         value: null,
         category: "renderer"
     },
-    "maxLines" : {
-        name: "maxLines" ,
-        type: "number",
-        value: {
-            min: 0,
-            max: 100,
-            steps: 1
-        },
-        help: "resize editor based on the contents of the editor until the number of lines reaches maxLines",
-        category: "renderer"
-    },
-    "minLines" : {
-        name:"minLines",
-        type: "number",
-        value: {
-            min: 0,
-            max: 100,
-            steps: 1
-        },
-        help: "resize editor based on the contents of the editor until the number of lines reaches maxLines",
-        category: "renderer" 
-    },
     "scrollPastEnd" : {
         name: "scrollPastEnd",
         type: ["number","boolean"],
