@@ -49,7 +49,16 @@ apos.define('custom-code-editor', {
             if (!item) {
                 return false;
             }
-            return !self.isString(item) && self.isArray(item) && item.length ? self.isObject(item[item.length - 1]) : false
+
+            // check if got object in it
+            for (var i = 0; i < item.length; i++) {
+                if (item[i].constructor !== Object) {
+                    return false
+                }
+            }
+
+            // Also check if the item is not a string
+            return !self.isString(item);
         }
 
         // To avoid using lodash _.has

@@ -136,13 +136,21 @@ module.exports =  {
     "printMarginColumn" : {
         name: "printMarginColumn",
         type : "number",
-        value : null,
+        value: {
+            min: 0,
+            max: 100,
+            steps: 1
+        },
         category : "renderer"
     },
     "printMargin" : {
         name: "printMargin",
-        type: ["boolean", "number"],
-        value : null,
+        type: "number",
+        value : {
+            min : 0,
+            max : 100,
+            steps : 1
+        },
         category : "renderer"
     },
     "fadeFoldWidgets" : {
@@ -178,14 +186,22 @@ module.exports =  {
     "maxLines" : {
         name: "maxLines" ,
         type: "number",
-        value: null,
+        value: {
+            min: 0,
+            max: 100,
+            steps: 1
+        },
         help: "resize editor based on the contents of the editor until the number of lines reaches maxLines",
         category: "renderer"
     },
     "minLines" : {
         name:"minLines",
         type: "number",
-        value: null,
+        value: {
+            min: 0,
+            max: 100,
+            steps: 1
+        },
         help: "resize editor based on the contents of the editor until the number of lines reaches maxLines",
         category: "renderer" 
     },
@@ -210,13 +226,21 @@ module.exports =  {
     "scrollSpeed" : {
         name : "scrollSpeed",
         type: "number",
-        value: null,
+        value : {
+            min : 0,
+            max : 100,
+            steps : 1
+        },
         category: "mouseHandler"
     },
     "dragDelay" : {
         name:"dragDelay",
         type: "number",
-        value: null,
+        value: {
+            min: 0,
+            max: 100,
+            steps: 1
+        },
         category: "mouseHandler"
     },
     "dragEnabled" : {
@@ -240,7 +264,11 @@ module.exports =  {
     "firstLineNumber" : {
         name: "firstLineNumber",
         type: "boolean",
-        value: null,
+        value: {
+            min: 0,
+            max: 1,
+            steps: 0.1
+        },
         category: "session"
     },
     "overwrite" : {
@@ -258,7 +286,11 @@ module.exports =  {
     "tabSize" : {
         name: "tabSize",
         type: "number",
-        value: null,
+        value: {
+            min: 0,
+            max: 20,
+            steps: 1
+        },
         category: "session"
     },
     "wrap" : {
