@@ -24,7 +24,7 @@ module.exports = {
          optionsTypes: {}
       });
 
-      options.ace.optionsTypes = _.merge(require("./aceTypes.js"), _.keyBy(options.optionsTypes, 'name'))
+      options.ace.optionsTypes = _.merge(require("./aceTypes.js"), _.keyBy(options.ace.optionsTypes, 'name'))
 
       options.pathLib = path.join(__dirname + "/lib");
 

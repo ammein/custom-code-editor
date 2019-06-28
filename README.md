@@ -424,6 +424,9 @@ module.exports = {
 }
 ```
 
+### Why some other options are missing ?
+Well, some other options will breaks apostrophe's UI and also against the rule of pushing assets. For instance, we cannot set other themes via options customizer because we will only push desired theme configuration from your project level module. This is because Ace contains more than 10 js files for each modes and themes available.
+
 # Browser
 
 ### Browser Object
