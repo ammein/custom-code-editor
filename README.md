@@ -406,7 +406,7 @@ module.exports = {
 }
 ```
 
-> NOTE : If you wish to add more options, take a look at `aceTypes.js` in `node_modules/custom-code-editor/aceTypes.js` to see how it is done.
+> NOTE : If you wish to add more options, take a look at `aceTypes.js` in `node_modules/custom-code-editor/aceTypes.js` to see how it is done. And MAKE SURE you do it in an ARRAY like above example.
 
 ## Remove Options
 You wish to remove options customizer ? You don't like it ? Don't worry, just set it to `enable : false` like this :
