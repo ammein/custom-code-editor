@@ -1,9 +1,14 @@
 # Custom-Code-Editor ApostropheCMS Schema
-An ApostropheCMS Custom Schema for your own custom-code-editor field
+An ApostropheCMS Custom Schema for your own custom-code-editor field. 
 
 This schema uses Ace Editor library that you may found here [Ace Editor](https://ace.c9.io/)
 
+
 ![Ace Editor Example](https://media.giphy.com/media/33F6GoBCalksXavQyN/giphy.gif)
+
+Falling in love with custom-code-editor module ? Send love ❤️ through Paypal link here : <br>
+[Paypal.me/AminShazrin](https://paypal.me/AminShazrin?locale.x=en_US)
+
 
 # Install
 From within your apostrophe project `npm install --save custom-code-editor`
@@ -330,6 +335,30 @@ ace : {
     }
 }
 ```
+
+# New Custom-Code-Editor V3 (Options Customizer)
+Have you ever wonder that you are tired of testing options by restarting the app and adjust your options all over again ? 
+
+Say no more ! Introducing new options customizer ! 
+
+![Options Customizer](https://media.giphy.com/media/JT1C49z4ghRFIvKPx1/giphy.gif)
+
+### What does it do ?
+I bring you more features that you can't live without ! All options available for you to modified are now can be saves to each logged in user or even you could copy all the desired options and paste it to your project level module ! Here are four core features for Options Customizer :
+- Copy Options
+- Undo Options
+- Save Options
+- Reset Options
+
+> These options will make your editor change live upon options modified.
+
+## Copy Options
+Now you can copy your changes options and paste it on your project level module that will applied to all ! The copy features uses [Clipboard JS](https://clipboardjs.com/) to make it work. Below are the demonstration on how to use it :
+
+![Copy Options](https://media.giphy.com/media/MaNmlXtVdItUCXRR17/giphy.gif)
+
+
+> NOTE : It only copies to modified changes, not its entire options. If your module options are already configured, it will not copy your module options. Instead, it will copy your changes options that you did on On/Off Toggle(s), Select Input(s) and Range Input(s)
 
 # Browser
 
