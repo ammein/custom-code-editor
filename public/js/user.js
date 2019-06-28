@@ -74,6 +74,7 @@ apos.define('custom-code-editor', {
                             help.innerHTML = object.help;
                             help.style.fontSize = "12px";
                             help.style.fontStyle = "italic";
+                            help.style.display = "block";
                             lists.appendChild(help);
                         }
 
@@ -122,6 +123,7 @@ apos.define('custom-code-editor', {
                             help.innerHTML = object.help;
                             help.style.fontSize = "12px";
                             help.style.fontStyle = "italic";
+                            help.style.display = "block";
                             lists.appendChild(help);
                         }
                     })();
@@ -172,6 +174,7 @@ apos.define('custom-code-editor', {
                             help.innerHTML = object.help;
                             help.style.fontSize = "12px";
                             help.style.fontStyle = "italic";
+                            help.style.display = "block";
                             lists.appendChild(help);
                         }
                     })();
@@ -219,6 +222,7 @@ apos.define('custom-code-editor', {
                             help.innerHTML = object.help;
                             help.style.fontSize = "12px";
                             help.style.fontStyle = "italic";
+                            help.style.display = "block";
                             lists.appendChild(help);
                         }
                     })();
