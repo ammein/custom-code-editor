@@ -676,6 +676,9 @@ Simple , you can access it via `self.ace` or `_this.ace`
 
 # Changelog
 
+### 3.0.0
+- New feature released, Options Customizer. Also change a bit stylish UI for user friendly.
+
 ### 2.9.0
 - Update CSS to be cursor:pointer for better mouse hover experience
 
