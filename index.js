@@ -17,13 +17,11 @@ module.exports = {
             pushAllAce: false
       });
 
-      options.optionsTypes = _.merge(require("./aceTypes.js"),_.keyBy(options.optionsTypes, 'name'));
-
       options.ace = _.defaults(options.ace, {
          theme : '',
          defaultMode : '',
          modes : [],
-         optionsTypes : options.optionsTypes
+         optionsTypes: _.merge(require("./aceTypes.js"), _.keyBy(options.optionsTypes, 'name'))
       });
 
       options.pathLib = path.join(__dirname + "/lib");

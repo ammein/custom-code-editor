@@ -358,7 +358,7 @@ You can copy your changes options and paste it on your project level module that
 ![Copy Options](https://media.giphy.com/media/MaNmlXtVdItUCXRR17/giphy.gif)
 
 
-> NOTE : It only copies from modified changes, not its entire options. If your module options are already configured, it will not copy your module options. Instead, it will copy all your changes options that you did on On/Off Toggle(s), Select Input(s) and Range Input(s)
+> NOTE : It only copies from modified changes, not on its entire options. If your module options are already configured, it will not copy your module options. Instead, it will copy all your changes options that you did on On/Off Toggle(s), Select Input(s) and Range Input(s).
 
 ## Undo Options
 You can undo your modified options to default settings. This will help you to reset your changes from all your modified options.
@@ -407,6 +407,8 @@ module.exports = {
 ```
 
 > NOTE : If you wish to add more options, take a look at `aceTypes.js` in `node_modules/custom-code-editor/aceTypes.js` to see how it is done.
+
+## 
 
 # Browser
 
