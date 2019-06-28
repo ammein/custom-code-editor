@@ -39,6 +39,10 @@
       height: 49px;
     }
 
+    .lists-inputs{
+      margin-bottom : 20px;
+    }
+
     .collapse:before{
       content: @fa-var-chevron-right;
       font-family: @myFontAwesome;
@@ -76,8 +80,8 @@
       height : auto;
       display : none;
       position : absolute;
-      top : 22px;
-      right : 12px;
+      top: 57px;
+      right: 38px;
       background-color :white;
       z-index: 101;
       border-radius: 2px;
@@ -121,10 +125,11 @@
       border: none;
       height : 46px;
       font-size : 14px;
-      width : auto;
+      width : 100%;
+      background-color : white;
 
       &:before {
-        content: @fa-var-remove;
+        // content: @fa-var-remove;
         font-family: @myFontAwesome;
       }
     }
@@ -134,10 +139,11 @@
       height : 46px;
       color: #5E5E5E;
       font-size : 14px;
-      width : auto;
+      width : 100%;
+      background-color : white;
 
       &:before{
-        content: @fa-var-save;
+        // content: @fa-var-save;
         font-family: @myFontAwesome;
       }
     }
