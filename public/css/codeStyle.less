@@ -38,7 +38,7 @@
       padding: 15px;
       background-color: #efefef;
       font-size: inherit;
-      width: 177px;
+      width: 170px;
       border-radius: 5px;
       height: 49px;
     }
@@ -61,12 +61,13 @@
     }
 
     .press-more-options{
-      margin: 0 0 0 14px;
-      border-radius: 50%;
+      margin: 5px 0 0 14px;
+      border-radius: 5px;
       background-color: #F8F8F8;
-      height: 46px;
+      height: 40px;
       text-align: center;
-      padding: 15px 20px 20px 20px;
+      width: 40px;
+      padding-top: 12px;
       cursor: pointer;
 
       &:hover{
@@ -102,10 +103,15 @@
       background-color: #B1D0FF;
       border: none;
       border-radius: 2px;
-      margin-top: 20px;
+      margin-top: 12px;
       flex: 1;
       color: #4a4a4a;
       height: 30px;
+      width: 30px;
+
+      &:hover{
+        background-color: rgb(129, 179, 253);
+      }
 
       &:before{
         content:@fa-var-clipboard;
@@ -117,11 +123,15 @@
       background-color: #E9E9E9;
       border: none;
       border-radius: 2px;
-      margin-top: 20px;
+      margin-top: 12px;
       flex: 1;
       color: #4a4a4a;
-      /* width: 30px; */
       height: 30px;
+      width: 30px;
+
+      &:hover{
+        background-color: rgb(187, 187, 187);
+      }
 
       &:before{
         content: @fa-var-undo;
@@ -139,7 +149,7 @@
       cursor : pointer;
 
       &:hover{
-        background-color : rgb(170, 170, 170);
+        background-color : rgb(233, 233, 233);
       }
 
       &:before {
@@ -158,7 +168,7 @@
       cursor : pointer;
 
       &:hover{
-        background-color : rgb(170, 170, 170);
+        background-color : rgb(233, 233, 233);
       }
 
       &:before{
@@ -171,6 +181,18 @@
     label {
       padding-bottom:10px;
       display: block;
+      line-height: 18.66px;
+      font-size: 14px;
+    }
+
+    & select{
+      padding: 5px 20px;
+      width: 80%;
+      font-size: 12px;
+      border-radius: 5px;
+      background: #f8f8f8;
+      border: none;
+      font-size: 15px;
     }
 
     li{
@@ -199,8 +221,8 @@
       border: none;
       background: url(http://www.pixelslip.be/img/check.png) no-repeat 0 0 transparent;
       background-color: #ccc;
-      width: 20%;
-      height: 20px;
+      width: 62px;
+      height: 27px;
       border-radius: 3px;
       box-shadow: inset 0 1px 4px rgba(0, 0, 0, .2);
       cursor: pointer;
@@ -209,7 +231,7 @@
     }
 
     input[type='checkbox'].error {
-      background-color: #c63d3d;
+      background-color: #FF4C1F;
     }
 
     input[type='checkbox']:after {
@@ -238,7 +260,7 @@
     }
 
     input[type='checkbox']:checked {
-      background-color: #79d122;
+      background-color: #89F869;
     }
 
     input[type='checkbox']:checked:after {
