@@ -34,9 +34,9 @@
       padding: 15px;
       background-color: #efefef;
       font-size: inherit;
-      width: auto;
-      border-radius: 5px;
       width: 192px;
+      border-radius: 5px;
+      height: 49px;
     }
 
     .collapse:before{
@@ -51,15 +51,48 @@
       font-size: 15px;
     }
 
+    .press-more-options{
+      margin: 0 0 0 14px;
+      border-radius: 50%;
+      background-color : #F8F8F8;
+
+      &:hover{
+        background-color : rgba(248, 248, 248, 0.822);
+      }
+
+      &:active{
+        background-color :rgba(248, 248, 248, 0.603);
+      }
+
+      &::before{
+        content: @fa-var-ellipsis-v;
+        font-family: @myFontAwesome; 
+        font-size: 15px;
+      }
+    }
+
+    .more-options{
+      width : 129px;
+      height : auto;
+      display : none;
+      position : absolute;
+      top : 22px;
+      right : 12px;
+      background-color :white;
+      z-index: 101;
+      border-radius: 2px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.16);
+    }
+
 
     .copy-options{
-      background-color: #6110ff;
+      background-color: #B1D0FF;
       border: none;
       border-radius: 2px;
-      padding: 10px;
       margin-top: 20px;
       flex: 1;
-      color: white;
+      color: #4a4a4a;
+      height: 30px;
 
       &:before{
         content:@fa-var-clipboard;
@@ -68,13 +101,14 @@
     }
 
     .reset-options{
-        background-color: #f6f6f6;
-        border: none;
-        border-radius: 2px;
-        padding: 10px;
-        margin-top: 20px;
-        flex: 1;
-        color: gray;
+      background-color: #E9E9E9;
+      border: none;
+      border-radius: 2px;
+      margin-top: 20px;
+      flex: 1;
+      color: #4a4a4a;
+      /* width: 30px; */
+      height: 30px;
 
       &:before{
         content: @fa-var-undo;
@@ -83,13 +117,11 @@
     }
 
     .delete-options {
-      background-color: #f6f6f6;
+      color : #5E5E5E;
       border: none;
-      border-radius: 2px;
-      padding: 10px;
-      margin-top: 20px;
-      flex: 1;
-      color: red;
+      height : 46px;
+      font-size : 14px;
+      width : auto;
 
       &:before {
         content: @fa-var-remove;
@@ -98,13 +130,11 @@
     }
 
     .save-options{
-      background-color: #17b51c;
       border: none;
-      border-radius: 2px;
-      padding: 10px;
-      margin-top: 20px;
-      flex: 1;
-      color: white;
+      height : 46px;
+      color: #5E5E5E;
+      font-size : 14px;
+      width : auto;
 
       &:before{
         content: @fa-var-save;
@@ -125,14 +155,17 @@
     .category{
       font-size: 20px;
       font-weight: bold;
-      margin-bottom: 20px;
+      margin-bottom: 19px;
       margin-top: 10px;
       text-transform: capitalize;
+      color : #484848;
     }
 
     .line-category{
-      border-top: 1px solid black;
-      margin-top: 20px;
+      border-top: 1px solid #ECECEC;
+      margin-top: 16.5px;
+      margin-right: 25px;
+      margin-bottom: 13.5px;
     }
 
     input[type='checkbox'] {
@@ -297,9 +330,8 @@
     flex: 1;
     overflow: auto;
     display: none;
-    padding-right: 21px;
-    padding-left: 21px;
-    padding-top: 32px;
+    padding : 33px 21px 10px 21px;
+    max-width: 282px;
   }
 
   .dropdown{

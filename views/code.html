@@ -19,11 +19,17 @@
       <button class="button-options" id="buttonOptions" title="Adjust Options"></button>
       <div class="options-container">
         <div class="options-inner">
-          <input type="text" placeholder="Search.." id="myOptions">
-          <button class="save-options" id="saveOptions" title="Save All Options"></button>
+          <div class="search-area">
+            <input type="text" placeholder="Search.." id="myOptions">
+            <div class="press-more-options">
+              <div class="more-options">
+                <button class="save-options" id="saveOptions"> Save</button>
+                <button class="delete-options" id="deleteOptions"> Reset</button>
+              </div>
+            </div>
+          </div>
           <button class="copy-options" id="copyOptions" title="Copy All Changes Options"></button>
-          <button class="reset-options" id="resetOptions" title="Reset To Default"></button>
-          <button class="delete-options" id="deleteOptions" title="Delete Saved Options"></button>
+          <button class="undo-options" id="undoOptions" title="Undo"></button>
           {# This is where all lists of options appear here #}
         </div>
       </div>
