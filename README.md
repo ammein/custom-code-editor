@@ -353,7 +353,7 @@ It brings you more features that you can't live without ! All options available 
 > These options will make your editor change live upon options modified.
 
 ## Copy Options
-You can copy your changes options and paste it on your project level module that will applied to all ! The copy features uses [Clipboard JS](https://clipboardjs.com/) to make it work. Below are the demonstration on how to use it :
+You can copy your changes options and paste it on your project level module that will apply to all ! The copy features uses [Clipboard JS](https://clipboardjs.com/) to make it work. Below are the demonstration on how to use it :
 
 ![Copy Options](https://media.giphy.com/media/MaNmlXtVdItUCXRR17/giphy.gif)
 
@@ -374,7 +374,7 @@ You can also saves all your changes options. This will keep all your modified op
 
 ![Save Options](https://media.giphy.com/media/dsvKmzLZID4CyrRNWu/giphy.gif)
 
-In MongoDB, you will see this data directly on `type : apostrophe-users` :
+In MongoDB, you will see this data directly on `type : apostrophe-user` :
 ```json
 "customCodeEditor" : {
     "highlightActiveLine" : false

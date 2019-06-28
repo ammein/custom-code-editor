@@ -21,8 +21,10 @@ module.exports = {
          theme : '',
          defaultMode : '',
          modes : [],
-         optionsTypes: _.merge(require("./aceTypes.js"), _.keyBy(options.optionsTypes, 'name'))
+         optionsTypes: {}
       });
+
+      options.ace.optionsTypes = _.merge(require("./aceTypes.js"), _.keyBy(options.optionsTypes, 'name'))
 
       options.pathLib = path.join(__dirname + "/lib");
 
