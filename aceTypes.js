@@ -69,14 +69,14 @@ module.exports =  {
         name : "autoScrollEditorIntoView",
         type : "boolean",
         value : null,
-        help: "this is needed if editor is inside scrollable page",
+        help: "This is needed if editor is inside scrollable page",
         category : "editor"
     },
     "copyWithEmptySelection":{
         name : "copyWithEmptySelection",
         type : "boolean",
         value : null,
-        help: "copy/cut the full line if selection is empty, defaults to false",
+        help: "Copy/Cut the full line if selection is empty, defaults to false",
         category : "editor"
     },
     "useSoftTabs":{
@@ -191,7 +191,7 @@ module.exports =  {
             max: 1,
             steps : 0.1
         },
-        help: "number of page sizes to scroll after document end (typical values are 0, 0.5, and 1)",
+        help: "Number of page sizes to scroll after document end (typical values are 0, 0.5, and 1)",
         category: "renderer"
     },
     "fixedWidthGutter" : {

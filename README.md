@@ -6,7 +6,7 @@ This schema uses Ace Editor library that you may found here [Ace Editor](https:/
 
 ![Ace Editor Example](https://media.giphy.com/media/33F6GoBCalksXavQyN/giphy.gif)
 
-Falling in love with custom-code-editor module ? Send love ❤️ through Paypal link here : <br>
+Falling in love with custom-code-editor module ? Send love ❤️ through Paypal here : <br>
 [Paypal.me/AminShazrin](https://paypal.me/AminShazrin?locale.x=en_US)
 
 
@@ -344,7 +344,7 @@ Say no more ! Introducing new options customizer !
 ![Options Customizer](https://media.giphy.com/media/JT1C49z4ghRFIvKPx1/giphy.gif)
 
 ### What does it do ?
-I bring you more features that you can't live without ! All options available for you to modified are now can be saves to each logged in user or even you could copy all the desired options and paste it to your project level module ! Here are four core features for Options Customizer :
+It brings you more features that you can't live without ! All options available for you to modify are now can be saves to each logged in user or even you could copy all the desired options and paste it to your project level module ! Here are four core features for Options Customizer :
 - Copy Options
 - Undo Options
 - Save Options
@@ -353,12 +353,60 @@ I bring you more features that you can't live without ! All options available fo
 > These options will make your editor change live upon options modified.
 
 ## Copy Options
-Now you can copy your changes options and paste it on your project level module that will applied to all ! The copy features uses [Clipboard JS](https://clipboardjs.com/) to make it work. Below are the demonstration on how to use it :
+You can copy your changes options and paste it on your project level module that will applied to all ! The copy features uses [Clipboard JS](https://clipboardjs.com/) to make it work. Below are the demonstration on how to use it :
 
 ![Copy Options](https://media.giphy.com/media/MaNmlXtVdItUCXRR17/giphy.gif)
 
 
-> NOTE : It only copies to modified changes, not its entire options. If your module options are already configured, it will not copy your module options. Instead, it will copy your changes options that you did on On/Off Toggle(s), Select Input(s) and Range Input(s)
+> NOTE : It only copies from modified changes, not its entire options. If your module options are already configured, it will not copy your module options. Instead, it will copy all your changes options that you did on On/Off Toggle(s), Select Input(s) and Range Input(s)
+
+## Undo Options
+You can undo your modified options to default settings. This will help you to reset your changes from all your modified options.
+
+![Undo Options](https://media.giphy.com/media/KbpWScHGzbpGfTAUTN/giphy.gif)
+
+
+> NOTE : This will not undo saved options to default setting. If you wish to reset from saved options, refer to section "Reset Options" below.
+
+
+## Save Options
+You can also saves all your changes options. This will keep all your modified options applied to all custom-code-editor types !
+
+![Save Options](https://media.giphy.com/media/dsvKmzLZID4CyrRNWu/giphy.gif)
+
+In MongoDB, you will see this data directly on `type : apostrophe-users` :
+```json
+"customCodeEditor" : {
+    "highlightActiveLine" : false
+}
+```
+
+> NOTE : Save options will not apply to all users. It will load current users saves options and apply it to all editors. This will brings each types of users to their own desired options.
+
+## Reset Options
+You can also reset all options. This will remove current saves options and changes it to default module options settings. Let say you have follows save options demonstration above, you simply click `Reset` like example below :
+
+![Reset Options](https://media.giphy.com/media/RhYUiFiT5xoxM8cvIj/giphy.gif)
+
+> NOTE : This will only affect to current logged in user only. It will not removes any other users options.
+
+## Modify Options
+What if you want to add your own help text, you could simply done it in project level module like this : 
+```js
+// In custom-code-editor/index.js :
+module.exports = {
+    ace : {
+        optionsTypes : [
+            {
+                name : "highlightActiveLine",
+                help : "This will highlight active line cursor position"
+            }
+        ]
+    }
+}
+```
+
+> NOTE : If you wish to add more options, take a look at `aceTypes.js` in `node_modules/custom-code-editor/aceTypes.js` to see how it is done.
 
 # Browser
 
