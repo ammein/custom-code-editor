@@ -408,7 +408,21 @@ module.exports = {
 
 > NOTE : If you wish to add more options, take a look at `aceTypes.js` in `node_modules/custom-code-editor/aceTypes.js` to see how it is done.
 
-## 
+## Remove Options
+You wish to remove options customizer ? You don't like it ? Don't worry, just set it to `enable : false` like this :
+```js
+// In custom-code-editor/index.js :
+module.exports = {
+    ace : {
+        config : {
+            optionsCustomizer : {
+                enable : false
+                // More configuration coming soon
+            }
+        }
+    }
+}
+```
 
 # Browser
 

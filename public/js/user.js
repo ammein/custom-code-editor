@@ -18,6 +18,214 @@ apos.define('custom-code-editor', {
             })
         }
 
+        self.aceOptionsUI = function (object, type, editor, $fieldSet) {
+            var lists = document.createElement("li");
+            switch (type) {
+                case "slider":
+                    (function () {
+                        var label = document.createElement("label");
+                        var output = document.createElement("span");
+                        output.classList.add("range-slider__value");
+                        var forLabel = apos.utils.cssName(object.name).replace(/-/g, " ");
+                        var category = apos.utils.cssName(object.category).replace(/-/g, " ");
+
+                        label.innerHTML = forLabel + " :";
+                        label.setAttribute("for", object.name);
+                        var input = document.createElement("input");
+                        $(label).css("text-transform", "capitalize");
+                        $(input).addClass("range-slider__range");
+                        input.name = object.name;
+                        input.type = "range";
+                        input.max = object.value.max;
+                        input.min = object.value.min;
+                        input.step = object.value.steps;
+                        output.style.display = "none";
+
+                        // Set the value
+                        if (object.saveValue !== undefined) {
+                            input.value = object.saveValue;
+                            editor.setOption(object.name, object.saveValue);
+                        } else if (object.saveValue === undefined) {
+                            (editor.getOptions()[object.name]) ? input.value = editor.getOptions()[object.name] : input.value = 0;
+                        }
+
+                        // Save to cache
+                        self.cache = self.cache.concat({ [object.name]: (object.saveValue !== undefined) ? object.saveValue : editor.getOptions()[object.name] })
+
+                        input.addEventListener('input', function () {
+                            this.nextElementSibling.style.display = "inline";
+                            this.nextElementSibling.innerHTML = this.value;
+                        });
+                        input.addEventListener("change", function () {
+                            input.setAttribute("value", this.value);
+                            editor.setOption(object.name, this.value);
+                        })
+
+                        lists.id = object.name;
+                        $(lists).addClass("lists-inputs");
+                        lists.setAttribute("data-category", category);
+                        lists.appendChild(label);
+                        lists.appendChild(input);
+                        lists.appendChild(output);
+
+                        // Help Text
+                        if (object.help) {
+                            var help = document.createElement("span");
+                            help.innerHTML = object.help;
+                            help.style.fontSize = "12px";
+                            help.style.fontStyle = "italic";
+                            lists.appendChild(help);
+                        }
+
+                    })()
+                    break;
+                case "dropdownArray":
+                    (function () {
+                        var label = document.createElement("label");
+                        var forLabel = apos.utils.cssName(object.name).replace("-", " ");
+                        var category = apos.utils.cssName(object.category).replace(/-/g, " ");
+                        label.innerHTML = forLabel + " :";
+                        label.setAttribute("for", object.name);
+                        $(label).css("text-transform", "capitalize");
+                        var select = document.createElement("select");
+                        select.name = object.name;
+                        object.value.forEach(function (value, i, arr) {
+                            var options = document.createElement("option");
+                            options.value = value;
+                            options.textContent = value;
+
+                            // Set the value
+                            if (object.saveValue === value) {
+                                options.selected = true;
+                                editor.setOption(object.name, object.saveValue);
+                            } else if (object.saveValue === undefined) {
+                                (editor.getOptions()[object.name] === value) ? options.selected = true : null;
+                            }
+                            select.appendChild(options);
+                        })
+
+                        // Save to cache
+                        self.cache = self.cache.concat({ [object.name]: (object.saveValue !== undefined) ? object.saveValue : editor.getOptions()[object.name] })
+
+                        select.addEventListener("change", function () {
+                            editor.setOption(object.name, this.value);
+                        })
+                        lists.id = object.name;
+                        $(lists).addClass("lists-inputs");
+                        lists.setAttribute("data-category", category);
+                        lists.appendChild(label);
+                        lists.appendChild(select);
+
+                        // Help Text
+                        if (object.help) {
+                            var help = document.createElement("span");
+                            help.innerHTML = object.help;
+                            help.style.fontSize = "12px";
+                            help.style.fontStyle = "italic";
+                            lists.appendChild(help);
+                        }
+                    })();
+                    break;
+                case "dropdownObject":
+                    (function () {
+                        var label = document.createElement("label");
+                        var forLabel = apos.utils.cssName(object.name).replace("-", " ");
+                        var category = apos.utils.cssName(object.category).replace(/-/g, " ");
+                        label.innerHTML = forLabel + " :";
+                        label.setAttribute("for", object.name);
+                        $(label).css("text-transform", "capitalize");
+                        var select = document.createElement("select");
+                        select.name = object.name;
+                        select.value = object.value;
+                        object.value.forEach(function (value, i, arr) {
+                            var options = document.createElement("option");
+                            options.value = value.value;
+                            options.textContent = value.title;
+
+                            // Set the value
+                            if (object.saveValue === value.value) {
+                                options.selected = true;
+                                editor.setOption(object.name, object.saveValue)
+                            } else if (object.saveValue === undefined) {
+                                (editor.getOptions()[object.name] === value.value) ? options.selected = true : null;
+                            }
+
+                            select.appendChild(options);
+                        });
+
+                        // Save to cache
+                        self.cache = self.cache.concat({ [object.name]: (object.saveValue !== undefined) ? object.saveValue : editor.getOptions()[object.name] })
+
+                        select.addEventListener("change", function () {
+                            var value = (this.value === "true" || this.value === "false") ? JSON.parse(this.value) : this.value;
+                            editor.setOption(object.name, value);
+                        })
+                        lists.id = object.name;
+                        $(lists).addClass("lists-inputs");
+                        lists.setAttribute("data-category", category);
+                        lists.appendChild(label);
+                        lists.appendChild(select);
+
+                        // Help Text
+                        if (object.help) {
+                            var help = document.createElement("span");
+                            help.innerHTML = object.help;
+                            help.style.fontSize = "12px";
+                            help.style.fontStyle = "italic";
+                            lists.appendChild(help);
+                        }
+                    })();
+                    break;
+                case "checkbox":
+                    (function () {
+                        var label = document.createElement("label");
+                        var forLabel = apos.utils.cssName(object.name).replace(/-/g, " ");
+                        var category = apos.utils.cssName(object.category).replace(/-/g, " ");
+                        label.innerHTML = forLabel + " :";
+                        label.setAttribute("for", object.name);
+                        $(label).css("text-transform", "capitalize");
+                        var input = document.createElement("input");
+                        input.name = object.name;
+                        input.type = "checkbox";
+
+                        // Set the value
+                        if (object.saveValue !== undefined) {
+                            input.checked = object.saveValue;
+                            editor.setOption(object.name, object.saveValue);
+                        } else if (object.saveValue === undefined) {
+                            editor.getOptions()[object.name] ? input.checked = editor.getOptions()[object.name] : null;
+                        }
+
+                        // Save to cache
+                        self.cache = self.cache.concat({ [object.name]: (object.saveValue !== undefined) ? object.saveValue : editor.getOptions()[object.name] ? true : false })
+
+                        $(input).addClass("error");
+                        input.addEventListener("change", function () {
+                            if (this.checked) {
+                                editor.setOption(object.name, true);
+                            } else {
+                                editor.setOption(object.name, false);
+                            }
+                        })
+                        lists.id = object.name;
+                        $(lists).addClass("lists-inputs");
+                        lists.setAttribute("data-category", category);
+                        lists.appendChild(label);
+                        lists.appendChild(input);
+
+                        // Help Text
+                        if (object.help) {
+                            var help = document.createElement("span");
+                            help.innerHTML = object.help;
+                            help.style.fontSize = "12px";
+                            help.style.fontStyle = "italic";
+                            lists.appendChild(help);
+                        }
+                    })();
+            }
+            return lists;
+        }
+
         self.isArray = function(item){
             if(!item){
                 return false;
@@ -316,25 +524,366 @@ apos.define('custom-code-editor', {
                 })
             }
 
-            // Fix Wrong Tooltip offset position for apostrophe modal
-            // $($fieldSet.find("#editor")).mousemove(function(event){
+            // OPTIONS CUSTOMIZER BEGINS
+            var optionsContainer = $fieldSet.find(".options-container");
+            var optionsInner = $fieldSet.find(".options-inner");
+            var unorderedLists = document.createElement("ul");
+            var buttonOptions = $fieldSet.find("#buttonOptions");
+            var moreOptions = $fieldSet.find(".press-more-options");
+            var optionsCustomizer = self.has(self.ace.config, "optionsCustomizer.enable") ? self.ace.config.optionsCustomizer.enable : true;
 
-            //     y = event.pageY;
-            //     x = event.pageX;
+            // If optionsCustomizer is enabled
+            if (optionsCustomizer) {
 
-            //     ace.require('ace/tooltip').Tooltip.prototype.setPosition = function () {
+                // Toggle Options Container
+                $(buttonOptions).click(function (e) {
+                    $(optionsContainer).toggleClass("show");
+                })
 
-            //         var _ace = this;
+                $(optionsContainer).on({
+                    scroll: function (e) {
+                        if ($(moreOptions).find(".more-options").hasClass("show")) {
+                            $(moreOptions).find(".more-options").removeClass("show");
+                        }
+                    },
+                    click: function (e) {
+                        if (e.target !== moreOptions.get(0) && $(moreOptions).find(".more-options").hasClass("show")) {
+                            $(moreOptions).find(".more-options").removeClass("show");
+                        }
+                    }
+                })
 
-            //          _ace.getElement().style.left = x + (self.ace.config.tooltip.offsetX) ? self.ace.config.tooltip.offsetX : 0 + "px";
-            //          _ace.getElement().style.top = y + (self.ace.config.tooltip.offsetY) ? self.ace.config.tooltip.offsetY : 0 + "px";
+                // Toggle More Options
+                $(moreOptions).click(function (e) {
+                    $(moreOptions).find(".more-options").toggleClass("show");
+                })
 
-            //         // To make it default to the parentNode (Ace Editor Container)
-            //         // y -= $(this.$parentNode).offset().top;
-            //         // x -= $(this.$parentNode).offset().left;
-            //     };
+                // When editor is on focus
+                editor.on("focus", function () {
+                    // Remove Options Container if options container is on show class
+                    if ($(optionsContainer).hasClass("show")) {
+                        $(optionsContainer.removeClass("show"));
+                    }
+                })
 
-            // });
+                // Make cache for set all default options at initialization
+                self.cache = [];
+
+                $.get("/modules/" + self.name + '/options', null, function (result) {
+                    if (result.status === "success" && Object.keys(result.message).length > 0) {
+                        return loopOptions(JSON.parse(result.message));
+                    }
+                    // Always return empty object to avoid catastrophe crashed
+                    return loopOptions({});
+                })
+
+                var originalOptions;
+
+                function loopOptions(myOptions) {
+                    // Loop over existing ace options and filter with our options
+                    originalOptions = editor.getOptions();
+                    for (let key of Object.keys(editor.getOptions())) {
+                        if (editor.getOptions().hasOwnProperty(key)) {
+                            let editorOptions = editor.getOptions()[key];
+
+                            // Match name of optionsTypes, build the field
+                            // But filter on each type of value
+                            var optionsTypes = self.ace.optionsTypes;
+
+                            if (optionsTypes[key] && optionsTypes[key].name === key) {
+                                switch (true) {
+                                    case self.isArray(optionsTypes[key].value):
+                                        optionsTypes[key] = myOptions[key] !== undefined ? Object.assign(optionsTypes[key], { saveValue: myOptions[key] }) : optionsTypes[key];
+
+                                        unorderedLists.appendChild(self.aceOptionsUI(optionsTypes[key], "dropdownArray", editor, $fieldSet));
+                                        break;
+                                    case self.isObject(optionsTypes[key].value):
+                                        optionsTypes[key] = myOptions[key] !== undefined ? Object.assign(optionsTypes[key], { saveValue: myOptions[key] }) : optionsTypes[key];
+
+                                        unorderedLists.appendChild(self.aceOptionsUI(optionsTypes[key], "slider", editor, $fieldSet));
+                                        break;
+                                    case self.isArrayOfObject(optionsTypes[key].value):
+                                        optionsTypes[key] = myOptions[key] !== undefined ? Object.assign(optionsTypes[key], { saveValue: myOptions[key] }) : optionsTypes[key];
+
+                                        unorderedLists.appendChild(self.aceOptionsUI(optionsTypes[key], "dropdownObject", editor, $fieldSet));
+                                        break;
+                                    case optionsTypes[key].type === "boolean":
+                                        optionsTypes[key] = myOptions[key] !== undefined ? Object.assign(optionsTypes[key], { saveValue: myOptions[key] }) : optionsTypes[key];
+
+                                        unorderedLists.appendChild(self.aceOptionsUI(optionsTypes[key], "checkbox", editor, $fieldSet));
+                                }
+                            }
+                        }
+                    }
+
+                    optionsInner.append(unorderedLists);
+
+                    var title = true;
+
+                    // Add Category
+                    var lists = unorderedLists.childElementCount;
+                    var inc = 0;
+                    for (var i = 0; i < lists; i++) {
+                        var h1 = document.createElement("h1");
+                        var li = document.createElement("li");
+                        $(h1).addClass("category");
+                        var category = unorderedLists.children[inc].dataset.category;
+                        if (unorderedLists.children[inc - 1] && unorderedLists.children[inc - 1].dataset.category !== category) {
+                            title = true;
+
+                            // Last children will put more space before header (Follows UI format)
+                            unorderedLists.children[inc - 1].style.marginBottom = "28px";
+                        }
+
+                        if (title) {
+                            h1.innerHTML = " " + category + " Options";
+                            li.setAttribute("data-category", category);
+                            li.id = apos.utils.camelName(category);
+                            $(li).css("cursor", "pointer");
+                            li.appendChild(h1);
+                            $(h1).addClass("uncollapse");
+                            li.dataset.header = category;
+                            unorderedLists.insertBefore(li, unorderedLists.children[inc]);
+
+                            // Increment the number by 1 because we prepend the new DOM to the lists
+                            inc++;
+
+                            // Set title to false
+                            title = false
+                        }
+
+                        // Normal increment
+                        inc++;
+                    }
+
+                    // Initialize Clipboardjs
+                    new ClipboardJS('.copy-options');
+                    // copy/reset/save options onclick
+                    $fieldSet.find("#copyOptions, #undoOptions, #saveOptions, #deleteOptions").on("click", function () {
+                        var button = this;
+                        var allCopy = {};
+                        optionsInner.find("li:not([data-header])").each(function (i, value) {
+                            var key = Object.keys(self.cache[i])[0];
+                            var cacheValue = self.cache[i];
+                            var input = value.querySelector("[name='" + value.id + "']");
+
+
+                            // Detect changes by comparing all cache with incoming list arrays.
+                            // This will be useful and only executes if it not matches the cache value
+                            switch (true) {
+                                case (/select/g).test(input.type) && cacheValue[input.name] !== undefined:
+                                    if (button.id === "deleteOptions") {
+                                        // Reset the cache first, then run checking
+                                        cacheValue[input.name] = originalOptions[input.name];
+                                    }
+
+                                    // Transform the value
+                                    var value = (input.options[input.selectedIndex].value === "true" || input.options[input.selectedIndex].value === "false") ? JSON.parse(input.options[input.selectedIndex].value) : input.options[input.selectedIndex].value;
+
+                                    if (value !== cacheValue[input.name]) {
+                                        if (button.id === "copyOptions" || button.id === "saveOptions") {
+                                            allCopy[input.name] = input.options[input.selectedIndex].value;
+                                        }
+                                        else if (button.id === "undoOptions") {
+                                            // Revert to default value
+                                            input.value = cacheValue[input.name];
+
+                                            // And reset options on editor
+                                            editor.setOption(input.name, cacheValue[input.name]);
+                                        }
+                                        else if (button.id === "deleteOptions") {
+                                            // Revert to default value based on module options
+                                            input.value = originalOptions[input.name];
+
+                                            // And reset options on editor
+                                            editor.setOption(input.name, originalOptions[input.name]);
+                                        }
+                                    }
+                                    break;
+
+                                case (/range/g).test(input.type):
+                                    if (button.id === "deleteOptions") {
+                                        // Reset the cache first, then run checking
+                                        cacheValue[input.name] = originalOptions[input.name];
+                                    }
+
+                                    if (
+                                        parseFloat(input.value) !== cacheValue[input.name] &&
+                                        input.getAttribute("value") !== null
+                                    ) {
+                                        if (button.id === "copyOptions" || button.id === "saveOptions") {
+                                            allCopy[input.name] = parseFloat(input.value);
+                                        }
+                                        else if (button.id === "undoOptions") {
+                                            // Revert to default value
+                                            input.value = cacheValue[input.name];
+
+                                            // Display none on span value
+                                            input.nextElementSibling.style.display = "none";
+
+                                            // And reset options on editor
+                                            editor.setOption(input.name, cacheValue[input.name]);
+
+                                            // Remove the attribute as default
+                                            input.removeAttribute("value");
+                                        }
+                                        else if (button.id === "deleteOptions") {
+                                            // Revert to default value based on module options
+                                            input.value = originalOptions[input.name];
+
+                                            // Display none on span value
+                                            input.nextElementSibling.style.display = "none";
+
+                                            // And reset options on editor
+                                            editor.setOption(input.name, originalOptions[input.name]);
+
+                                            // Remove the attribute as default
+                                            input.removeAttribute("value");
+                                        }
+                                    }
+                                    break;
+
+                                case (/checkbox/g).test(input.type):
+                                    if (button.id === "deleteOptions") {
+                                        // Reset the cache first, then run checking
+                                        cacheValue[input.name] = originalOptions[input.name] === undefined ? false : originalOptions[input.name];
+                                    }
+
+                                    if (input.checked !== cacheValue[input.name]) {
+                                        if (button.id === "copyOptions" || button.id === "saveOptions") {
+                                            allCopy[input.name] = input.checked
+                                        } else if (button.id === "undoOptions") {
+                                            // Revert to default value
+                                            input.checked = cacheValue[input.name];
+
+                                            // And reset options on editor
+                                            editor.setOption(input.name, cacheValue[input.name]);
+                                        } else if (button.id === "deleteOptions") {
+                                            // Revert to default value based on module options
+                                            input.checked = originalOptions[input.name];
+
+                                            // And reset options on editor
+                                            editor.setOption(input.name, originalOptions[input.name]);
+                                        }
+                                    }
+                                    break;
+                            }
+                        })
+
+                        if (button.id === "copyOptions") {
+                            // Merge allCopy options
+                            if (Object.keys(myOptions).length > 0) {
+                                allCopy = Object.assign(myOptions, allCopy);
+
+                                // Loop and find if existing default saved options detected matches module options
+                                for (let key of Object.keys(originalOptions)) {
+                                    if (originalOptions.hasOwnProperty(key)) {
+
+                                        // Only allow non-module options to be copy
+                                        if (originalOptions[key] === allCopy[key]) {
+                                            delete allCopy[key];
+                                        }
+                                    }
+                                }
+                            }
+
+                            // Will use clipboard.js, much more functional to all browsers
+                            button.dataset.clipboardText = JSON.stringify(allCopy);
+
+                            // Click again to copy the dataset
+                            button.click();
+                        } else if (button.id === "saveOptions") {
+                            if (Object.keys(allCopy).length > 0) {
+                                self.api('submit', {
+                                    [apos.utils.camelName(self.name)]: allCopy
+                                }, function (result) {
+                                    if (result.status === "success") {
+                                        apos.notify("Options successfully Saved", {
+                                            type: "success",
+                                            dismiss: 2
+                                        });
+                                    } else {
+                                        apos.notify("ERROR : " + result.message, {
+                                            type: "error",
+                                            dismiss: 2
+                                        });
+                                    }
+                                })
+                            } else {
+                                apos.notify("ERROR : Save unsuccessful, options empty. Try adjust your desire options than your default settings.", {
+                                    type: "error",
+                                    dismiss: 10
+                                })
+                            }
+                        } else if (button.id === "deleteOptions") {
+                            $.ajax({
+                                url: '/modules/' + self.name + "/remove",
+                                type: "DELETE",
+                                success: function (result) {
+                                    if (result.status === "success") {
+                                        apos.notify("Saved options successfully removed", {
+                                            type: "success",
+                                            dismiss: 2
+                                        });
+                                    } else {
+                                        apos.notify("ERROR : " + result.message, {
+                                            type: "error",
+                                            dismiss: 10
+                                        });
+                                    }
+                                }
+                            })
+
+                            // Set myOptions to be empty too
+                            myOptions = {}
+                        }
+
+                    })
+
+                    // Toggle Header
+                    optionsInner.find("[data-header]").on("click", function () {
+                        var header = this;
+
+                        // get all related categories
+                        var nextSiblings = $(header).nextUntil(`li:not([data-category="${header.dataset.category}"])`);
+
+                        if ($(header).find("h1").hasClass("uncollapse")) {
+                            $(header).find("h1").removeClass("uncollapse");
+                            $(header).find("h1").addClass("collapse");
+                            $(header).find("h1").css("margin-bottom", 0);
+                            nextSiblings.css("display", "none");
+                        } else {
+                            $(header).find("h1").removeClass("collapse");
+                            $(header).find("h1").addClass("uncollapse");
+                            $(header).find("h1").css("margin-bottom", "");
+                            nextSiblings.css("display", "");
+                        }
+                    })
+
+                    // Find lists
+                    $($fieldSet.find("#myOptions")).on("keyup", function () {
+                        var input, filter, ul, myLists, i;
+                        input = $fieldSet.find("#myOptions");
+                        filter = $(input).val().toUpperCase();
+                        ul = $fieldSet.find(optionsInner).find("ul");
+                        header = ul.find("li[data-header]");
+                        myLists = ul.find("li");
+                        for (i = 0; i < myLists.length; i++)(function (i) {
+                            txtValue = $(myLists.get(i)).text();
+
+                            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                $(myLists.get(i)).css("display", "");
+
+                                // Searching for any header that same as category. Remain display
+                                $(myLists.get(i)).prevAll(`[data-header="${myLists.get(i).dataset.category}"]`).css("display", "");
+                            } else {
+                                $(myLists.get(i)).css("display", "none");
+                            }
+                        }(i));
+                    })
+                }
+            }
+
 
             // if got object
             if (object[name]) {
