@@ -534,7 +534,7 @@ apos.define('custom-code-editor', {
             var unorderedLists = document.createElement("ul");
             var buttonOptions = $fieldSet.find("#buttonOptions");
             var moreOptions = $fieldSet.find(".press-more-options");
-            var optionsCustomizer = self.has(self.ace.config, "optionsCustomizer.enable") ? self.ace.config.optionsCustomizer.enable : true;
+            var optionsCustomizer = self.has(self.ace.config, "optionsCustomizer") ? self.ace.config.optionsCustomizer.enable : true;
 
             $(buttonOptions).css("display" , "none");
 

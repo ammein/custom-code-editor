@@ -676,6 +676,9 @@ Simple , you can access it via `self.ace` or `_this.ace`
 
 # Changelog
 
+## 3.0.1
+- Button Options display issue.
+
 ### 3.0.0
 - New feature released, Options Customizer. Also change a bit stylish UI for user friendly.
 
