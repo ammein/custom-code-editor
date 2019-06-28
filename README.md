@@ -318,7 +318,7 @@ Ace got it owns search bar. Simply hit `Ctrl + F` !
 
 ![Search Function](https://media.giphy.com/media/dQlgFYEG6CbgoHWdHw/giphy.gif)
 
-### ***NEW FEATURE (Save Selection)
+### Save Selection
 Now this one is a new function ONLY for ApostropheCMS . If you hit `Ctrl + Shift + S` while selecting new code, it will replace an existing highlighted text previously when you change your mode. Don't believe me ? Check it out !
 
 ![Save Feature](https://media.giphy.com/media/4EFt3QBgKu1NG5oz5a/giphy.gif)
