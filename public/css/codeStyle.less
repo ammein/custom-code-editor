@@ -28,19 +28,24 @@
     height: 100%;
     top: 0;
 
+    .search-area{
+      display : flex;
+    }
+
     // Searchbar for options
     #myOptions{
       border: 20px;
       padding: 15px;
       background-color: #efefef;
       font-size: inherit;
-      width: 192px;
+      width: 177px;
       border-radius: 5px;
       height: 49px;
     }
 
     .lists-inputs{
       margin-bottom : 20px;
+      margin-left: 19px;
     }
 
     .collapse:before{
@@ -58,14 +63,18 @@
     .press-more-options{
       margin: 0 0 0 14px;
       border-radius: 50%;
-      background-color : #F8F8F8;
+      background-color: #F8F8F8;
+      height: 46px;
+      text-align: center;
+      padding: 15px 20px 20px 20px;
+      cursor: pointer;
 
       &:hover{
-        background-color : rgba(248, 248, 248, 0.822);
+        background-color : rgb(216, 216, 216);
       }
 
       &:active{
-        background-color :rgba(248, 248, 248, 0.603);
+        background-color :rgb(179, 179, 179);
       }
 
       &::before{
@@ -127,6 +136,11 @@
       font-size : 14px;
       width : 100%;
       background-color : white;
+      cursor : pointer;
+
+      &:hover{
+        background-color : rgb(170, 170, 170);
+      }
 
       &:before {
         // content: @fa-var-remove;
@@ -141,6 +155,11 @@
       font-size : 14px;
       width : 100%;
       background-color : white;
+      cursor : pointer;
+
+      &:hover{
+        background-color : rgb(170, 170, 170);
+      }
 
       &:before{
         // content: @fa-var-save;
