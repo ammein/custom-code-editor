@@ -536,8 +536,12 @@ apos.define('custom-code-editor', {
             var moreOptions = $fieldSet.find(".press-more-options");
             var optionsCustomizer = self.has(self.ace.config, "optionsCustomizer.enable") ? self.ace.config.optionsCustomizer.enable : true;
 
+            $(buttonOptions).css("display" , "none");
+
             // If optionsCustomizer is enabled
             if (optionsCustomizer) {
+
+                $(buttonOptions).css("display", "");
 
                 // Toggle Options Container
                 $(buttonOptions).click(function (e) {
