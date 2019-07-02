@@ -339,12 +339,12 @@ ace : {
 # New Custom-Code-Editor V3 (Options Customizer)
 Have you ever wonder that you are tired of testing options by restarting the app and adjust your options all over again ? 
 
-Say no more ! Introducing new options customizer ! 
+Say no more ! Introducing new **Options Customizer** ! 
 
 ![Options Customizer](https://media.giphy.com/media/JT1C49z4ghRFIvKPx1/giphy.gif)
 
 ### What does it do ?
-It brings you more features that you can't live without ! All options available for you to modify are now can be saves to each logged in user or even you could copy all the desired options and paste it to your project level module ! Here are four core features for Options Customizer :
+It brings you more features that you can't live without ! All options available for you to modify are now can be save to each logged in user or even you could copy all the desired options and paste it to your project level module ! Here are four core features for Options Customizer :
 - Copy Options
 - Undo Options
 - Save Options
@@ -353,7 +353,7 @@ It brings you more features that you can't live without ! All options available 
 > These options will make your editor change live upon options modified.
 
 ## Copy Options
-You can copy your changes options and paste it on your project level module that will apply to all ! The copy features uses [Clipboard JS](https://clipboardjs.com/) to make it work. Below are the demonstration on how to use it :
+You can copy your modified options and paste it on your project level module that will apply to all ! The copy features uses [Clipboard JS](https://clipboardjs.com/) to make it work. Below are the demonstration on how to use it :
 
 ![Copy Options](https://media.giphy.com/media/MaNmlXtVdItUCXRR17/giphy.gif)
 
@@ -361,7 +361,7 @@ You can copy your changes options and paste it on your project level module that
 > NOTE : It only copies from modified changes, not on its entire options. If your module options are already configured, it will not copy your module options. Instead, it will copy all your changes options that you did on On/Off Toggle(s), Select Input(s) and Range Input(s).
 
 ## Undo Options
-You can undo your modified options to default settings. This will help you to reset your changes from all your modified options.
+You can undo your modified options to default settings. This will help you reset your changes to default options.
 
 ![Undo Options](https://media.giphy.com/media/KbpWScHGzbpGfTAUTN/giphy.gif)
 
@@ -370,7 +370,7 @@ You can undo your modified options to default settings. This will help you to re
 
 
 ## Save Options
-You can also saves all your changes options. This will keep all your modified options applied to all custom-code-editor types !
+You can also saves all your modified options. This will keep all your modified options apply to all custom-code-editor types !
 
 ![Save Options](https://media.giphy.com/media/dsvKmzLZID4CyrRNWu/giphy.gif)
 
@@ -384,7 +384,7 @@ In MongoDB, you will see this data directly on `type : apostrophe-user` :
 > NOTE : Save options will not apply to all users. It will load current users saves options and apply it to all editors. This will brings each types of users to their own desired options.
 
 ## Reset Options
-You can also reset all options. This will remove current saves options and changes it to default module options settings. Let say you have follows save options demonstration above, you simply click `Reset` like example below :
+You can also reset all options. This will remove current saves options and change it to default module options settings. Let say you have follows save options demonstration above, you simply click `Reset` like example below :
 
 ![Reset Options](https://media.giphy.com/media/RhYUiFiT5xoxM8cvIj/giphy.gif)
 
@@ -425,7 +425,7 @@ module.exports = {
 ```
 
 ### Why some other options are missing ?
-Well, some other options will breaks apostrophe's UI and also against the rule of pushing assets. For instance, we cannot set other themes via options customizer because we will only push desired theme configuration from your project level module. This is because Ace contains more than 10 js files for each modes and themes available.
+Well, some other options will break apostrophe's UI and also against the rule of pushing assets. For instance, we cannot set other themes via Options Customizer because we will only push desired theme configuration from your project level module. This is because Ace contains more than 10 js files for each modes and themes available.
 
 # Browser
 
@@ -676,7 +676,11 @@ Simple , you can access it via `self.ace` or `_this.ace`
 
 # Changelog
 
-## 3.0.1
+### 3.0.2
+- Fix README and typos.
+- Bug Fixes.
+
+### 3.0.1
 - Button Options display issue.
 
 ### 3.0.0

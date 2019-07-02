@@ -696,6 +696,9 @@ apos.define('custom-code-editor', {
                                             // Revert to default value
                                             input.value = cacheValue[input.name];
 
+                                            // Delete assigned myOptions
+                                            delete myOptions[key];
+
                                             // And reset options on editor
                                             editor.setOption(input.name, cacheValue[input.name]);
                                         }
@@ -728,6 +731,9 @@ apos.define('custom-code-editor', {
 
                                             // Display none on span value
                                             input.nextElementSibling.style.display = "none";
+
+                                            // Delete assigned myOptions
+                                            delete myOptions[key];
 
                                             // And reset options on editor
                                             editor.setOption(input.name, cacheValue[input.name]);
@@ -763,6 +769,9 @@ apos.define('custom-code-editor', {
                                         } else if (button.id === "undoOptions") {
                                             // Revert to default value
                                             input.checked = cacheValue[input.name];
+
+                                            // Delete assigned myOptions
+                                            delete myOptions[key];
 
                                             // And reset options on editor
                                             editor.setOption(input.name, cacheValue[input.name]);
@@ -829,6 +838,18 @@ apos.define('custom-code-editor', {
                                 type: "DELETE",
                                 success: function (result) {
                                     if (result.status === "success") {
+                                        // Set myOptions to be empty too
+                                        myOptions = {}
+
+                                        // Loop the optionsTypes, if there is `saveValue` assigned to it, delete it
+                                        for(let key of Object.keys(self.ace.optionsTypes)){
+                                            if(self.ace.optionsTypes.hasOwnProperty(key)){
+                                                if(self.ace.optionsTypes[key].saveValue !== undefined){
+                                                    delete self.ace.optionsTypes[key].saveValue;
+                                                }
+                                            }
+                                        }
+
                                         apos.notify("Saved options successfully removed", {
                                             type: "success",
                                             dismiss: 2
@@ -841,11 +862,7 @@ apos.define('custom-code-editor', {
                                     }
                                 }
                             })
-
-                            // Set myOptions to be empty too
-                            myOptions = {}
                         }
-
                     })
 
                     // Toggle Header

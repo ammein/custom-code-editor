@@ -1,3 +1,7 @@
+### 3.0.2
+- Fix README and typos.
+- Bug Fixes.
+
 ## 3.0.1
 - Button Options display issue.
 
