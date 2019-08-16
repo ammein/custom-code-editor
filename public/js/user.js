@@ -305,6 +305,7 @@ apos.define('custom-code-editor', {
                     optionsTypes: self.ace.optionsTypes
                 })
             } else {
+                // Safely apply clone options from project level module even there is no field options configure
                 self.ace = self.cloneAce;
             }
 

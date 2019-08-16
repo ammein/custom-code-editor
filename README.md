@@ -312,6 +312,26 @@ ace : {
 
 > Because we have a css issue on `!important` to override apostrophe css default normalize. So I did it for you to easily override it on `config` options. Or maybe you can push your own file to override it. Either way , both are possible override options :)
 
+# Specific Field Customization
+Well, I know some of you don't want some specific editor to be in the same options to all custom-code-editor field type, right ? To make it backward compatibility, only some of the options can be overridden on your schema fields. Here is an example :
+
+```javascript
+addFields : [
+    {
+        type : 'custom-code-editor',
+        name : 'mycode',
+        label : 'Paste your code here',
+        ace : {
+            defaultMode : "html"
+            config : {
+                // All config options here
+            }
+        }
+    }
+]
+```
+> Why `modes` and `theme` are not available to override ? This will against the rule optimizing push asset feature that only project level options module by your own defined modes and theme get push to browser. This is because Ace JS contains 10 and more JS files available to use. All `options` values must be configure in project level module `index.js` or directly on `app.js` in `modules: {}`
+
 # How To
 ### Search Bar
 Ace got it owns search bar. Simply hit `Ctrl + F` ! 
