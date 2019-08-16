@@ -1,3 +1,6 @@
+### 3.1.2
+- Using _.assign() to assign existing config options
+
 ### 3.1.1
 - New feature, specific field customization available to override
 
