@@ -10,6 +10,8 @@ apos.define('custom-code-editor', {
 
         self.ace = options.ace;
 
+        self.cloneAce = _.cloneDeep(self.ace);
+
         self.addFieldCodeType = function () {
             apos.schemas.addFieldType({
                 name: self.name,
@@ -293,7 +295,8 @@ apos.define('custom-code-editor', {
 
             // Customize field options if any. Only allow some override options to be available
             if (self.has(field , "ace")) {
-                self.ace = _.defaults(self.ace , {
+                // Immutable Copies
+                self.ace = _.merge({} , {
                     modes: self.ace.modes,
                     theme: self.ace.theme,
                     defaultMode: field.ace.defaultMode.toLowerCase() || self.ace.defaultMode.toLowerCase(),
@@ -301,6 +304,8 @@ apos.define('custom-code-editor', {
                     options: self.ace.options,
                     optionsTypes: self.ace.optionsTypes
                 })
+            } else {
+                self.ace = self.cloneAce;
             }
 
             // Locate the element 
