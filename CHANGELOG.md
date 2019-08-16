@@ -1,5 +1,6 @@
 ### 3.1.2
 - Using _.assign() to assign existing config options
+- Make merge options to be able on undefined some property that are will not be use or override.
 
 ### 3.1.1
 - New feature, specific field customization available to override
