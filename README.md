@@ -332,22 +332,7 @@ addFields : [
 ```
 > Why `modes` and `theme` are not available to override ? This will against the rule optimizing push asset feature that only project level options module by your own defined modes and theme get push to browser. This is because Ace JS contains 10 and more JS files available to use. All `options` values must be configure in project level module `index.js` or directly on `app.js` in `modules: {}`
 
-### If you wish to set `config` to `undefined`, you may do so. This will disable all config from your project level module option
-```javascript
-addFields : [
-    {
-        type : 'custom-code-editor',
-        name : 'mycode',
-        label : 'Paste your code here',
-        ace : {
-            defaultMode : "html"
-            config : undefined
-        }
-    }
-]
-```
-
-> If you wish to disable some options, just set it to `null` on that property option. It will removed from your specific field option. For example :
+### If you wish to disable some options, just set it to `null` on that property option. It will removed from your specific field option. For example :
 ```javascript
 addFields : [
     {
@@ -364,6 +349,7 @@ addFields : [
 ]
 ```
 
+> Warning ! If you did not set any config value, config will not be available on specific field. To use existing config, simply set it as empty object `config : {}`
 
 # How To
 ### Search Bar
@@ -728,6 +714,9 @@ _this.has(myObject , "nested.anotherNested.getValue");
 Simple , you can access it via `self.ace` or `_this.ace`
 
 # Changelog
+
+### 3.1.4
+- Adjust Readme to use proper configuration
 
 ### 3.1.3
 - Using _.assign() to assign existing config options
