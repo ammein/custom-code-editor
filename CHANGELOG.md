@@ -1,4 +1,4 @@
-### 3.1.2
+### 3.1.3
 - Using _.assign() to assign existing config options
 - Make merge options to be able on undefined some property that are will not be use or override.
 
