@@ -301,7 +301,7 @@ apos.define('custom-code-editor', {
                     theme: self.ace.theme,
                     defaultMode: self.has(field.ace, "defaultMode") ? field.ace.defaultMode.toLowerCase() : self.ace.defaultMode.toLowerCase(),
                     // Let the devs to set undefined on config property if any, else just override it
-                    config: _.assign(field.ace.config === undefined && Object.keys(field.ace.config).length !== 0 ? undefined : {}, self.ace.config, field.ace.config),
+                    config: _.assign(field.ace.config === undefined ? undefined : {}, self.ace.config, field.ace.config),
                     options: self.ace.options,
                     optionsTypes: self.ace.optionsTypes
                 })

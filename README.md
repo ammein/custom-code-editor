@@ -347,7 +347,7 @@ addFields : [
 ]
 ```
 
-> Although, you will override other options in config but mostly will be merge from your project level module. So, if you wish to disable some options, just set it to `undefined` on that property option. It will removed from your specific field option. For example :
+> If you wish to disable some options, just set it to `null` on that property option. It will removed from your specific field option. For example :
 ```javascript
 addFields : [
     {
@@ -357,7 +357,7 @@ addFields : [
         ace : {
             defaultMode : "html"
             config : {
-                saveCommand : undefined
+                saveCommand : null
             }
         }
     }
