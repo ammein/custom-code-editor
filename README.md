@@ -696,6 +696,9 @@ Simple , you can access it via `self.ace` or `_this.ace`
 
 # Changelog
 
+### 3.1.1
+- New feature, specific field customization available to override
+
 ### 3.0.2
 - Fix README and typos.
 - Bug Fixes.

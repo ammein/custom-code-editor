@@ -299,7 +299,7 @@ apos.define('custom-code-editor', {
                 self.ace = _.merge({} , {
                     modes: self.ace.modes,
                     theme: self.ace.theme,
-                    defaultMode: field.ace.defaultMode.toLowerCase() || self.ace.defaultMode.toLowerCase(),
+                    defaultMode: self.has(field.ace, "defaultMode") ? field.ace.defaultMode.toLowerCase() : self.ace.defaultMode.toLowerCase(),
                     config: field.ace.config,
                     options: self.ace.options,
                     optionsTypes: self.ace.optionsTypes
