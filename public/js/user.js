@@ -291,6 +291,18 @@ apos.define('custom-code-editor', {
                 return this.charAt(0).toUpperCase() + this.slice(1);
             }
 
+            // Customize field options if any. Only allow some override options to be available
+            if (self.has(field , "ace")) {
+                self.ace = _.defaults(self.ace , {
+                    modes: self.ace.modes,
+                    theme: self.ace.theme,
+                    defaultMode: field.ace.defaultMode.toLowerCase() || self.ace.defaultMode.toLowerCase(),
+                    config: field.ace.config,
+                    options: self.ace.options,
+                    optionsTypes: self.ace.optionsTypes
+                })
+            }
+
             // Locate the element 
             var $fieldSet = apos.schemas.findFieldset($el, name);
 
