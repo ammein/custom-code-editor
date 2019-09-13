@@ -4,7 +4,7 @@
   "description": "ApostropheCMS Code Schema Field",
   "main": "index.js",
   "scripts": {
-    "test": "/bin/bash tests/run-all || bash tests/run-all"
+    "test": "mocha tests/**/*.test.js"
   },
   "directories": {
     "lib": "lib"
@@ -14,7 +14,7 @@
     "url": "https://github.com/ammein/custom-code-editor.git"
   },
   "dependencies": {
-    "lodash": "^4.17.11"
+    "lodash": "^4.17.15"
   },
   "keywords": [
     "apostrophe",
@@ -30,10 +30,11 @@
   "author": "Amin Shazrin",
   "license": "ISC",
   "devDependencies": {
-    "apostrophe-nightwatch-tools": "^2.0.8",
-    "chromedriver": "^74.0.0",
-    "geckodriver": "^1.16.2",
-    "nightwatch": "^1.0.19",
-    "selenium-server": "^3.141.59"
+    "apostrophe": "^2.96.1",
+    "async": "^3.1.0",
+    "expect": "^24.9.0",
+    "mocha": "^6.2.0",
+    "nodemon": "^1.19.2",
+    "supertest": "^4.0.2"
   }
 }
