@@ -980,7 +980,7 @@ apos.define('custom-code-editor', {
                 type: editor.session.getMode().$id.match(/(?!(\/|\\))(?:\w)*$/g)[0]
             }
 
-            if (field.required && !(data[name]))
+            if (field.required && data[name])
                 return setImmediate(_.partial(callback, "required"));
 
             return setImmediate(callback);
