@@ -4,6 +4,7 @@ var fs = require("fs");
 const expect = require('expect');
 const request = require('supertest');
 const _ = require("lodash");
+const path = require("path")
 
 describe("Testing Field Type to work in all cases" , function(){
     var apos;
@@ -24,6 +25,7 @@ describe("Testing Field Type to work in all cases" , function(){
 
     it('should be a property of the apos object', function (done) {
         apos = require('apostrophe')({
+            root : module,
             testModule: true,
             baseUrl: 'http://localhost:7780',
             modules: {
@@ -31,7 +33,8 @@ describe("Testing Field Type to work in all cases" , function(){
                     port: 7780
                 },
                 // Technique for fieldType test, require the custom options and all constructs
-                'custom-code-editor': process.env.TRAVIS ? {} : require("custom-code-editor/tests/optionsTest.js")
+                // 'custom-code-editor': process.env.TRAVIS ? {} : require("custom-code-editor/tests/optionsTest.js")
+                'custom-code-editor': {}
             },
             afterInit: function (callback) {
                 assert(apos.schemas);
