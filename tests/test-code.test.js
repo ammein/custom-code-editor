@@ -31,7 +31,7 @@ describe("Testing Field Type to work in all cases" , function(){
                     port: 7780
                 },
                 // Technique for fieldType test, require the custom options and all constructs
-                'custom-code-editor': require("custom-code-editor/tests/optionsTest.js")
+                'custom-code-editor': process.env.TRAVIS ? {} : require("custom-code-editor/tests/optionsTest.js")
             },
             afterInit: function (callback) {
                 assert(apos.schemas);
