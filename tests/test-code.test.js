@@ -25,15 +25,15 @@ describe("Testing Field Type to work in all cases" , function(){
 
     it('should be a property of the apos object', function (done) {
         apos = require('apostrophe')({
-            root : module,
+            // Windows seems to have problem with symlinkSync created by Apostrophe,
+            // Therefore, make it run on current folder and creates all nessecary files on current directory to initialize
+            root : process.platform === "win32" && !process.env.TRAVIS ? module : undefined,
             testModule: true,
             baseUrl: 'http://localhost:7780',
             modules: {
                 'apostrophe-express': {
                     port: 7780
                 },
-                // Technique for fieldType test, require the custom options and all constructs
-                // 'custom-code-editor': process.env.TRAVIS ? {} : require("custom-code-editor/tests/optionsTest.js")
                 'custom-code-editor': {}
             },
             afterInit: function (callback) {
