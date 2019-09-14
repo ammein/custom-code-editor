@@ -1,10 +1,13 @@
 # Custom-Code-Editor ApostropheCMS Schema
-An ApostropheCMS Custom Schema for your own custom-code-editor field. 
 
-![Ace Editor Example](https://media.giphy.com/media/33F6GoBCalksXavQyN/giphy.gif)
+[![Build Status](https://travis-ci.org/ammein/custom-code-editor.svg?branch=master)](https://travis-ci.org/ammein/custom-code-editor)
+
+An ApostropheCMS Custom Schema for your own custom-code-editor field. 
 
 This schema uses Ace Editor library that you may found here [Ace Editor](https://ace.c9.io/)
 
+
+![Ace Editor Example](https://media.giphy.com/media/33F6GoBCalksXavQyN/giphy.gif)
 
 Falling in love with custom-code-editor module ? Send love ❤️ through Paypal here : <br>
 [Paypal.me/AminShazrin](https://paypal.me/AminShazrin?locale.x=en_US)
