@@ -1,12 +1,6 @@
 var assert = require("assert");
-var async = require("async");
-var fs = require("fs");
-const expect = require('expect');
-const request = require('supertest');
-const _ = require("lodash");
-const path = require("path")
 
-describe("Testing Field Type to work in all cases" , function(){
+describe("Custom Code Editor : Basic Schema Test" , function(){
     var apos;
 
     // Apostrophe took some time to load

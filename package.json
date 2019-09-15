@@ -4,7 +4,8 @@
   "description": "ApostropheCMS Code Schema Field",
   "main": "index.js",
   "scripts": {
-    "test": "mocha ./tests/**/*.test.js"
+    "test": "mocha ./tests/**/*.test.js",
+    "test-chrome": "mocha --inspect-brk ./tests/**/*.test.js"
   },
   "directories": {
     "lib": "lib"
