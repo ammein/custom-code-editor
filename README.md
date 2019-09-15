@@ -1,4 +1,7 @@
 # Custom-Code-Editor ApostropheCMS Schema
+
+[![Build Status](https://travis-ci.org/ammein/custom-code-editor.svg?branch=master)](https://travis-ci.org/ammein/custom-code-editor)
+
 An ApostropheCMS Custom Schema for your own custom-code-editor field. 
 
 This schema uses Ace Editor library that you may found here [Ace Editor](https://ace.c9.io/)
