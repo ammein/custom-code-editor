@@ -288,7 +288,8 @@ describe("Custom Code Editor : Override Options and Push Asset Test", function (
 
     it('should not push custom theme via browser options or any illegal options passing from project level module', function () {
         // Pass Custom Theme Hardcoded
-        var theme = new RegExp("theme-solarized_dark", "g")
+        apos.customCodeEditor.ace.theme = "solarized_dark"
+        var theme = new RegExp("theme-" + apos.customCodeEditor.ace.theme, "g")
         for (var i = apos.assets.pushed.scripts.length - 1; i >= 0; i--) {
             var web = apos.assets.pushed.scripts[i].web
             var file = apos.assets.pushed.scripts[i].file
