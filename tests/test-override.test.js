@@ -251,4 +251,57 @@ describe("Custom Code Editor : Override Options and Push Asset Test", function (
             }
         }
     });
+
+    it('should not push custom mode via browser options or any illegal options passing from project level module', function () {
+        // Push to all modes name to be expect
+        const expected = []
+        _.forEach(apos.customCodeEditor.ace.modes, function (value, i, arr) {
+            expected.push(new RegExp("mode-" + value.name, 'g'))
+        })
+
+        // Pass Custom Mode Hardcoded
+        expected.push(/mode-python/g)
+
+        for (var i = apos.assets.pushed.scripts.length - 1; i >= 0; i--) {
+            var web = apos.assets.pushed.scripts[i].web
+            var file = apos.assets.pushed.scripts[i].file
+
+            if (web.match(/custom-code-editor/g)) {
+                _.forEach(expected, function (value, i, arr) {
+                    if (file.match(/mode-/g)) {
+                        if (file.match(value)) {
+                            // If file match with the defined modes
+                            expect(file).toEqual(
+                                expect.stringMatching(value)
+                            )
+                        } else if (!file.match(value)) {
+                            // If file not match with the defined modes
+                            expect(file).not.toEqual(
+                                expect.stringMatching(value)
+                            )
+                        }
+                    }
+                })
+            }
+        }
+    });
+
+    it('should not push custom theme via browser options or any illegal options passing from project level module', function () {
+        // Pass Custom Theme Hardcoded
+        var theme = new RegExp("theme-solarized_dark", "g")
+        for (var i = apos.assets.pushed.scripts.length - 1; i >= 0; i--) {
+            var web = apos.assets.pushed.scripts[i].web
+            var file = apos.assets.pushed.scripts[i].file
+
+            if (web.match(/custom-code-editor/g)) {
+                if (file.match(/theme-/g)) {
+                    // Must not matched with defined theme push, since 
+                    // theme asset is always pushing one JS file
+                    expect(file).not.toEqual(
+                        expect.stringMatching(theme)
+                    )
+                }
+            }
+        }
+    });
 });

@@ -1,3 +1,7 @@
+### 3.1.6
+- Build Passing
+- Add Unit Tests
+
 ### 3.1.4
 - Adjust Readme to use proper configuration
 

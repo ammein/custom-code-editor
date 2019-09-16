@@ -1,4 +1,7 @@
 # Custom-Code-Editor ApostropheCMS Schema
+
+[![Build Status](https://travis-ci.org/ammein/custom-code-editor.svg?branch=master)](https://travis-ci.org/ammein/custom-code-editor)
+
 An ApostropheCMS Custom Schema for your own custom-code-editor field. 
 
 This schema uses Ace Editor library that you may found here [Ace Editor](https://ace.c9.io/)
@@ -714,6 +717,10 @@ _this.has(myObject , "nested.anotherNested.getValue");
 Simple , you can access it via `self.ace` or `_this.ace`
 
 # Changelog
+
+### 3.1.6
+- Build Passing
+- Add Unit Tests
 
 ### 3.1.4
 - Adjust Readme to use proper configuration
