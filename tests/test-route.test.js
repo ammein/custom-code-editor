@@ -186,5 +186,60 @@ describe("Custom Code Editor : Routes Saving Options", function () {
             expect(Object.keys(result).length).toBe(0);
             done();
         })
+    });
+
+    it('should save user options successfully - second time', function (done) {
+        var req = apos.tasks.getReq();
+        var existingUser = _.cloneDeep(req.user);
+        var myUser = _.cloneDeep(dummyUser);
+        req.user = _.assign(existingUser, myUser);
+        req.body = _.cloneDeep(body)
+        apos.customCodeEditor.submit(req, function (err) {
+            if (err) {
+                console.log("ERROR (POST) : ", err)
+            }
+            assert(!err);
+            // Check User Database to be match with customCodeEditor saving options
+            apos.users.find(req, {
+                username: "abuBakar"
+            }).toObject(function (err, user) {
+                if (err) {
+                    console.log("ERROR (USER POST) : ", err)
+                }
+                assert(!err);
+                expect(user.customCodeEditor).toMatchObject(body.customCodeEditor);
+                assert(user.username === "abuBakar");
+                done()
+            })
+        })
+    });
+
+    it('should not submit wrong key value to saves and must maintain the saves value', function(done) {
+        var req = apos.tasks.getReq();
+        var existingUser = _.cloneDeep(req.user);
+        var myUser = _.cloneDeep(dummyUser);
+        var cloneBody = _.cloneDeep(body);
+        req.user = _.assign(existingUser, myUser);
+        req.body = {
+            "NotCustomCodeEditor" : cloneBody.customCodeEditor
+        }
+        apos.customCodeEditor.submit(req, function(err) {
+            assert(!err);
+
+            // Check User Database to be available
+            apos.users.find(req, {
+                username: "abuBakar"
+            }).toObject(function (err, user) {
+                assert(!err);
+                expect(user.customCodeEditor).toMatchObject(body.customCodeEditor);
+
+                apos.customCodeEditor.getOptions(req, function(err, result) {
+                    assert(!err);
+                    expect(result).not.toMatchObject(cloneBody);
+                    expect(result).toMatchObject(body.customCodeEditor);
+                    done();
+                })
+            })
+        })
     })
 });
