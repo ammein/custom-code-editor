@@ -321,7 +321,7 @@ apos.define('custom-code-editor', {
             var editor = ace.edit($fieldInput);
 
             // Pass to self object but by schema name prefix (Trigger this if got more than one schema , else pass to editor property)
-            if ($el.find("#editor[data-editor]").length > 1) {
+            if ($el.find(".editor[data-editor]").length > 1) {
                 self[name] = {
                     editor: editor
                 }
@@ -371,7 +371,7 @@ apos.define('custom-code-editor', {
                     },
                     exec: function (editor) {
                         // If Two or more editor in single schema , show field name
-                        if ($el.find("#editor[data-editor]").length > 1) {
+                        if ($el.find(".editor[data-editor]").length > 1) {
                             apos.notify((self.has(self.ace, "config.saveCommand.message")) ? self.ace.config.saveCommand.message + " - Field Name : " + name : 'Selected Code Saved Successfully' + " - Field Name : " + name, {
                                 type: "success",
                                 dismiss: 2
@@ -390,7 +390,7 @@ apos.define('custom-code-editor', {
 
                 // Only Set if got no object. Set to defaultMode
                 if (!object[name]) {
-                    $($fieldSet.find("#buttonDropdown")).text(self.ace.defaultMode.capitalize());
+                    $($fieldSet.find(".button-dropdown")).text(self.ace.defaultMode.capitalize());
                 }
 
                 // Enable Dropdown
@@ -398,14 +398,14 @@ apos.define('custom-code-editor', {
                     display: 'block'
                 })
                 // Dropdown
-                $fieldSet.find("#buttonDropdown").on("click", function () {
-                    $($fieldSet.find("#myDropdown")).toggleClass("show");
-                    $($fieldSet.find("#myDropdown")).css("top", $($fieldSet.find(".dropdown")).height() + "px");
+                $fieldSet.find(".button-dropdown").on("click", function () {
+                    $($fieldSet.find(".dropdown-content")).toggleClass("show");
+                    $($fieldSet.find(".dropdown-content")).css("top", $($fieldSet.find(".dropdown")).height() + "px");
                 })
 
                 // create dropdown modes
                 for (var i = 0; i < self.ace.modes.length; i++) {
-                    var dropdown = $fieldSet.find("#myDropdown");
+                    var dropdown = $fieldSet.find(".dropdown-content");
                     var li = document.createElement("li");
                     li.innerHTML =
                         (self.ace.modes[i].title) ? self.ace.modes[i].title : self.ace.modes[i].name.capitalize();
@@ -446,14 +446,14 @@ apos.define('custom-code-editor', {
 
                 };
 
-                var allItems = $fieldSet.find("#myDropdown > li");
+                var allItems = $fieldSet.find(".dropdown-content > li");
 
                 for (var i = 0; i < allItems.length; i++)(function (i) {
                     $(allItems.get(i)).on("click", function () {
                         var getText = $(this).attr("data-name");
                         var getTitle = $(this).attr("data-title");
 
-                        $fieldSet.find("#buttonDropdown").text((getTitle) ? getTitle : getText.capitalize());
+                        $fieldSet.find(".button-dropdown").text((getTitle) ? getTitle : getText.capitalize());
                         // Set Mode
                         for (var i = 0; i < self.ace.modes.length; i++)(function (i) {
                             if (getText === self.ace.modes[i].name.toLowerCase()) {
@@ -494,11 +494,11 @@ apos.define('custom-code-editor', {
                     })
                 })(i);
 
-                $($fieldSet.find("#myInput")).on("keyup", function () {
+                $($fieldSet.find(".my-input")).on("keyup", function () {
                     var input, filter, ul, li, a, i;
-                    input = $fieldSet.find("#myInput");
+                    input = $fieldSet.find(".my-input");
                     filter = $(input).val().toUpperCase();
-                    div = $fieldSet.find("#myDropdown");
+                    div = $fieldSet.find(".dropdown-content");
                     a = $(div).find("li");
                     for (i = 0; i < a.length; i++)(function (i) {
                         txtValue = $(a.get(i)).text();
@@ -551,7 +551,7 @@ apos.define('custom-code-editor', {
             var optionsContainer = $fieldSet.find(".options-container");
             var optionsInner = $fieldSet.find(".options-inner");
             var unorderedLists = document.createElement("ul");
-            var buttonOptions = $fieldSet.find("#buttonOptions");
+            var buttonOptions = $fieldSet.find(".button-options");
             var moreOptions = $fieldSet.find(".press-more-options");
             var optionsCustomizer = self.has(self.ace.config, "optionsCustomizer") ? self.ace.config.optionsCustomizer.enable : true;
 
@@ -686,7 +686,7 @@ apos.define('custom-code-editor', {
                     // Initialize Clipboardjs
                     new ClipboardJS('.copy-options');
                     // copy/reset/save options onclick
-                    $fieldSet.find("#copyOptions, #undoOptions, #saveOptions, #deleteOptions").on("click", function () {
+                    $fieldSet.find(".copy-options, .undo-options, .save-options, .delete-options").on("click", function () {
                         var button = this;
                         var allCopy = {};
                         optionsInner.find("li:not([data-header])").each(function (i, value) {
@@ -699,7 +699,7 @@ apos.define('custom-code-editor', {
                             // This will be useful and only executes if it not matches the cache value
                             switch (true) {
                                 case (/select/g).test(input.type) && cacheValue[input.name] !== undefined:
-                                    if (button.id === "deleteOptions") {
+                                    if (button.className === "delete-options") {
                                         // Reset the cache first, then run checking
                                         cacheValue[input.name] = originalOptions[input.name];
                                     }
@@ -708,10 +708,10 @@ apos.define('custom-code-editor', {
                                     var value = (input.options[input.selectedIndex].value === "true" || input.options[input.selectedIndex].value === "false") ? JSON.parse(input.options[input.selectedIndex].value) : input.options[input.selectedIndex].value;
 
                                     if (value !== cacheValue[input.name]) {
-                                        if (button.id === "copyOptions" || button.id === "saveOptions") {
+                                        if (button.className === "copy-options" || button.className === "save-options") {
                                             allCopy[input.name] = input.options[input.selectedIndex].value;
                                         }
-                                        else if (button.id === "undoOptions") {
+                                        else if (button.className === "undo-options") {
                                             // Revert to default value
                                             input.value = cacheValue[input.name];
 
@@ -721,7 +721,7 @@ apos.define('custom-code-editor', {
                                             // And reset options on editor
                                             editor.setOption(input.name, cacheValue[input.name]);
                                         }
-                                        else if (button.id === "deleteOptions") {
+                                        else if (button.className === "delete-options") {
                                             // Revert to default value based on module options
                                             input.value = originalOptions[input.name];
 
@@ -732,7 +732,7 @@ apos.define('custom-code-editor', {
                                     break;
 
                                 case (/range/g).test(input.type):
-                                    if (button.id === "deleteOptions") {
+                                    if (button.className === "delete-options") {
                                         // Reset the cache first, then run checking
                                         cacheValue[input.name] = originalOptions[input.name];
                                     }
@@ -741,10 +741,10 @@ apos.define('custom-code-editor', {
                                         parseFloat(input.value) !== cacheValue[input.name] &&
                                         input.getAttribute("value") !== null
                                     ) {
-                                        if (button.id === "copyOptions" || button.id === "saveOptions") {
+                                        if (button.className === "copy-options" || button.className === "save-options") {
                                             allCopy[input.name] = parseFloat(input.value);
                                         }
-                                        else if (button.id === "undoOptions") {
+                                        else if (button.className === "undo-options") {
                                             // Revert to default value
                                             input.value = cacheValue[input.name];
 
@@ -760,7 +760,7 @@ apos.define('custom-code-editor', {
                                             // Remove the attribute as default
                                             input.removeAttribute("value");
                                         }
-                                        else if (button.id === "deleteOptions") {
+                                        else if (button.className === "delete-options") {
                                             // Revert to default value based on module options
                                             input.value = originalOptions[input.name];
 
@@ -777,15 +777,15 @@ apos.define('custom-code-editor', {
                                     break;
 
                                 case (/checkbox/g).test(input.type):
-                                    if (button.id === "deleteOptions") {
+                                    if (button.className === "delete-options") {
                                         // Reset the cache first, then run checking
                                         cacheValue[input.name] = originalOptions[input.name] === undefined ? false : originalOptions[input.name];
                                     }
 
                                     if (input.checked !== cacheValue[input.name]) {
-                                        if (button.id === "copyOptions" || button.id === "saveOptions") {
+                                        if (button.className === "copy-options" || button.className === "save-options") {
                                             allCopy[input.name] = input.checked
-                                        } else if (button.id === "undoOptions") {
+                                        } else if (button.className === "undo-options") {
                                             // Revert to default value
                                             input.checked = cacheValue[input.name];
 
@@ -794,7 +794,7 @@ apos.define('custom-code-editor', {
 
                                             // And reset options on editor
                                             editor.setOption(input.name, cacheValue[input.name]);
-                                        } else if (button.id === "deleteOptions") {
+                                        } else if (button.className === "delete-options") {
                                             // Revert to default value based on module options
                                             input.checked = originalOptions[input.name];
 
@@ -806,7 +806,7 @@ apos.define('custom-code-editor', {
                             }
                         })
 
-                        if (button.id === "copyOptions") {
+                        if (button.className === "copy-options") {
                             // Merge allCopy options
                             if (Object.keys(myOptions).length > 0) {
                                 allCopy = Object.assign(myOptions, allCopy);
@@ -828,7 +828,7 @@ apos.define('custom-code-editor', {
 
                             // Click again to copy the dataset
                             button.click();
-                        } else if (button.id === "saveOptions") {
+                        } else if (button.className === "save-options") {
                             if (Object.keys(allCopy).length > 0) {
                                 self.api('submit', {
                                     [apos.utils.camelName(self.name)]: allCopy
@@ -851,7 +851,7 @@ apos.define('custom-code-editor', {
                                     dismiss: 10
                                 })
                             }
-                        } else if (button.id === "deleteOptions") {
+                        } else if (button.className === "delete-options") {
                             $.ajax({
                                 url: '/modules/' + self.name + "/remove",
                                 type: "DELETE",
@@ -905,9 +905,9 @@ apos.define('custom-code-editor', {
                     })
 
                     // Find lists
-                    $($fieldSet.find("#myOptions")).on("keyup", function () {
+                    $($fieldSet.find(".my-options")).on("keyup", function () {
                         var input, filter, ul, myLists, i;
-                        input = $fieldSet.find("#myOptions");
+                        input = $fieldSet.find(".my-options");
                         filter = $(input).val().toUpperCase();
                         ul = $fieldSet.find(optionsInner).find("ul");
                         header = ul.find("li[data-header]");
@@ -939,18 +939,18 @@ apos.define('custom-code-editor', {
                 for (var i = 0; i < self.ace.modes.length; i++)(function (i) {
                     if (self.ace.modes[i].name.toLowerCase() === object[name].type.toLowerCase()) {
                         var getTitle = (self.ace.modes[i].title) ? self.ace.modes[i].title : object[name].type.capitalize();
-                        $($fieldSet.find("#buttonDropdown")).text(getTitle);
+                        $($fieldSet.find(".button-dropdown")).text(getTitle);
                         return;
                     } else if (object[name].type.toLowerCase() === self.ace.defaultMode.toLowerCase()) {
                         var getTitle = object[name].type.capitalize();
-                        $($fieldSet.find("#buttonDropdown")).text(getTitle);
+                        $($fieldSet.find(".button-dropdown")).text(getTitle);
                         return;
                     }
                 })(i);
 
                 // Set if clearModes and there is no single mode at all
                 if (self.ace.modes.length === 0) {
-                    $($fieldSet.find("#buttonDropdown")).text(object[name].type.capitalize());
+                    $($fieldSet.find(".button-dropdown")).text(object[name].type.capitalize());
                 }
             }
 
