@@ -1,0 +1,22 @@
+{
+    "extends": "punkave",
+    "globals": {
+        "$": "readonly",
+        "_": "readonly",
+        "apos": "readonly"
+    },
+    "env": {
+        "es6": true
+    },
+    "rules": {
+        "indent": "off",
+        "space-before-function-paren": "off",
+        "semi": "off",
+        "no-return-assign": "off",
+        "no-unused-expressions": "off",
+        "padded-blocks": "off",
+        "eol-last": "off",
+        "no-unused-vars": "off",
+        "no-debugger": "off"
+    }
+}

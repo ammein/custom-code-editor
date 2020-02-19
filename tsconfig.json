@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "module": "none",
+        "declaration": true,
+        "noImplicitAny": true,
+        "lib": [
+            "dom"
+        ]
+    },
+    "exclude": [
+        "node_modules"
+    ],
+    "include": [
+        "lib/modules/my-theme/public/js/**/*",
+        "src/js/**/*.js"
+    ]
+}
