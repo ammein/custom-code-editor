@@ -717,6 +717,9 @@ _this.has(myObject , "nested.anotherNested.getValue");
 Simple , you can access it via `self.ace` or `_this.ace`
 
 # Changelog
+### 3.1.7
+- Add `appearance : none` to checkbox to remove default checkbox CSS
+- Fix all codes by removing ES6 codes for minifying ApostropheCMS issue
 
 ### 3.1.7
 - Fix DOM where warnings occured on same values of id.

@@ -1,5 +1,10 @@
 ### 3.1.7
+<<<<<<< HEAD
 - Fix DOM where warnings occured on same values of id.
+=======
+- Add `appearance : none` to checkbox to remove default checkbox CSS
+- Fix all codes by removing ES6 codes for minifying ApostropheCMS issue
+>>>>>>> development
 
 ### 3.1.6
 - Build Passing
