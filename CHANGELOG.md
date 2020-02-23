@@ -1,3 +1,7 @@
+### 3.1.7
+- Add `appearance : none` to checkbox to remove default checkbox CSS
+- Fix all codes by removing ES6 codes for minifying ApostropheCMS issue
+
 ### 3.1.6
 - Build Passing
 - Add Unit Tests
