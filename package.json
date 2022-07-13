@@ -4,18 +4,15 @@
   "description": "ApostropheCMS Code Schema Field",
   "main": "index.js",
   "scripts": {
-    "test": "mocha ./tests/**/*.test.js",
+    "test": "eslint . && node ./tests/build-test-package-json.js && mocha ./tests/**/*.test.js",
     "test-chrome": "mocha --inspect-brk ./tests/**/*.test.js"
-  },
-  "directories": {
-    "lib": "lib"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/ammein/custom-code-editor.git"
   },
   "dependencies": {
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.21"
   },
   "keywords": [
     "apostrophe",
@@ -41,29 +38,29 @@
     "babel-preset-es2015": "^6.24.1",
     "babelify": "^10.0.0",
     "browser-sync": "^2.26.7",
-    "browserify": "^16.5.0",
-    "eslint": "^6.8.0",
+    "browserify": "^17.0.0",
+    "eslint": "^8.19.0",
     "eslint-config-punkave": "^2.0.1",
-    "eslint-config-standard": "^14.1.0",
+    "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-node": "^11.0.0",
-    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-standard": "^4.0.1",
-    "expect": "^24.9.0",
-    "gulp": "^3.9.1",
-    "gulp-autoprefixer": "^7.0.1",
+    "expect": "^28.1.3",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^8.0.0",
     "gulp-babel": "^8.0.0",
     "gulp-eslint": "^6.0.0",
-    "gulp-notify": "^3.2.0",
-    "gulp-sass": "^4.0.2",
-    "gulp-stylelint": "^3.9.0",
-    "mocha": "^6.2.0",
-    "nodemon": "^1.19.2",
+    "gulp-notify": "^4.0.0",
+    "gulp-sass": "^5.1.0",
+    "gulp-stylelint": "^13.0.0",
+    "mocha": "^10.0.0",
+    "nodemon": "^2.0.19",
+    "sass": "^1.53.0",
     "stylelint-config-punkave": "^1.1.3",
-    "supertest": "^4.0.2",
+    "supertest": "^6.2.4",
     "vinyl-buffer": "^1.0.1",
-    "vinyl-source-stream": "^2.0.0",
-    "webpack-cli": "^3.3.11"
+    "vinyl-source-stream": "^2.0.0"
   }
 }

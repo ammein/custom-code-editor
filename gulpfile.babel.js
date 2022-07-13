@@ -4,11 +4,13 @@ import browserify from 'browserify';
 import browserSync from 'browser-sync';
 import buffer from 'vinyl-buffer';
 import eslint from 'gulp-eslint';
-import gulp from 'gulp';
+import gulp, { task } from 'gulp';
 import gulpStylelint from 'gulp-stylelint';
 import notify from 'gulp-notify';
-import sass from 'gulp-sass';
 import source from 'vinyl-source-stream';
+import dartSass from 'sass';
+import gulpSass from 'gulp-sass';
+const sass = gulpSass(dartSass);
 // import through from 'through2'; // For custom function extension
 // import path from 'path';
 
@@ -24,24 +26,28 @@ const spawn = require('child_process').spawn;
 const bs = browserSync.create();
 let travis = process.env.TRAVIS || false;
 
-gulp.task('js', (done) => {
-    JS.map(function (file) {
-        browserify(`${file.src}${file.name}.js`)
-            .transform(babelify, {
-                presets: ['@babel/preset-env']
-            })
-            .bundle()
-            .pipe(source(file.name + '.js'))
-            .pipe(buffer())
-            .pipe(gulp.dest(`${file.dest}`))
-            .pipe(bs.stream())
-            .pipe(notify('scripts task ' + file.name + '.js complete'));
+function js(done){
+    JS.map(function(file){
+        return browserify({
+            entries: [`${file.src}${file.name}.js`]
+        })
+        .transform(babelify, {
+            presets: ['@babel/preset-env']
+        })
+        .bundle()
+        .pipe(source(file.name + '.js'))
+        .pipe(buffer())
+        .pipe(gulp.dest(`${file.dest}`))
+        .pipe(bs.stream())
+        .pipe(notify('scripts task ' + file.name + '.js complete'));
     })
     done();
-});
+}
 
-gulp.task('sass', () =>
-    gulp.src(`${src}sass/**/*.scss`)
+task("js", js);
+
+function sassGulp(){
+    return gulp.src(`${src}sass/**/*.scss`)
     .pipe(gulpStylelint({
         failAfterError: travis,
         reporters: [{
@@ -57,20 +63,26 @@ gulp.task('sass', () =>
     .pipe(gulp.dest(`${dest}css`))
     .pipe(bs.stream())
     .pipe(notify('styles task complete'))
-);
+}
 
-gulp.task('imgs', () =>
-    gulp.src([`${src}/imgs/*.png`, `${src}/imgs/*.jpg`, `${src}/imgs/*.svg`], {
+task("css", sassGulp);
+
+function images(){
+    return gulp.src([`${src}/imgs/*.png`, `${src}/imgs/*.jpg`, `${src}/imgs/*.svg`], {
         base: `${src}/imgs/`
     })
     .pipe(gulp.dest(`public/imgs`))
-);
+}
 
-gulp.task('lint', () =>
-    gulp.src([`${src}js/**/*.js`, `!node_modules/**`])
+task("images", images);
+
+function lint(){
+    return gulp.src([`${src}js/**/*.js`, `!node_modules/**`])
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failAfterError())
-);
+}
 
-gulp.task('default', ['lint', 'js']);
+task("lint", lint);
+
+exports.default = gulp.series("lint", "js")

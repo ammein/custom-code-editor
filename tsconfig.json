@@ -6,13 +6,14 @@
         "noImplicitAny": true,
         "lib": [
             "dom"
-        ]
+        ],
+        "outDir": "public"
     },
     "exclude": [
-        "node_modules"
+        "node_modules",
+        "public"
     ],
     "include": [
-        "lib/modules/my-theme/public/js/**/*",
-        "src/js/**/*.js"
+        "./src/js/**/*.js"
     ]
 }

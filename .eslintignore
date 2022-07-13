@@ -3,6 +3,7 @@
 monitor-config.js
 index.js
 gulpfile.babel.js
+test/**
 tests/**
 
 # In public folders
