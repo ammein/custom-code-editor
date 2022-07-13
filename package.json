@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "eslint . && node ./tests/build-test-package-json.js && mocha ./tests/**/*.test.js",
-    "test-chrome": "mocha --inspect-brk ./tests/**/*.test.js"
+    "test-chrome": "eslint . && node ./tests/build-test-package-json.js && mocha --inspect-brk ./tests/**/*.test.js"
   },
   "repository": {
     "type": "git",
