@@ -1,3 +1,7 @@
+### 3.2.0
+- Update packages to the new ApostropheCMS 2.0 version
+- Tests mocha successful to the new Mocha v10
+
 ### 3.1.8
 - Add `appearance : none` to checkbox to remove default checkbox CSS
 - Fix all codes by removing ES6 codes for minifying ApostropheCMS issue
