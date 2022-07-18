@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "module": "none",
+        "declaration": true,
+        "noImplicitAny": true,
+        "lib": [
+            "dom"
+        ],
+        "outDir": "public"
+    },
+    "exclude": [
+        "node_modules",
+        "public",
+        ".stylelintrc"
+    ],
+    "include": [
+        "./src/js/**/*.js"
+    ]
+}
