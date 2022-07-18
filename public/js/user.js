@@ -1,83 +1,4 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-(function (setImmediate,clearImmediate){
-var nextTick = require('process/browser.js').nextTick;
-var apply = Function.prototype.apply;
-var slice = Array.prototype.slice;
-var immediateIds = {};
-var nextImmediateId = 0;
-
-// DOM APIs, for completeness
-
-exports.setTimeout = function() {
-  return new Timeout(apply.call(setTimeout, window, arguments), clearTimeout);
-};
-exports.setInterval = function() {
-  return new Timeout(apply.call(setInterval, window, arguments), clearInterval);
-};
-exports.clearTimeout =
-exports.clearInterval = function(timeout) { timeout.close(); };
-
-function Timeout(id, clearFn) {
-  this._id = id;
-  this._clearFn = clearFn;
-}
-Timeout.prototype.unref = Timeout.prototype.ref = function() {};
-Timeout.prototype.close = function() {
-  this._clearFn.call(window, this._id);
-};
-
-// Does not start the time, just sets up the members needed.
-exports.enroll = function(item, msecs) {
-  clearTimeout(item._idleTimeoutId);
-  item._idleTimeout = msecs;
-};
-
-exports.unenroll = function(item) {
-  clearTimeout(item._idleTimeoutId);
-  item._idleTimeout = -1;
-};
-
-exports._unrefActive = exports.active = function(item) {
-  clearTimeout(item._idleTimeoutId);
-
-  var msecs = item._idleTimeout;
-  if (msecs >= 0) {
-    item._idleTimeoutId = setTimeout(function onTimeout() {
-      if (item._onTimeout)
-        item._onTimeout();
-    }, msecs);
-  }
-};
-
-// That's not how node.js implements it but the exposed api is the same.
-exports.setImmediate = typeof setImmediate === "function" ? setImmediate : function(fn) {
-  var id = nextImmediateId++;
-  var args = arguments.length < 2 ? false : slice.call(arguments, 1);
-
-  immediateIds[id] = true;
-
-  nextTick(function onNextTick() {
-    if (immediateIds[id]) {
-      // fn.call() is faster so we optimize for the common use-case
-      // @see http://jsperf.com/call-apply-segu
-      if (args) {
-        fn.apply(null, args);
-      } else {
-        fn.call(null);
-      }
-      // Prevent ids from leaking
-      exports.clearImmediate(id);
-    }
-  });
-
-  return id;
-};
-
-exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate : function(id) {
-  delete immediateIds[id];
-};
-}).call(this,require("timers").setImmediate,require("timers").clearImmediate)
-},{"process/browser.js":2,"timers":1}],2:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -263,11 +184,90 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],3:[function(require,module,exports){
-(function (setImmediate){
+},{}],2:[function(require,module,exports){
+(function (setImmediate,clearImmediate){(function (){
+var nextTick = require('process/browser.js').nextTick;
+var apply = Function.prototype.apply;
+var slice = Array.prototype.slice;
+var immediateIds = {};
+var nextImmediateId = 0;
+
+// DOM APIs, for completeness
+
+exports.setTimeout = function() {
+  return new Timeout(apply.call(setTimeout, window, arguments), clearTimeout);
+};
+exports.setInterval = function() {
+  return new Timeout(apply.call(setInterval, window, arguments), clearInterval);
+};
+exports.clearTimeout =
+exports.clearInterval = function(timeout) { timeout.close(); };
+
+function Timeout(id, clearFn) {
+  this._id = id;
+  this._clearFn = clearFn;
+}
+Timeout.prototype.unref = Timeout.prototype.ref = function() {};
+Timeout.prototype.close = function() {
+  this._clearFn.call(window, this._id);
+};
+
+// Does not start the time, just sets up the members needed.
+exports.enroll = function(item, msecs) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = msecs;
+};
+
+exports.unenroll = function(item) {
+  clearTimeout(item._idleTimeoutId);
+  item._idleTimeout = -1;
+};
+
+exports._unrefActive = exports.active = function(item) {
+  clearTimeout(item._idleTimeoutId);
+
+  var msecs = item._idleTimeout;
+  if (msecs >= 0) {
+    item._idleTimeoutId = setTimeout(function onTimeout() {
+      if (item._onTimeout)
+        item._onTimeout();
+    }, msecs);
+  }
+};
+
+// That's not how node.js implements it but the exposed api is the same.
+exports.setImmediate = typeof setImmediate === "function" ? setImmediate : function(fn) {
+  var id = nextImmediateId++;
+  var args = arguments.length < 2 ? false : slice.call(arguments, 1);
+
+  immediateIds[id] = true;
+
+  nextTick(function onNextTick() {
+    if (immediateIds[id]) {
+      // fn.call() is faster so we optimize for the common use-case
+      // @see http://jsperf.com/call-apply-segu
+      if (args) {
+        fn.apply(null, args);
+      } else {
+        fn.call(null);
+      }
+      // Prevent ids from leaking
+      exports.clearImmediate(id);
+    }
+  });
+
+  return id;
+};
+
+exports.clearImmediate = typeof clearImmediate === "function" ? clearImmediate : function(id) {
+  delete immediateIds[id];
+};
+}).call(this)}).call(this,require("timers").setImmediate,require("timers").clearImmediate)
+},{"process/browser.js":1,"timers":2}],3:[function(require,module,exports){
+(function (setImmediate){(function (){
 "use strict";
 
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -832,41 +832,41 @@ apos.define('custom-code-editor', {
           originalOptions = editor.getOptions();
 
           for (var _i3 = 0, _Object$keys = Object.keys(editor.getOptions()); _i3 < _Object$keys.length; _i3++) {
-            var _key3 = _Object$keys[_i3];
+            var _key = _Object$keys[_i3];
 
-            if (editor.getOptions().hasOwnProperty(_key3)) {
+            if (editor.getOptions().hasOwnProperty(_key)) {
               // Match name of optionsTypes, build the field
               // But filter on each type of value
               var optionsTypes = self.ace.optionsTypes;
 
-              if (optionsTypes[_key3] && optionsTypes[_key3].name === _key3) {
+              if (optionsTypes[_key] && optionsTypes[_key].name === _key) {
                 switch (true) {
-                  case self.isArray(optionsTypes[_key3].value):
-                    optionsTypes[_key3] = myOptions[_key3] !== undefined ? Object.assign(optionsTypes[_key3], {
-                      saveValue: myOptions[_key3]
-                    }) : optionsTypes[_key3];
-                    unorderedLists.appendChild(self.aceOptionsUI(optionsTypes[_key3], 'dropdownArray', editor, $fieldSet));
+                  case self.isArray(optionsTypes[_key].value):
+                    optionsTypes[_key] = myOptions[_key] !== undefined ? Object.assign(optionsTypes[_key], {
+                      saveValue: myOptions[_key]
+                    }) : optionsTypes[_key];
+                    unorderedLists.appendChild(self.aceOptionsUI(optionsTypes[_key], 'dropdownArray', editor, $fieldSet));
                     break;
 
-                  case self.isObject(optionsTypes[_key3].value):
-                    optionsTypes[_key3] = myOptions[_key3] !== undefined ? Object.assign(optionsTypes[_key3], {
-                      saveValue: myOptions[_key3]
-                    }) : optionsTypes[_key3];
-                    unorderedLists.appendChild(self.aceOptionsUI(optionsTypes[_key3], 'slider', editor, $fieldSet));
+                  case self.isObject(optionsTypes[_key].value):
+                    optionsTypes[_key] = myOptions[_key] !== undefined ? Object.assign(optionsTypes[_key], {
+                      saveValue: myOptions[_key]
+                    }) : optionsTypes[_key];
+                    unorderedLists.appendChild(self.aceOptionsUI(optionsTypes[_key], 'slider', editor, $fieldSet));
                     break;
 
-                  case self.isArrayOfObject(optionsTypes[_key3].value):
-                    optionsTypes[_key3] = myOptions[_key3] !== undefined ? Object.assign(optionsTypes[_key3], {
-                      saveValue: myOptions[_key3]
-                    }) : optionsTypes[_key3];
-                    unorderedLists.appendChild(self.aceOptionsUI(optionsTypes[_key3], 'dropdownObject', editor, $fieldSet));
+                  case self.isArrayOfObject(optionsTypes[_key].value):
+                    optionsTypes[_key] = myOptions[_key] !== undefined ? Object.assign(optionsTypes[_key], {
+                      saveValue: myOptions[_key]
+                    }) : optionsTypes[_key];
+                    unorderedLists.appendChild(self.aceOptionsUI(optionsTypes[_key], 'dropdownObject', editor, $fieldSet));
                     break;
 
-                  case optionsTypes[_key3].type === 'boolean':
-                    optionsTypes[_key3] = myOptions[_key3] !== undefined ? Object.assign(optionsTypes[_key3], {
-                      saveValue: myOptions[_key3]
-                    }) : optionsTypes[_key3];
-                    unorderedLists.appendChild(self.aceOptionsUI(optionsTypes[_key3], 'checkbox', editor, $fieldSet));
+                  case optionsTypes[_key].type === 'boolean':
+                    optionsTypes[_key] = myOptions[_key] !== undefined ? Object.assign(optionsTypes[_key], {
+                      saveValue: myOptions[_key]
+                    }) : optionsTypes[_key];
+                    unorderedLists.appendChild(self.aceOptionsUI(optionsTypes[_key], 'checkbox', editor, $fieldSet));
                 }
               }
             }
@@ -1020,12 +1020,12 @@ apos.define('custom-code-editor', {
                 allCopy = Object.assign(myOptions, allCopy); // Loop and find if existing default saved options detected matches module options
 
                 for (var _i4 = 0, _Object$keys2 = Object.keys(originalOptions); _i4 < _Object$keys2.length; _i4++) {
-                  var _key = _Object$keys2[_i4];
+                  var _key2 = _Object$keys2[_i4];
 
-                  if (originalOptions.hasOwnProperty(_key)) {
+                  if (originalOptions.hasOwnProperty(_key2)) {
                     // Only allow non-module options to be copy
-                    if (originalOptions[_key] === allCopy[_key]) {
-                      delete allCopy[_key];
+                    if (originalOptions[_key2] === allCopy[_key2]) {
+                      delete allCopy[_key2];
                     }
                   }
                 }
@@ -1066,11 +1066,11 @@ apos.define('custom-code-editor', {
                     myOptions = {}; // Loop the optionsTypes, if there is `saveValue` assigned to it, delete it
 
                     for (var _i5 = 0, _Object$keys3 = Object.keys(self.ace.optionsTypes); _i5 < _Object$keys3.length; _i5++) {
-                      var _key2 = _Object$keys3[_i5];
+                      var _key3 = _Object$keys3[_i5];
 
-                      if (self.ace.optionsTypes.hasOwnProperty(_key2)) {
-                        if (self.ace.optionsTypes[_key2].saveValue !== undefined) {
-                          delete self.ace.optionsTypes[_key2].saveValue;
+                      if (self.ace.optionsTypes.hasOwnProperty(_key3)) {
+                        if (self.ace.optionsTypes[_key3].saveValue !== undefined) {
+                          delete self.ace.optionsTypes[_key3].saveValue;
                         }
                       }
                     }
@@ -1230,5 +1230,5 @@ apos.define('custom-code-editor', {
   }
 });
 
-}).call(this,require("timers").setImmediate)
-},{"timers":1}]},{},[3]);
+}).call(this)}).call(this,require("timers").setImmediate)
+},{"timers":2}]},{},[3]);

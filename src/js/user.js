@@ -54,7 +54,9 @@ apos.define('custom-code-editor', {
                         }
 
                         // Save to cache
-                        self.cache = self.cache.concat({ [object.name]: (object.saveValue !== undefined) ? object.saveValue : editor.getOptions()[object.name] })
+                        self.cache = self.cache.concat({
+                            [object.name]: (object.saveValue !== undefined) ? object.saveValue : editor.getOptions()[object.name]
+                        })
 
                         input.addEventListener('input', function () {
                             this.nextElementSibling.style.display = 'inline';
@@ -110,7 +112,9 @@ apos.define('custom-code-editor', {
                         })
 
                         // Save to cache
-                        self.cache = self.cache.concat({ [object.name]: (object.saveValue !== undefined) ? object.saveValue : editor.getOptions()[object.name] })
+                        self.cache = self.cache.concat({
+                            [object.name]: (object.saveValue !== undefined) ? object.saveValue : editor.getOptions()[object.name]
+                        })
 
                         select.addEventListener('change', function () {
                             editor.setOption(object.name, this.value);
@@ -160,7 +164,9 @@ apos.define('custom-code-editor', {
                         });
 
                         // Save to cache
-                        self.cache = self.cache.concat({ [object.name]: (object.saveValue !== undefined) ? object.saveValue : editor.getOptions()[object.name] })
+                        self.cache = self.cache.concat({
+                            [object.name]: (object.saveValue !== undefined) ? object.saveValue : editor.getOptions()[object.name]
+                        })
 
                         select.addEventListener('change', function () {
                             let value = (this.value === 'true' || this.value === 'false') ? JSON.parse(this.value) : this.value;
@@ -204,7 +210,9 @@ apos.define('custom-code-editor', {
                         }
 
                         // Save to cache
-                        self.cache = self.cache.concat({ [object.name]: (object.saveValue !== undefined) ? object.saveValue : !!editor.getOptions()[object.name] })
+                        self.cache = self.cache.concat({
+                            [object.name]: (object.saveValue !== undefined) ? object.saveValue : !!editor.getOptions()[object.name]
+                        })
 
                         $(input).addClass('error');
                         input.addEventListener('change', function () {
@@ -234,7 +242,7 @@ apos.define('custom-code-editor', {
             return lists;
         }
 
-        self.isArray = function(item) {
+        self.isArray = function (item) {
             if (!item) {
                 return false;
             }
@@ -247,21 +255,21 @@ apos.define('custom-code-editor', {
             return item && typeof item === 'object' && item.constructor === Array;
         }
 
-        self.isObject = function(item) {
+        self.isObject = function (item) {
             if (!item) {
                 return false;
             }
             return item && typeof item === 'object' && item.constructor === Object;
         }
 
-        self.isString = function(item) {
+        self.isString = function (item) {
             if (!item) {
                 return false;
             }
             return typeof item === 'string' && typeof item.length === 'number'
         }
 
-        self.isArrayOfObject = function(item) {
+        self.isArrayOfObject = function (item) {
             if (!item) {
                 return false;
             }
@@ -453,51 +461,55 @@ apos.define('custom-code-editor', {
 
                 for (let i = 0; i < allItems.length; i++) {
                     (function (i) {
-                    $(allItems.get(i)).on('click', function () {
-                        let getText = $(this).attr('data-name');
-                        let getTitle = $(this).attr('data-title');
+                        $(allItems.get(i)).on('click', function () {
+                            let getText = $(this).attr('data-name');
+                            let getTitle = $(this).attr('data-title');
 
-                        $fieldSet.find('.button-dropdown').text((getTitle) || getText.capitalize());
-                        // Set Mode
-                        for (let i = 0; i < self.ace.modes.length; i++) {
-                            (function (i) {
-                            if (getText === self.ace.modes[i].name.toLowerCase()) {
+                            $fieldSet.find('.button-dropdown').text((getTitle) || getText.capitalize());
+                            // Set Mode
+                            for (let i = 0; i < self.ace.modes.length; i++) {
+                                (function (i) {
+                                    if (getText === self.ace.modes[i].name.toLowerCase()) {
 
-                                editor.session.setMode('ace/mode/' + self.ace.modes[i].name.toLowerCase());
+                                        editor.session.setMode('ace/mode/' + self.ace.modes[i].name.toLowerCase());
 
-                                if (self.ace.modes[i].snippet) {
-                                    // If got disableContent , get out from this if else
-                                    if (self.ace.modes[i].disableSnippet) { return; }
+                                        if (self.ace.modes[i].snippet) {
+                                            // If got disableContent , get out from this if else
+                                            if (self.ace.modes[i].disableSnippet) {
+                                                return;
+                                            }
 
-                                    let beautify = ace.require('ace/ext/beautify');
-                                    editor.session.setValue(self.ace.modes[i].snippet);
-                                    beautify.beautify(editor.session);
-                                    // If changing mode got existing codes , replace the value
-                                    if (editor.getSelectedText().length > 1) { return originalValue = editor.replace(editor.getSelectedText()); }
+                                            let beautify = ace.require('ace/ext/beautify');
+                                            editor.session.setValue(self.ace.modes[i].snippet);
+                                            beautify.beautify(editor.session);
+                                            // If changing mode got existing codes , replace the value
+                                            if (editor.getSelectedText().length > 1) {
+                                                return originalValue = editor.replace(editor.getSelectedText());
+                                            }
 
-                                    // Find the template for replace the code area
-                                    let find = editor.find('@code-here', {
-                                        backwards: false,
-                                        wrap: true,
-                                        caseSensitive: true,
-                                        wholeWord: true,
-                                        regExp: false
-                                    });
+                                            // Find the template for replace the code area
+                                            let find = editor.find('@code-here', {
+                                                backwards: false,
+                                                wrap: true,
+                                                caseSensitive: true,
+                                                wholeWord: true,
+                                                regExp: false
+                                            });
 
-                                    // If found
-                                    if (find && originalValue !== undefined) {
-                                        editor.replace(originalValue);
-                                    } else {
-                                        editor.replace('');
+                                            // If found
+                                            if (find && originalValue !== undefined) {
+                                                editor.replace(originalValue);
+                                            } else {
+                                                editor.replace('');
+                                            }
+
+                                        }
                                     }
-
-                                }
+                                })(i);
                             }
-                        })(i);
-}
-                    })
-                })(i);
-}
+                        })
+                    })(i);
+                }
 
                 $($fieldSet.find('.my-input')).on('keyup', function () {
                     let input, filter, ul, li, a, i, div, txtValue;
@@ -507,15 +519,15 @@ apos.define('custom-code-editor', {
                     a = $(div).find('li');
                     for (i = 0; i < a.length; i++) {
                         (function (i) {
-                        txtValue = $(a.get(i)).text();
+                            txtValue = $(a.get(i)).text();
 
-                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                            $(a.get(i)).css('display', '');
-                        } else {
-                            $(a.get(i)).css('display', 'none');
-                        }
-                    }(i));
-}
+                            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                $(a.get(i)).css('display', '');
+                            } else {
+                                $(a.get(i)).css('display', 'none');
+                            }
+                        }(i));
+                    }
                 })
 
                 let dropdownObject = self.ace.config.dropdown;
@@ -626,22 +638,30 @@ apos.define('custom-code-editor', {
                             if (optionsTypes[key] && optionsTypes[key].name === key) {
                                 switch (true) {
                                     case self.isArray(optionsTypes[key].value):
-                                        optionsTypes[key] = myOptions[key] !== undefined ? Object.assign(optionsTypes[key], { saveValue: myOptions[key] }) : optionsTypes[key];
+                                        optionsTypes[key] = myOptions[key] !== undefined ? Object.assign(optionsTypes[key], {
+                                            saveValue: myOptions[key]
+                                        }) : optionsTypes[key];
 
                                         unorderedLists.appendChild(self.aceOptionsUI(optionsTypes[key], 'dropdownArray', editor, $fieldSet));
                                         break;
                                     case self.isObject(optionsTypes[key].value):
-                                        optionsTypes[key] = myOptions[key] !== undefined ? Object.assign(optionsTypes[key], { saveValue: myOptions[key] }) : optionsTypes[key];
+                                        optionsTypes[key] = myOptions[key] !== undefined ? Object.assign(optionsTypes[key], {
+                                            saveValue: myOptions[key]
+                                        }) : optionsTypes[key];
 
                                         unorderedLists.appendChild(self.aceOptionsUI(optionsTypes[key], 'slider', editor, $fieldSet));
                                         break;
                                     case self.isArrayOfObject(optionsTypes[key].value):
-                                        optionsTypes[key] = myOptions[key] !== undefined ? Object.assign(optionsTypes[key], { saveValue: myOptions[key] }) : optionsTypes[key];
+                                        optionsTypes[key] = myOptions[key] !== undefined ? Object.assign(optionsTypes[key], {
+                                            saveValue: myOptions[key]
+                                        }) : optionsTypes[key];
 
                                         unorderedLists.appendChild(self.aceOptionsUI(optionsTypes[key], 'dropdownObject', editor, $fieldSet));
                                         break;
                                     case optionsTypes[key].type === 'boolean':
-                                        optionsTypes[key] = myOptions[key] !== undefined ? Object.assign(optionsTypes[key], { saveValue: myOptions[key] }) : optionsTypes[key];
+                                        optionsTypes[key] = myOptions[key] !== undefined ? Object.assign(optionsTypes[key], {
+                                            saveValue: myOptions[key]
+                                        }) : optionsTypes[key];
 
                                         unorderedLists.appendChild(self.aceOptionsUI(optionsTypes[key], 'checkbox', editor, $fieldSet));
                                 }
@@ -915,19 +935,19 @@ apos.define('custom-code-editor', {
                         header = ul.find('li[data-header]');
                         myLists = ul.find('li');
                         for (i = 0; i < myLists.length; i++) {
-(function (i) {
-                            txtValue = $(myLists.get(i)).text();
+                            (function (i) {
+                                txtValue = $(myLists.get(i)).text();
 
-                            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                                $(myLists.get(i)).css('display', '');
+                                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                    $(myLists.get(i)).css('display', '');
 
-                                // Searching for any header that same as category. Remain display
-                                $(myLists.get(i)).prevAll(`[data-header="${myLists.get(i).dataset.category}"]`).css('display', '');
-                            } else {
-                                $(myLists.get(i)).css('display', 'none');
-                            }
-                        }(i));
-}
+                                    // Searching for any header that same as category. Remain display
+                                    $(myLists.get(i)).prevAll(`[data-header="${myLists.get(i).dataset.category}"]`).css('display', '');
+                                } else {
+                                    $(myLists.get(i)).css('display', 'none');
+                                }
+                            }(i));
+                        }
                     })
                 }
             }
@@ -940,18 +960,18 @@ apos.define('custom-code-editor', {
 
                 // Find modes. When found , set title if available, else set name of the mode. If not found , set to default type object
                 for (let i = 0; i < self.ace.modes.length; i++) {
-                (function (i) {
-                    if (self.ace.modes[i].name.toLowerCase() === object[name].type.toLowerCase()) {
-                        let getTitle = (self.ace.modes[i].title) ? self.ace.modes[i].title : object[name].type.capitalize();
-                        $($fieldSet.find('.button-dropdown')).text(getTitle);
+                    (function (i) {
+                        if (self.ace.modes[i].name.toLowerCase() === object[name].type.toLowerCase()) {
+                            let getTitle = (self.ace.modes[i].title) ? self.ace.modes[i].title : object[name].type.capitalize();
+                            $($fieldSet.find('.button-dropdown')).text(getTitle);
 
-                    } else if (object[name].type.toLowerCase() === self.ace.defaultMode.toLowerCase()) {
-                        let getTitle = object[name].type.capitalize();
-                        $($fieldSet.find('.button-dropdown')).text(getTitle);
+                        } else if (object[name].type.toLowerCase() === self.ace.defaultMode.toLowerCase()) {
+                            let getTitle = object[name].type.capitalize();
+                            $($fieldSet.find('.button-dropdown')).text(getTitle);
 
-                    }
-                })(i);
-}
+                        }
+                    })(i);
+                }
 
                 // Set if clearModes and there is no single mode at all
                 if (self.ace.modes.length === 0) {
@@ -984,7 +1004,9 @@ apos.define('custom-code-editor', {
                 type: editor.session.getMode().$id.match(/(?!(\/|\\))(?:\w)*$/g)[0]
             }
 
-            if (field.required && data[name]) { return setImmediate(_.partial(callback, 'required')); }
+            if (field.required && data[name]) {
+                return setImmediate(_.partial(callback, 'required'));
+            }
 
             return setImmediate(callback);
 
