@@ -1,3 +1,7 @@
+### 3.3.0
+- Update packages to the new ApostropheCMS 2.0 version
+- Add YML Tests
+
 ### 3.2.0
 - Update packages to the new ApostropheCMS 2.0 version
 - Tests mocha successful to the new Mocha v10

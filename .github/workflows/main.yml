@@ -1,0 +1,62 @@
+# Run using `act` locally to test in your local computer. Reference: https://github.com/nektos/act
+name: test-custom-code-editor
+on: 
+  push:
+    branches:
+      - 'master'
+  pull_request:
+jobs:
+    build-and-test-ubuntu:
+      runs-on: ubuntu-latest
+      strategy:
+        matrix:
+          node-version: [14.x, 16.x, 18.x]
+          mongodb-version: ['4.2', '4.4', '5.0', '6.0']
+
+      steps:
+      - uses: actions/checkout@v1
+      
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: npm install
+
+      # Only this action can run mongodb on Ubuntu: https://github.com/marketplace/actions/mongodb-in-github-actions
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.8.0
+        with:
+          mongodb-version: ${{ matrix.mongodb-version }}
+
+      - name: Start Test
+        run: npm test
+
+    build-and-test-mac:
+      runs-on: macos-latest
+
+      strategy:
+        matrix:
+          node-version: [14.x, 16.x, 18.x]
+          mongodb-version: ['4.2', '4.4', '5.0', '6.0']
+
+      steps:
+      - uses: actions/checkout@v1
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      
+      - name: Install dependencies
+        run: npm install
+
+        # https://github.com/ankane/setup-mongodb
+      - name: Install Mongodb
+        uses: ankane/setup-mongodb@v1
+        with:
+          mongodb-version: ${{ matrix.mongodb-version }}
+
+      - name: Start Test
+        run: npm test

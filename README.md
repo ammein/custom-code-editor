@@ -1,6 +1,6 @@
 # Custom-Code-Editor ApostropheCMS Schema
 
-[![Build Status](https://travis-ci.org/ammein/custom-code-editor.svg?branch=master)](https://travis-ci.org/ammein/custom-code-editor)
+[![test-custom-code-editor](https://github.com/ammein/custom-code-editor/actions/workflows/main.yml/badge.svg)](https://github.com/ammein/custom-code-editor/actions/workflows/main.yml)
 
 An ApostropheCMS Custom Schema for your own custom-code-editor field. 
 
@@ -717,6 +717,10 @@ _this.has(myObject , "nested.anotherNested.getValue");
 Simple , you can access it via `self.ace` or `_this.ace`
 
 # Changelog
+### 3.3.0
+- Update packages to the new ApostropheCMS 2.0 version
+- Add YML Tests
+
 ### 3.2.0
 - Update packages to the new ApostropheCMS 2.0 version
 - Tests mocha successful to the new Mocha v10
