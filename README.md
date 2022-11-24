@@ -2,14 +2,16 @@
 
 [![test-custom-code-editor](https://github.com/ammein/custom-code-editor/actions/workflows/main.yml/badge.svg)](https://github.com/ammein/custom-code-editor/actions/workflows/main.yml)
 
-An ApostropheCMS Custom Schema for your own custom-code-editor field. 
+An ApostropheCMS Custom Schema for your own custom-code-editor field.
 
-This schema uses Ace Editor library that you may found here [Ace Editor](https://ace.c9.io/)
+This extension adds a full-featured code editor that is perfect for coding tutorials, documentation containing code examples, or any other type of page that needs to display code.
+
+This schema uses the open-source Ace Editor library that you can find here [Ace Editor](https://ace.c9.io/)
 
 
 ![Ace Editor Example](https://media.giphy.com/media/33F6GoBCalksXavQyN/giphy.gif)
 
-Falling in love with custom-code-editor module ? Send love ❤️ through Paypal here : <br>
+Falling in love with the custom-code-editor module ? Send love ❤️ through Paypal here : <br>
 [Paypal.me/AminShazrin](https://paypal.me/AminShazrin?locale.x=en_US)
 
 
@@ -29,17 +31,22 @@ Include in app.js:
 # Enable Code Editor Schema
 Simple :
 ```javascript
-addFields : [
-    {
+module.exports = {
+  fields: {
+    add: {
+      myCode: {
         type : 'custom-code-editor',
         name : 'mycode',
         label : 'Paste your code here'
-    }
-]
+      }
+  }
+}
+
 ```
 
-### Widget.html Get `custom-code-editor` Value
-This custom-code-editor schema returns an object. 
+### Getting the `custom-code-editor` values
+This custom-code-editor schema returns an object composed of a `code` string containing the formatted code along with a `type` string that is derived from the type of editor used to input the code.
+
 ```javascript
 {
     code : '<string code value>',
@@ -47,27 +54,42 @@ This custom-code-editor schema returns an object.
 }
 ```
 
-If you did an example above , in `widget.html` you can simply get an object like this :
+Following the example above, in your template HTML file you can simply get an object like this :
 
 ```twig
-{{ data.widget.mycode.code }}
-{{ data.widget.mycode.type }}
+{{ data.page.myCode.code }}
+{{ data.page.myCode.type }}
 ```
 
-or you can simply use `apos.log()` to see what's available on `custom-code-editor` objects :
+or you can simply use `apos.log()` to see the entire `custom-code-editor` object:
 
 ```twig
-{{ apos.log(data.widget.mycode) }}
+{{ apos.log(data.page.myCode) }}
 ```
 
+### Displaying the custom code
+
+It is up to the developer to format the code string supplied to the template by the `custom-code-editor`. We recommend using a package like [`highlight.js`](https://highlightjs.org/), but there are a number of other similar packages out there.
+
+For the `highlight.js` package you will need to add the package script and styling, plus a small additional script to activate it on the page. It is typically sufficient to surround the editor code string with `<pre>` and `<code>` tags, but you can also supply the `type` if needed.
+
+```twig
+<pre>
+  <code class="language-{{ data.page.myCode.type}}">
+    {{ data.page.myCode.code }}
+  </code>
+</pre>
+```
 
 # Custom-Code-Editor Options Available
 
+The custom-code-editor has a number of options available. You can customize your editor experience by creating your own `index.js` file in the `modules/custom-code-editor` folder of your project to extend the existing options.
+
 ```javascript
-// in lib/modules/custom-code-editor/index.js
+// in modules/custom-code-editor/index.js
 module.exports = {
     ace : {
-        theme : 'tomorrow', // themes available : https://github.com/ajaxorg/ace/tree/master/lib/ace/theme (Case Sensitive)
+        theme : 'tomorrow', // themes available : https://gist.github.com/RyanNutt/cb8d60997d97905f0b2aea6c3b5c8ee0
         defaultMode : 'javascript',
         options : {
             // All options available in : https://github.com/ajaxorg/ace/wiki/Configuring-Ace
@@ -113,13 +135,13 @@ module.exports = {
 - Javascript
 
 # Name Of The Modes References
-### [List of all Modes](https://github.com/ajaxorg/ace/blob/master/lib/ace/ext/modelist.js#L45)
+### [List of all Modes](https://github.com/ajaxorg/ace/tree/master/src/mode)
 
-# How to Override Existing Mode ?
-Simple , make sure the name of the mode is similar to default modes provided. 
+# How to Override the Existing Mode ?
+Simple, make sure the name of the mode is similar to default modes provided. 
 
 ### Default Mode
-By default , `defaultMode : 'javascript'` enable. But you can choose a default mode by yourself ! Name any mode available for you. Let say you want 'css' to be in default mode.
+By default , `defaultMode : 'javascript'` is enabled. But you can choose a default mode by yourself! Just add the name any mode available for you. Lets say you want 'css' to be the default mode.
 
 ```javascript
 ace : {
@@ -127,10 +149,10 @@ ace : {
 }
 ```
 
-> This will open a starting mode , then you can choose other mode by choosing modes on your dropdown
+> This will select `css` a the starting mode, then you can choose a different mode by choosing from the dropdown if needed.
 
 ### Enable Snippet
-To enable your snippet added automatically when this schema is open , you have to enable dropdown
+To enable your snippet to be added automatically when this schema is open, you have to enable the dropdown
 ```javascript
 ace : {
     config : {
@@ -142,7 +164,7 @@ ace : {
 ```
 
 WARNING !
-Once enable your dropdown , you will frustated with the position of dropdown is on top left corner. It is because the dropdown do not have customized position. Let's position the dropdown on bottom left corner with some offset of 30px from the container
+Once enabled, your dropdown will be in the upper left corner. This will block your code input so we recommend that at the same time you enable the dropdown you add a custom position. For example, to position the dropdown on bottom left corner with an offset of 30px from the container edge use:
 
 ```javascript
 ace : {
@@ -159,7 +181,7 @@ ace : {
 ```
 
 ### Disable Snippet
-If you want it to disable snippet for specific mode. Write the `name` of the modes and insert your `disableSnippet` :
+If you want it to disable snippet addition for a specific mode. Write the `name` of the mode and set the `disableSnippet` property to `true`:
 
 ```javascript
 ace : {
@@ -173,7 +195,7 @@ ace : {
 ```
 
 ### Override Snippet
-Also , if you wanted to override default snippet for specific mode. Write the `name` of the modes and insert your `snippet` :
+Als , if you wanted to override the default snippet for aspecific mode. Write the `name` of the mode and insert your `snippet` :
 
 ```javascript
 ace : {
@@ -188,8 +210,8 @@ ace : {
 }
 ```
 
-### `@code-here` On Snippet
-What is that syntax for ? Well , whenever you change your mode on dropdown , existing codes on schema will replace automatically on new snippet on `@code-here`. Amazing right ? If you did not provide that syntax , your existing value on editor schema will be lost. Let's make a new override snippet and has our own `@code-here` on it :
+### `@code-here` In A Snippet
+What is this syntax for? Well, whenever you change your mode on dropdown, the existing codes in the schema will be replaced automatically into the new snippet in place opf the `@code-here`. Amazing right? If you did not provide this, your existing value in the editor schema will be lost. Let's make a new override snippet and has our own `@code-here` in it :
 ```javascript
       modes : [
          {
@@ -200,7 +222,7 @@ What is that syntax for ? Well , whenever you change your mode on dropdown , exi
 ```
 
 ### Title of Dropdown
-By default , the name of a dropdown will be on `name` property. But some of the name does not make sense ! Can I change it ? Yes you can , simply add `title` property like existing mode called **bash** :
+By default, the name of a dropdown will be in the `name` property. But some of the name s don't make sense! Can I change it? Yes you can! Simply add the `title` property with your prefered name For example, rename the existing `sh` mode to be called **bash** :
 ```javascript
 ace : {
     modes : [
@@ -213,14 +235,14 @@ ace : {
 ```
 
 ### Clear Default Modes
-What if I want to clear all default modes and define them myself ? Easy , add an option to `clearModes : true` :
+What if I want to clear all default modes and define them myself ? Easy, add the `clearModes : true` option:
 ```javascript
 ace : {
     clearModes : true
 }
 ```
 
-Once you clear your mode , you can define your own modes without considering any overrides mode. Isn't this makes your life easier ?
+Once you clear your mode you can define your own modes without considering any overrides mode. Doesn't this make your life easier ?
 ```javascript
 ace : {
     modes : [
@@ -234,10 +256,10 @@ ace : {
 }
 ```
 
-> Don't worry about indent in Snippet , it will automatically beautify the codes whenever you enter your new content
+> Don't worry about the indent in your Snippet , Ace will automatically beautify the code whenever you enter your new content.
 
 # Insert My Own Theme
-By default , `theme : 'ambiance'` . If you wish to change theme (Case Sensitive). You can find all available themes here [All Ace Editor Themes Available](https://github.com/ajaxorg/ace/tree/master/lib/ace/theme) :
+By default, Ace is set to  `theme : 'ambiance'`. If you wish to change theme (Case Sensitive). You can find all available themes here [All Ace Editor Themes Available](https://github.com/ajaxorg/ace/tree/master/src/theme) :
 ```javascript
 ace : {
     theme : 'monokai'
@@ -259,7 +281,7 @@ ace : {
 ```
 
 ## Enable Emmet Option
-By default , emmet is not enable and you need to configure it yourself. But Ace Editor provides a simple options to enable emmet. However, you need a library to load it to Ace Editor. You can find any emmet libraries available online but I provide some sample to you below that works :
+By default , emmet is not enable and you need to configure it yourself. But Ace Editor provides a simple option to enable emmet. However, you need a library to load it to Ace Editor. You can find any emmet libraries available online but I provide some sample to you below that works :
 
 ```javascript
 ace : {
@@ -276,7 +298,7 @@ Then load emmet library in your template views :
 ```
 
 # Custom-Code-Editor & Dropdown Configurations
-Well , you also can customize your own dropdown/ace editor css styles. All dropdown configuratins available for you are :
+You can also customize your own dropdown/ace editor css styles. All dropdown configuratins available for you are :
 
 ```javascript
 ace : {
@@ -333,7 +355,7 @@ addFields : [
     }
 ]
 ```
-> Why `modes` and `theme` are not available to override ? This will against the rule optimizing push asset feature that only project level options module by your own defined modes and theme get push to browser. This is because Ace JS contains 10 and more JS files available to use. All `options` values must be configure in project level module `index.js` or directly on `app.js` in `modules: {}`
+> Why `modes` and `theme` are not available to override? This will against the rule optimizing push asset feature that only project level options module by your own defined modes and theme get push to browser. This is because Ace JS contains 10 and more JS files available to use. All `options` values must be configure in project level module `index.js` or directly on `app.js` in `modules: {}`
 
 ### If you wish to disable some options, just set it to `null` on that property option. It will removed from your specific field option. For example :
 ```javascript
