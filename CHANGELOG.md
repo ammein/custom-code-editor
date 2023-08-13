@@ -1,3 +1,8 @@
+### 3.4.0
+- Update README.md (Thanks to @BoDonkey - https://github.com/BoDonkey)
+- Update Ace-Builds files that contains more updated modes, snippets & etc.
+- Fixed pushAssets scripts that were hilariously error when checking the regex
+
 ### 3.3.0
 - Update packages to the new ApostropheCMS 2.0 version
 - Add YML Tests
