@@ -4,7 +4,9 @@
 
 An ApostropheCMS Custom Schema for your own custom-code-editor field. 
 
-This schema uses Ace Editor library that you may found here [Ace Editor](https://ace.c9.io/)
+This extension adds a full-featured code editor that is perfect for coding tutorials, documentation containing code examples, or any other type of page that needs to display code.
+
+This schema uses the open-source Ace Editor library that you may found here [Ace Editor](https://ace.c9.io/)
 
 
 ![Ace Editor Example](https://media.giphy.com/media/33F6GoBCalksXavQyN/giphy.gif)
@@ -39,7 +41,7 @@ addFields : [
 ```
 
 ### Widget.html Get `custom-code-editor` Value
-This custom-code-editor schema returns an object. 
+This custom-code-editor schema returns an object composed of a `code` string containing the formatted code along with a `type` string that is derived from the type of editor used to input the code. 
 ```javascript
 {
     code : '<string code value>',
@@ -47,7 +49,7 @@ This custom-code-editor schema returns an object.
 }
 ```
 
-If you did an example above , in `widget.html` you can simply get an object like this :
+Following the example above, in your template HTML file you can simply get an object like this :
 
 ```twig
 {{ data.widget.mycode.code }}
@@ -60,8 +62,23 @@ or you can simply use `apos.log()` to see what's available on `custom-code-edito
 {{ apos.log(data.widget.mycode) }}
 ```
 
+### Displaying the custom code
+
+It is up to the developer to format the code string supplied to the template by the `custom-code-editor`. We recommend using a package like [`highlight.js`](https://highlightjs.org/), but there are a number of other similar packages out there.
+
+For the `highlight.js` package you will need to add the package script and styling, plus a small additional script to activate it on the page. It is typically sufficient to surround the editor code string with `<pre>` and `<code>` tags, but you can also supply the `type` if needed.
+
+```twig
+<pre>
+  <code class="language-{{ data.page.myCode.type}}">
+    {{ data.page.myCode.code }}
+  </code>
+</pre>
+```
 
 # Custom-Code-Editor Options Available
+
+The custom-code-editor has a number of options available. You can customize your editor experience by creating your own `index.js` file in the `lib/modules/custom-code-editor` folder of your project to extend the existing options.
 
 ```javascript
 // in lib/modules/custom-code-editor/index.js
@@ -113,13 +130,13 @@ module.exports = {
 - Javascript
 
 # Name Of The Modes References
-### [List of all Modes](https://github.com/ajaxorg/ace/blob/master/lib/ace/ext/modelist.js#L45)
+### [List of all Modes](https://github.com/ajaxorg/ace-builds/blob/master/src/ext-modelist.js#L36)
 
 # How to Override Existing Mode ?
 Simple , make sure the name of the mode is similar to default modes provided. 
 
 ### Default Mode
-By default , `defaultMode : 'javascript'` enable. But you can choose a default mode by yourself ! Name any mode available for you. Let say you want 'css' to be in default mode.
+By default , `defaultMode : 'javascript'` is enable. But you can choose a default mode by yourself! Just add the name of any mode available to you. Lets say you want 'css' to be the default mode.
 
 ```javascript
 ace : {
@@ -127,10 +144,10 @@ ace : {
 }
 ```
 
-> This will open a starting mode , then you can choose other mode by choosing modes on your dropdown
+> This will select `css` a the starting mode, then you can choose a different mode by choosing from the dropdown if needed.
 
 ### Enable Snippet
-To enable your snippet added automatically when this schema is open , you have to enable dropdown
+To enable your snippet to be added automatically when this schema is open, you have to enable the dropdown
 ```javascript
 ace : {
     config : {
@@ -141,8 +158,8 @@ ace : {
 }
 ```
 
-WARNING !
-Once enable your dropdown , you will frustated with the position of dropdown is on top left corner. It is because the dropdown do not have customized position. Let's position the dropdown on bottom left corner with some offset of 30px from the container
+> ⚠️ WARNING !
+Once enabled, your dropdown will be in the upper left corner. This will block your code input so we recommend that at the same time you enable the dropdown you add a custom position. For example, to position the dropdown on bottom left corner with an offset of 30px from the container edge use:
 
 ```javascript
 ace : {
@@ -159,7 +176,7 @@ ace : {
 ```
 
 ### Disable Snippet
-If you want it to disable snippet for specific mode. Write the `name` of the modes and insert your `disableSnippet` :
+If you want to disable snippet addition for a specific mode, write the `name` of the mode and set the `disableSnippet` property to `true`:
 
 ```javascript
 ace : {
@@ -173,7 +190,7 @@ ace : {
 ```
 
 ### Override Snippet
-Also , if you wanted to override default snippet for specific mode. Write the `name` of the modes and insert your `snippet` :
+Also , if you want to override the default snippet for specific mode, write the `name` of the mode and insert your `snippet` :
 
 ```javascript
 ace : {
@@ -188,8 +205,8 @@ ace : {
 }
 ```
 
-### `@code-here` On Snippet
-What is that syntax for ? Well , whenever you change your mode on dropdown , existing codes on schema will replace automatically on new snippet on `@code-here`. Amazing right ? If you did not provide that syntax , your existing value on editor schema will be lost. Let's make a new override snippet and has our own `@code-here` on it :
+### `@code-here` in a Snippet
+What is this syntax for? Well, whenever you change your mode on dropdown, the existing codes in the schema will be replaced automatically into the new snippet in place of `@code-here`. Amazing right? If you did not provide this, your existing value in the editor schema will be lost. Let's make a new override snippet that has our own `@code-here` in it:
 ```javascript
       modes : [
          {
@@ -200,7 +217,7 @@ What is that syntax for ? Well , whenever you change your mode on dropdown , exi
 ```
 
 ### Title of Dropdown
-By default , the name of a dropdown will be on `name` property. But some of the name does not make sense ! Can I change it ? Yes you can , simply add `title` property like existing mode called **bash** :
+By default, the name of a dropdown will be in the `name` property. But some of the names don't make sense! Can I change it? Yes you can! Simply add the `title` property with your prefered name For example, rename the existing `sh` mode to be called **`Bash`** :
 ```javascript
 ace : {
     modes : [
@@ -213,14 +230,14 @@ ace : {
 ```
 
 ### Clear Default Modes
-What if I want to clear all default modes and define them myself ? Easy , add an option to `clearModes : true` :
+What if I want to clear all default modes and define them myself? Easy, add the `clearModes : true` setting:true` :
 ```javascript
 ace : {
     clearModes : true
 }
 ```
 
-Once you clear your mode , you can define your own modes without considering any overrides mode. Isn't this makes your life easier ?
+Once you clear your modes, you can define your own modes without considering any overrides mode. Doesn't this makes your life easier?
 ```javascript
 ace : {
     modes : [
@@ -234,10 +251,10 @@ ace : {
 }
 ```
 
-> Don't worry about indent in Snippet , it will automatically beautify the codes whenever you enter your new content
+> 💡 Don't worry about the indent in your Snippet , Ace will automatically beautify the code whenever you enter your new content.
 
 # Insert My Own Theme
-By default , `theme : 'ambiance'` . If you wish to change theme (Case Sensitive). You can find all available themes here [All Ace Editor Themes Available](https://github.com/ajaxorg/ace/tree/master/lib/ace/theme) :
+By default , `theme : 'chrome'` . If you wish to change the theme (Case Sensitive), you can find all available themes here [All Ace Editor Themes Available](https://github.com/ajaxorg/ace-builds/blob/master/src/ext-themelist.js#L9) :
 ```javascript
 ace : {
     theme : 'monokai'
@@ -259,7 +276,7 @@ ace : {
 ```
 
 ## Enable Emmet Option
-By default , emmet is not enable and you need to configure it yourself. But Ace Editor provides a simple options to enable emmet. However, you need a library to load it to Ace Editor. You can find any emmet libraries available online but I provide some sample to you below that works :
+By default, emmet is not enable and you need to configure it yourself. But Ace Editor provides a simple options to enable emmet. However, you need a library to load it to Ace Editor. You can find any emmet libraries available online but I provide some sample to you below that works :
 
 ```javascript
 ace : {
@@ -276,7 +293,7 @@ Then load emmet library in your template views :
 ```
 
 # Custom-Code-Editor & Dropdown Configurations
-Well , you also can customize your own dropdown/ace editor css styles. All dropdown configuratins available for you are :
+You also can customize your own dropdown/ace editor css styles. All the dropdown configurations available for you are listed in this example:
 
 ```javascript
 ace : {
@@ -303,7 +320,7 @@ ace : {
 }
 ```
 
-You must be thinking , why `fontSize` and `editorHeight` is available for editor options ? While we can do it in :
+You must be thinking , why are `fontSize` and `editorHeight` available for editor options ? While we could do it at the `options` level:
 
 ```javascript
 ace : {
@@ -313,10 +330,10 @@ ace : {
 }
 ```
 
-> Because we have a css issue on `!important` to override apostrophe css default normalize. So I did it for you to easily override it on `config` options. Or maybe you can push your own file to override it. Either way , both are possible override options :)
+> Because we have a css issue with `!important` to override apostrophe css default normalize. So, I made it for you to easily override in the `config` settings. Or maybe you can push your own file to override it. Either way, both are possible override options :)
 
 # Specific Field Customization
-Well, I know some of you don't want some specific editor to be in the same options to all custom-code-editor field type, right ? To make it backward compatibility, only some of the options can be overridden on your schema fields. Here is an example :
+Well, I know some of you don't want some specific editor to have the same options in all custom-code-editor field instances, right? To make it backward compatibility, only some of the options can be overridden on your schema fields. Here is an example :
 
 ```javascript
 addFields : [
@@ -333,7 +350,7 @@ addFields : [
     }
 ]
 ```
-> Why `modes` and `theme` are not available to override ? This will against the rule optimizing push asset feature that only project level options module by your own defined modes and theme get push to browser. This is because Ace JS contains 10 and more JS files available to use. All `options` values must be configure in project level module `index.js` or directly on `app.js` in `modules: {}`
+> Why are `modes` and `theme` not available to override? This will go against the rule optimizing webpack feature that only project level options module by your own defined modes and theme get setup in the browser. All `options` values must be configure in project level module `index.js` or directly on `app.js` in `modules: {}`
 
 ### If you wish to disable some options, just set it to `null` on that property option. It will removed from your specific field option. For example :
 ```javascript
@@ -356,12 +373,12 @@ addFields : [
 
 # How To
 ### Search Bar
-Ace got it owns search bar. Simply hit `Ctrl + F` ! 
+Ace got its own search bar. Simply hit `Ctrl + F` ! 
 
 ![Search Function](https://media.giphy.com/media/dQlgFYEG6CbgoHWdHw/giphy.gif)
 
 ### Save Selection
-Now this one is a new function ONLY for ApostropheCMS . If you hit `Ctrl + Shift + S` while selecting new code, it will replace an existing highlighted text previously when you change your mode. Don't believe me ? Check it out !
+Now this one is a new function ONLY for ApostropheCMS . If you hit `Ctrl + Shift + S` while selecting new code, it will replace an existing highlighted text previously when you change your mode. Don't believe me? Check it out!
 
 ![Save Feature](https://media.giphy.com/media/4EFt3QBgKu1NG5oz5a/giphy.gif)
 
@@ -378,15 +395,15 @@ ace : {
 }
 ```
 
-# New Custom-Code-Editor V3 (Options Customizer)
-Have you ever wonder that you are tired of testing options by restarting the app and adjust your options all over again ? 
+# Options Customizer
+Have you ever lamented that you are tired of testing options by restarting the app and adjusting your options all over again? Now we have the Options Customizer that helps you more easily tweak your editor options configuration.
 
 Say no more ! Introducing new **Options Customizer** ! 
 
 ![Options Customizer](https://media.giphy.com/media/JT1C49z4ghRFIvKPx1/giphy.gif)
 
 ### What does it do ?
-It brings you more features that you can't live without ! All options available for you to modify are now can be save to each logged in user or even you could copy all the desired options and paste it to your project level module ! Here are four core features for Options Customizer :
+It brings you more features that you can't live without! All options available for you to modify can now be saved for each logged in user or even you could copy all the desired options and paste it to your project level module! Here are four core features for Options Customizer :
 - Copy Options
 - Undo Options
 - Save Options
@@ -395,20 +412,20 @@ It brings you more features that you can't live without ! All options available 
 > These options will make your editor change live upon options modified.
 
 ## Copy Options
-You can copy your modified options and paste it on your project level module that will apply to all ! The copy features uses [Clipboard JS](https://clipboardjs.com/) to make it work. Below are the demonstration on how to use it :
+You can copy your modified options and paste it on your project level module that will apply to all! The copy features uses [Clipboard JS](https://clipboardjs.com/) to make it work. Below are the demonstration on how to use it :
 
 ![Copy Options](https://media.giphy.com/media/MaNmlXtVdItUCXRR17/giphy.gif)
 
 
-> NOTE : It only copies from modified changes, not on its entire options. If your module options are already configured, it will not copy your module options. Instead, it will copy all your changes options that you did on On/Off Toggle(s), Select Input(s) and Range Input(s).
+> NOTE : It only copies from modified changes, not the entirty of the options. If your module options are already configured, it will not copy your module options. Instead, it will copy all your changes options that you did through On/Off Toggle(s), Select Input(s) and Range Input(s).
 
 ## Undo Options
-You can undo your modified options to default settings. This will help you reset your changes to default options.
+You can undo your modified options to the default settings. This will help you reset your changes to default options.
 
 ![Undo Options](https://media.giphy.com/media/KbpWScHGzbpGfTAUTN/giphy.gif)
 
 
-> NOTE : This will not undo saved options to default setting. If you wish to reset from saved options, refer to section "Reset Options" below.
+> NOTE : This will not undo saved options to the default setting. If you wish to reset from saved options, refer to section "Reset Options" below.
 
 
 ## Save Options
@@ -416,24 +433,24 @@ You can also saves all your modified options. This will keep all your modified o
 
 ![Save Options](https://media.giphy.com/media/dsvKmzLZID4CyrRNWu/giphy.gif)
 
-In MongoDB, you will see this data directly on `type : apostrophe-user` :
+In MongoDB, you will see this data directly in `type : apostrophe-user`:
 ```json
 "customCodeEditor" : {
     "highlightActiveLine" : false
 }
 ```
 
-> NOTE : Save options will not apply to all users. It will load current users saves options and apply it to all editors. This will brings each types of users to their own desired options.
+> NOTE : Save options will not apply to all users. It will load current users saved options and apply it to all editors. This will allow each users to their own desired options.
 
 ## Reset Options
-You can also reset all options. This will remove current saves options and change it to default module options settings. Let say you have follows save options demonstration above, you simply click `Reset` like example below :
+You can also reset all options. This will remove current saves options and change it to the default module options settings. Let say you have follows save options demonstration above, you simply click `Reset` like example below :
 
 ![Reset Options](https://media.giphy.com/media/RhYUiFiT5xoxM8cvIj/giphy.gif)
 
-> NOTE : This will only affect to current logged in user only. It will not removes any other users options.
+> NOTE : This will affect the currently logged in user only. It will not remove any other user's options.
 
 ## Modify Options
-What if you want to add your own help text, you could simply done it in project level module like this : 
+What if you want to add your own help text? You could simply done it in project level module like this : 
 ```js
 // In custom-code-editor/index.js :
 module.exports = {
@@ -448,10 +465,10 @@ module.exports = {
 }
 ```
 
-> NOTE : If you wish to add more options, take a look at `aceTypes.js` in `node_modules/custom-code-editor/aceTypes.js` to see how it is done. And MAKE SURE you do it in an ARRAY like above example.
+> NOTE : If you wish to add more options, take a look at `aceTypes.js` in `node_modules/custom-code-editor/aceTypes.js` to see how it is done. And MAKE SURE you do it in an ARRAY like the example above.
 
-## Remove Options
-You wish to remove options customizer ? You don't like it ? Don't worry, just set it to `enable : false` like this :
+## Disable Options Customizer
+You wish to remove the options customizer? You don't like it? Don't worry, just set it to `enable : false` like this :
 ```js
 // In custom-code-editor/index.js :
 module.exports = {
@@ -466,13 +483,13 @@ module.exports = {
 }
 ```
 
-### Why some other options are missing ?
-Well, some other options will break apostrophe's UI and also against the rule of pushing assets. For instance, we cannot set other themes via Options Customizer because we will only push desired theme configuration from your project level module. This is because Ace contains more than 10 js files for each modes and themes available.
+### Why are some other options missing ?
+Well, some other options will break apostrophe's UI and are also against the rule of pushing assets. For instance, we cannot set other themes via the Options Customizer because we will only push desired theme configuration from your project level module. This is because Ace contains more than 10 js files for each modes and themes available.
 
 # Browser
 
 ### Browser Object
-How can I get this schema browser object for my `custom-code-editor` ?
+How can I get the schema browser object for `custom-code-editor` ?
 
 Simply you can find it on :
 
@@ -495,7 +512,7 @@ apos.customCodeEditor.editor.session.getValue()
 ```
 
 ### Get Multiple Editor Browser in Single Schema
-Oops ! How can I get specific editor browser object if I have two fields in a same schema ? I made a simple for you , let say you have this fields :
+Oops! How can I get specific editor browser object if I have two fields in a same schema? I made it simple for you, let say you have these fields:
 
 ```javascript
 addFields : [
@@ -521,9 +538,9 @@ apos.customCodeEditor.mycode.editor
 apos.customCodeEditor.mysecondcode.editor
 ```
 
-> Easy right ? Hell yeah it is ! :D
+> Easy right? Hell yeah it is ! :D
 
-# Advanced Configuration (Skip this if you comfortable with current feature)
+# Advanced Configuration (Skip this if you comfortable with current features)
 
 ## How To Insert My Stylesheets/Scripts Files ?
 I provide a simple object for you. Behold !
@@ -605,9 +622,8 @@ scripts : {
 
 > NOTE : You don't have to include `'js/filedirectory'` or `'css/filedirectory'` in it. APOSTROPHECMS will push based on `self.pushAsset()` that you may found in [ApostropheCMS Push Asset Documentation](https://apostrophecms.org/docs/tutorials/getting-started/pushing-assets.html#configuring-stylesheets). Easy right ?
 
-
-### Why I cannot switch other themes or other modes by scripting ?
-As I already mentioned in Push Asset section , by default we only push asset that are ONLY defined modes. It detect by your modes name and push. The rest of the modes will not be available in your browser. This is due to performance where Ace Editor contains more than 10 js files for all modes. If you really want to do by scripting that can switch themes or maybe other modes via scripting , you have to push ALL ACE's JS files in order to do that. Here is the code :
+## Why can't I switch to other themes or other modes by scripting ?
+As I already mentioned in the Push Asset section, by default we only push asset that are defined modes. It detect by your modes name and push. The rest of the modes will not be available in your browser. This is due to performance where the Ace Editor contains more than 10 js files for all modes. If you really want scripting that can switch themes or maybe other modes via scripting, you have to push ALL ACE's JS files in order to do that. Here is the code :
 
 ```javascript
 ace : {
@@ -618,12 +634,12 @@ scripts : {
 }
 ```
 
-> NOTE : Beware that this push ALL ACE JS files including your own mode. Enable this only when you wanted to configure more ace on your own script. This might decrease performance and may require long time page loads.
+> ⚠️ NOTE: Beware that this push ALL ACE JS files including your own mode. Enable this only when you want to configure ace more from on your own script. This might decrease performance and may require long time page loads.
 
 
 # Add More Methods/Commands/Event Listener To Your Ace Editor
 
-Let say you want to add MORE commands that you already refer to [Ace Editor HOW TO](https://ace.c9.io/#nav=howto) or maybe add new events by yourself. First , let's create new js file to any name you like and push like this :
+Let say you want to add MORE commands that are already refered to [Ace Editor HOW TO](https://ace.c9.io/#nav=howto) or maybe add new events by yourself. First, let's create new js file to any name you like and push like this:
 
 ```javascript
 // In custom-code-editor/index.js
@@ -717,6 +733,11 @@ _this.has(myObject , "nested.anotherNested.getValue");
 Simple , you can access it via `self.ace` or `_this.ace`
 
 # Changelog
+### 3.4.0
+- Update README.md (Thanks to @BoDonkey - https://github.com/BoDonkey)
+- Update Ace-Builds files that contains more updated modes, snippets & etc.
+- Fixed pushAssets scripts that were hilariously error when checking the regex
+
 ### 3.3.0
 - Update packages to the new ApostropheCMS 2.0 version
 - Add YML Tests
